@@ -1,0 +1,74 @@
+﻿  title.cpp
+  texture.cpp
+  sound.cpp
+  score.cpp
+  result.cpp
+  renderer.cpp
+  player3D.cpp
+  player.cpp
+  objectX.cpp
+  object3D.cpp
+  object2D.cpp
+  object.cpp
+  motion.cpp
+  model.cpp
+  manager.cpp
+  main.cpp
+  light.cpp
+  item3D.cpp
+  input.cpp
+  game.cpp
+  コードを生成中...
+  コンパイル中...
+  field.cpp
+  explosion.cpp
+  enemy3D.cpp
+  enemy.cpp
+  effect.cpp
+  camera.cpp
+  bullet3D.cpp
+  bullet.cpp
+  block3D.cpp
+  block.cpp
+  billboard.cpp
+  bg.cpp
+  コードを生成中...
+player3D.obj : error LNK2001: 外部シンボル "D3DXMatrixMultiply" は未解決です。
+billboard.obj : error LNK2001: 外部シンボル "D3DXMatrixMultiply" は未解決です。
+model.obj : error LNK2001: 外部シンボル "D3DXMatrixMultiply" は未解決です。
+object3D.obj : error LNK2001: 外部シンボル "D3DXMatrixMultiply" は未解決です。
+objectX.obj : error LNK2001: 外部シンボル "D3DXMatrixMultiply" は未解決です。
+billboard.obj : error LNK2019: 未解決の外部シンボル D3DXMatrixInverse が関数 "public: virtual void __cdecl CBillboard::Draw(void)" (?Draw@CBillboard@@UEAAXXZ) で参照されました。
+player3D.obj : error LNK2001: 外部シンボル "D3DXMatrixTranslation" は未解決です。
+billboard.obj : error LNK2001: 外部シンボル "D3DXMatrixTranslation" は未解決です。
+model.obj : error LNK2001: 外部シンボル "D3DXMatrixTranslation" は未解決です。
+object3D.obj : error LNK2001: 外部シンボル "D3DXMatrixTranslation" は未解決です。
+objectX.obj : error LNK2001: 外部シンボル "D3DXMatrixTranslation" は未解決です。
+billboard.obj : error LNK2019: 未解決の外部シンボル D3DXCreateTextureFromFileA が関数 "public: virtual long __cdecl CBillboard::Init(void)" (?Init@CBillboard@@UEAAJXZ) で参照されました。
+texture.obj : error LNK2001: 外部シンボル "D3DXCreateTextureFromFileA" は未解決です。
+model.obj : error LNK2001: 外部シンボル "D3DXLoadMeshFromXA" は未解決です。
+block3D.obj : error LNK2001: 外部シンボル "D3DXLoadMeshFromXA" は未解決です。
+bullet3D.obj : error LNK2001: 外部シンボル "D3DXLoadMeshFromXA" は未解決です。
+enemy3D.obj : error LNK2001: 外部シンボル "D3DXLoadMeshFromXA" は未解決です。
+item3D.obj : error LNK2001: 外部シンボル "D3DXLoadMeshFromXA" は未解決です。
+block3D.obj : error LNK2019: 未解決の外部シンボル D3DXGetFVFVertexSize が関数 "public: virtual long __cdecl CBlock3D::Init(void)" (?Init@CBlock3D@@UEAAJXZ) で参照されました。
+enemy3D.obj : error LNK2001: 外部シンボル "D3DXGetFVFVertexSize" は未解決です。
+camera.obj : error LNK2019: 未解決の外部シンボル D3DXMatrixLookAtLH が関数 "public: void __cdecl CCamera::SetCamera(void)" (?SetCamera@CCamera@@QEAAXXZ) で参照されました。
+camera.obj : error LNK2019: 未解決の外部シンボル D3DXMatrixPerspectiveFovLH が関数 "public: void __cdecl CCamera::SetCamera(void)" (?SetCamera@CCamera@@QEAAXXZ) で参照されました。
+input.obj : error LNK2019: 未解決の外部シンボル DirectInput8Create が関数 "public: virtual long __cdecl CInput::Init(struct HINSTANCE__ *,struct HWND__ *)" (?Init@CInput@@UEAAJPEAUHINSTANCE__@@PEAUHWND__@@@Z) で参照されました。
+input.obj : error LNK2001: 外部シンボル "IID_IDirectInput8A" は未解決です。
+input.obj : error LNK2001: 外部シンボル "GUID_SysMouse" は未解決です。
+input.obj : error LNK2001: 外部シンボル "GUID_SysKeyboard" は未解決です。
+input.obj : error LNK2001: 外部シンボル "c_dfDIMouse" は未解決です。
+input.obj : error LNK2001: 外部シンボル "c_dfDIKeyboard" は未解決です。
+light.obj : error LNK2019: 未解決の外部シンボル D3DXVec3Normalize が関数 "public: long __cdecl CLight::Init(void)" (?Init@CLight@@QEAAJXZ) で参照されました。
+model.obj : error LNK2019: 未解決の外部シンボル D3DXMatrixRotationYawPitchRoll が関数 "public: void __cdecl CModel::Draw(void)" (?Draw@CModel@@QEAAXXZ) で参照されました。
+object3D.obj : error LNK2001: 外部シンボル "D3DXMatrixRotationYawPitchRoll" は未解決です。
+objectX.obj : error LNK2001: 外部シンボル "D3DXMatrixRotationYawPitchRoll" は未解決です。
+player3D.obj : error LNK2001: 外部シンボル "D3DXMatrixRotationYawPitchRoll" は未解決です。
+renderer.obj : error LNK2019: 未解決の外部シンボル Direct3DCreate9 が関数 "public: long __cdecl CRenderer::Init(struct HWND__ *,int)" (?Init@CRenderer@@QEAAJPEAUHWND__@@H@Z) で参照されました。
+C:\Program Files (x86)\Microsoft DirectX SDK (June 2010)\Lib\x86\d3d9.lib : warning LNK4272: ライブラリのコンピューターの種類 'X86' がターゲットのコンピューターの種類' x64' と競合しています
+C:\Program Files (x86)\Microsoft DirectX SDK (June 2010)\Lib\x86\d3dx9.lib : warning LNK4272: ライブラリのコンピューターの種類 'X86' がターゲットのコンピューターの種類' x64' と競合しています
+C:\Program Files (x86)\Microsoft DirectX SDK (June 2010)\Lib\x86\dxguid.lib : warning LNK4272: ライブラリのコンピューターの種類 'X86' がターゲットのコンピューターの種類' x64' と競合しています
+C:\Program Files (x86)\Microsoft DirectX SDK (June 2010)\Lib\x86\dinput8.lib : warning LNK4272: ライブラリのコンピューターの種類 'X86' がターゲットのコンピューターの種類' x64' と競合しています
+C:\Users\student\Documents\Visual Studio 2015\Projects\action002\x64\Debug\action002.exe : fatal error LNK1120: 17 件の未解決の外部参照
