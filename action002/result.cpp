@@ -9,6 +9,10 @@
 #include "object2D.h"
 #include "fade.h"
 
+//========================================================
+//静的メンバ変数
+//========================================================
+CRanking *CResult::m_pRanking = NULL;
 int CResult::m_nIdxTexture = 0;
 
 //========================================================
@@ -58,6 +62,8 @@ HRESULT CResult::Init(void)
 
 	m_apObject2D[0]->SetVtxResult();
 
+	m_pRanking = CRanking::Create();
+
 	return S_OK;
 }
 
@@ -67,6 +73,7 @@ HRESULT CResult::Init(void)
 void CResult::Uninit(void)
 {
 	m_apObject2D[0]->Uninit();
+	m_pRanking->Uninit();
 	CScene::Uninit();
 }
 
@@ -97,6 +104,7 @@ void CResult::Update(void)
 void CResult::Draw(void)
 {
 	m_apObject2D[0]->Draw();
+	m_pRanking->Draw();
 }
 
 //========================================================
@@ -105,4 +113,12 @@ void CResult::Draw(void)
 D3DXVECTOR3 CResult::GetPos(void)
 {
 	return m_pos;
+}
+
+//========================================================
+//ランキングのポインタを返す関数
+//========================================================
+CRanking *CResult::GetRanking(void)
+{
+	return m_pRanking;
 }

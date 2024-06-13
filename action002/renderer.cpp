@@ -189,6 +189,14 @@ LPDIRECT3DDEVICE9 CRenderer::GetDevice(void)
 //========================================================
 //Direct3Dデバイスへのポインタを返す関数
 //========================================================
+void CRenderer::SetDevice(LPDIRECT3DDEVICE9 dev)
+{
+	m_pD3DDevice = dev;
+}
+
+//========================================================
+//Direct3Dデバイスへのポインタを返す関数
+//========================================================
 LPD3DXFONT CRenderer::GetFont(void)
 {
 	return m_pFont;

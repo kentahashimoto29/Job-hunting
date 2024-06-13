@@ -14,6 +14,7 @@
 #include "death_block.h"
 #include "through_block.h"
 #include "time.h"
+#include "score.h"
 #include "field.h"
 #include "wall.h"
 #include "item_manager.h"
@@ -39,13 +40,14 @@ public:
 	static CDeathBlock *GetDeathBlock();		//即死ブロックのポインタを返す関数
 	static CThroughBlock *GetThroughBlock();	//通り抜けれるブロックのポインタを返す関数
 	static CTime *GetTime();					//タイムのポインタを返す関数
+	static CScore *GetScore();					//スコアのポインタを返す関数
 	static CEnemyManager *GetEnemyManager();	//敵マネージャーのポインタを返す関数
 	static CItemManager *GetItemManager();		//アイテムマネージャーのポインタを返す関数
 	CField *GetField();							//フィールドのポインタを返す関数
 	CWall *GetWall();							//壁のポインタを返す関数
 
 	static float GetInitPos();
-	static int GetScore();
+	static int GetGameScore();
 	static void SetScore(int nScore);
 	static void AddScore();
 
@@ -56,10 +58,11 @@ private:
 	static CDeathBlock *m_pDeathBlock;			//即死ブロックのポインタ
 	static CThroughBlock *m_pThroughBlock;		//通り抜けれるブロックのポインタ
 	static CTime *m_pTime;						//タイムのポインタ
+	static CScore *m_pScore;					//スコアのポインタ
 	static CEnemyManager *m_pEnemyManager;		//エネミー3Dのポインタ
 	static CItemManager *m_pItemManager;		//アイテムマネージャーのポインタ
 	CField *m_pField[256];						//フィールドのポインタ
-	CWall *m_pWall[256];							//壁のポインタ
+	CWall *m_pWall[256];						//壁のポインタ
 
 	static float m_nInitPos;
 

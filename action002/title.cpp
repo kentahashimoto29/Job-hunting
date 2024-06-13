@@ -5,10 +5,14 @@
 //
 //========================================================
 #include "title.h"
-#include "manager.h"
+#include "title_obj2D.h"
 #include "object2D.h"
 #include "fade.h"
 
+//========================================================
+//静的メンバ変数
+//========================================================
+CTitle_Obj2D *CTitle::m_apTitleObj = NULL;
 int CTitle::m_nIdxTexture = 0;
 
 //========================================================
@@ -32,33 +36,7 @@ CTitle::~CTitle()
 //========================================================
 HRESULT CTitle::Init(void)
 {
-	CTexture *pTexture = CManager::GetInstance()->GetTexture();
-
-	bool bTexture = false;
-
-	for (int nCnt = 0; nCnt < TEXTURE_MAX; nCnt++)
-	{
-		if ("data\\TEXTURE\\イヴェルカーナ.png" == pTexture->GetName(nCnt))
-		{
-			bTexture = true;
-			break;
-		}
-	}
-
-	if (bTexture == false)
-	{
-		m_nIdxTexture = pTexture->Regist("data\\TEXTURE\\イヴェルカーナ.png");
-	}
-
-	m_apObject2D[0] = new CObject2D;
-
-	m_apObject2D[0]->BindTexture(m_nIdxTexture);
-
-	m_apObject2D[0]->Init();
-
-	m_apObject2D[0]->SetVtxResult();
-
-	m_apObject2D[0]->SetType(CObject::TYPE_TITLE);
+	m_apTitleObj = CTitle_Obj2D::Create();
 
 	return S_OK;
 }
@@ -68,7 +46,7 @@ HRESULT CTitle::Init(void)
 //========================================================
 void CTitle::Uninit(void)
 {
-	m_apObject2D[0]->Uninit();
+	m_apTitleObj->Uninit();
 	CScene::Uninit();
 }
 
@@ -101,7 +79,7 @@ void CTitle::Update(void)
 //========================================================
 void CTitle::Draw(void)
 {
-	m_apObject2D[0]->Draw();
+	m_apTitleObj->Draw();
 }
 
 //========================================================

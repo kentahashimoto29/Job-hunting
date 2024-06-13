@@ -121,7 +121,7 @@ HRESULT CManager::Init(HINSTANCE hInstance, HWND hWnd, BOOL bWindow)
 	m_pCamera = new CCamera;
 	m_pCamera->Init();
 
-	SetMode(GetScene()->MODE_GAME);
+	SetMode(GetScene()->MODE_TITLE);
 
 	return S_OK;
 }

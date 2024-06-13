@@ -23,6 +23,7 @@ public:
 	void Draw(void);						//描画処理
 
 	LPDIRECT3DDEVICE9 GetDevice(void);		//デバイスを返す
+	void SetDevice(LPDIRECT3DDEVICE9 dev);		//デバイスを返す
 
 	LPD3DXFONT GetFont(void);
 

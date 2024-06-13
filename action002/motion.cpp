@@ -212,6 +212,8 @@ void CMotion::Load(void)
 						//•¶Žš—ñ”äŠr
 						else if (strcmp(aString, "END_MOTIONSET") == 0)
 						{
+							m_aInfo[nCntMotion].nType = (TYPE)nCntMotion;
+
 							nCntKey = 0;
 							nCntMotion++;
 							m_nNumAll++;

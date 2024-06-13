@@ -29,15 +29,23 @@ public:
 	void SetVtxScore(int aTexU, int nCnt);					//スコアの頂点座標を設定
 	void SetVtxBlock(D3DXVECTOR3 pos);						//ブロックの頂点座標を設定
 	void SetVtxResult(void);								//リザルトの頂点座標を設定
+	void SetVtxTitle(void);								//タイトルの頂点座標を設定
 	void SetVtxTime(int aTexU, int nCnt);					//タイムの頂点座標を設定
 	void SetVtxRanking(int aTexU, int nCnt, int nCnt2);		//ランキングの頂点座標を設定
 	void SetVtxFade(void);									//リザルトの頂点座標を設定
 
-	void SetColor(D3DXCOLOR col);									//リザルトの頂点座標を設定
-
 	D3DXVECTOR3 GetPos(void);								//位置を返す
-	void SetPos(D3DXVECTOR3 pos);
-	void SetRot(D3DXVECTOR3 rot);
+	void SetPos(D3DXVECTOR3 pos);							//位置を設定
+	void SetRot(D3DXVECTOR3 rot);							//向きを設定
+	void SetColor(D3DXCOLOR col);							//色を設定
+	int SetTex(const char TexName[32]);
+
+	void AlphaTestValid();
+	void AlphaTestInvalid();
+
+	void AlphaBlendValid();
+	void AlphaBlendInvalid();
+
 
 	LPDIRECT3DVERTEXBUFFER9 m_aVerBuff;			//頂点情報へのポインタ
 	D3DXVECTOR3 m_pos;							//オブジェクトの位置

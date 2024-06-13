@@ -115,6 +115,9 @@ void CCamera::Update(void)
 
 			m_rot.y = x;
 
+			float f = sinf(m_rot.y + D3DX_PI) * m_Distance;
+			float ff = cosf(m_rot.y + D3DX_PI + m_rot.x) * m_Distance;
+
 			m_posV.x = m_posR.x + sinf(m_rot.y + D3DX_PI) * m_Distance;
 			m_posV.z = m_posR.z + cosf(m_rot.y + D3DX_PI) * m_Distance;
 		}
@@ -204,10 +207,12 @@ void CCamera::SetPosGame(D3DXVECTOR3 posV, D3DXVECTOR3 posR)
 	m_vecU = D3DXVECTOR3(0.0f, 1.0f, 0.0f);
 
 	//ëŒäpê¸ÇÃí∑Ç≥ÇéZèo
-	m_Distance = sqrtf(m_posV.y * m_posV.y + m_posV.z * m_posV.z);
+	//m_Distance = sqrtf(m_posV.y * m_posV.y + m_posV.z * m_posV.z);
+
+	m_Distance = -m_posV.z;
 
 	//ëŒäpê¸ÇÃäpìxÇéZèo
-	m_Angle = atan2f(m_posV.y - m_posR.y, -(m_posV.z - m_posR.z));
+	m_Angle = atan2f(m_posV.y, -(m_posV.z - m_posR.z));
 
 	m_rot.x = m_Angle;
 

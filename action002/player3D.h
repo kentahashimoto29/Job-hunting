@@ -82,6 +82,7 @@ private:
 	D3DXVECTOR3 m_VtxMin;			//
 
 	MOTIONTYPE m_nType;				//
+	MOTIONTYPE m_nOldType;				//
 	SKILL m_nSkill;
 
 	CModel *m_apModel[32];			//モデルへのポインタ

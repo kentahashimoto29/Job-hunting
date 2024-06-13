@@ -15,7 +15,6 @@
 #define WALL_HEIGHT								(2)
 #define WALL_NUM								(4)
 
-
 //========================================================
 //静的メンバ変数
 //========================================================
@@ -26,6 +25,7 @@ CDeathBlock *CGame::m_pDeathBlock = NULL;
 CThroughBlock *CGame::m_pThroughBlock = NULL;
 CItemManager *CGame::m_pItemManager = NULL;
 CTime *CGame::m_pTime = NULL;
+CScore *CGame::m_pScore = NULL;
 float CGame::m_nInitPos = 0.0f;
 int CGame::m_nScore = 0;
 
@@ -61,6 +61,8 @@ HRESULT CGame::Init(void)
 	m_pEnemyManager = CEnemyManager::Create();
 
 	m_pItemManager = CItemManager::Create();
+
+	m_pScore = CScore::Create();
 
 	for (int nCntHeight = 0; nCntHeight < FEILD_HEIGHT; nCntHeight++)
 	{
@@ -133,6 +135,14 @@ void CGame::Uninit(void)
 	}
 
 	//NULLチェック
+	if (m_pScore != NULL)
+	{
+		//終了処理
+		m_pScore->Uninit();
+		m_pScore = NULL;
+	}
+
+	//NULLチェック
 	if (m_pPlayer3D != NULL)
 	{
 		//終了処理
@@ -165,7 +175,16 @@ void CGame::Uninit(void)
 			m_pField[nCntField] = NULL;
 		}
 	}
-	
+
+	for (int nCntWall = 0; nCntWall < WALL_WIDTH * WALL_HEIGHT * WALL_NUM; nCntWall++)
+	{
+		//NULLチェック
+		if (m_pWall[nCntWall] != NULL)
+		{
+			m_pWall[nCntWall]->Uninit();
+			m_pWall[nCntWall] = NULL;
+		}
+	}
 
 	Release();
 }
@@ -259,7 +278,7 @@ CThroughBlock *CGame::GetThroughBlock(void)
 }
 
 //========================================================
-//通り抜けれるブロックのポインタを返す関数
+//タイムのポインタを返す関数
 //========================================================
 CTime *CGame::GetTime(void)
 {
@@ -267,7 +286,16 @@ CTime *CGame::GetTime(void)
 }
 
 //========================================================
-//通り抜けれるブロックのポインタを返す関数
+//スコアのポインタを返す関数
+//========================================================
+CScore *CGame::GetScore(void)
+{
+	return m_pScore;
+}
+
+
+//========================================================
+//敵マネージャーのポインタを返す関数
 //========================================================
 CEnemyManager *CGame::GetEnemyManager(void)
 {
@@ -275,7 +303,7 @@ CEnemyManager *CGame::GetEnemyManager(void)
 }
 
 //========================================================
-//通り抜けれるブロックのポインタを返す関数
+//アイテムマネージャーのポインタを返す関数
 //========================================================
 CItemManager *CGame::GetItemManager(void)
 {
@@ -313,7 +341,7 @@ float CGame::GetInitPos(void)
 //==========================================================================
 // スコア取得
 //==========================================================================
-int CGame::GetScore(void)
+int CGame::GetGameScore(void)
 {
 	return m_nScore;
 }
