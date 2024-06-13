@@ -10,7 +10,7 @@
 #include "object2D.h"
 
 //マクロ定義
-#define SCORE_MAX									(8)		//スコアの桁数
+#define SCORE_MAX									(6)		//スコアの桁数
 
 //===================================
 //背景のクラス

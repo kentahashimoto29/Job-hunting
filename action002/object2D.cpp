@@ -127,27 +127,11 @@ void CObject2D::Draw(void)
 	//テクスチャの設定
 	pDevice->SetTexture(0, CManager::GetInstance()->GetTexture()->GetAddress(m_nTexture));
 
-	//if (GetType() == TYPE_EFFECT)
-	//{
-	//	//αブレンディングを加算合成に設定
-	//	pDevice->SetRenderState(D3DRS_BLENDOP, D3DBLENDOP_ADD);
-	//	pDevice->SetRenderState(D3DRS_SRCBLEND, D3DBLEND_SRCALPHA);
-	//	pDevice->SetRenderState(D3DRS_DESTBLEND, D3DBLEND_ONE);
-	//}
-
 	//描画
 	pDevice->DrawPrimitive(
 		D3DPT_TRIANGLESTRIP,				//プリミティブの種類
 		0,									//最初の頂点インデックス
 		2);									//プリミティブ数
-
-	//if (GetType() == TYPE_EFFECT)
-	//{
-	//	//αブレンディングを加算合成に設定
-	//	pDevice->SetRenderState(D3DRS_BLENDOP, D3DBLENDOP_ADD);
-	//	pDevice->SetRenderState(D3DRS_SRCBLEND, D3DBLEND_SRCALPHA);
-	//	pDevice->SetRenderState(D3DRS_DESTBLEND, D3DBLEND_INVSRCALPHA);
-	//}
 }
 
 //========================================================
@@ -231,7 +215,33 @@ void CObject2D::SetVtxBlock(D3DXVECTOR3 pos)
 }
 
 //========================================================
-//ブロックの頂点座標を設定
+// タイトルの頂点座標を設定
+//========================================================
+void CObject2D::SetVtxTitle()
+{
+	VERTEX_2D *pVtx;         //頂点情報へのポインタ
+
+							 //頂点バッファをロックする
+	m_aVerBuff->Lock(0, 0, (void**)&pVtx, 0);
+
+	//頂点座標の設定
+	pVtx[0].pos = D3DXVECTOR3(-40.0f + m_pos.x, -40.0f + m_pos.y, 0.0f);
+	pVtx[1].pos = D3DXVECTOR3(40.0f + m_pos.x, -40.0f + m_pos.y, 0.0f);
+	pVtx[2].pos = D3DXVECTOR3(-40.0f + m_pos.x, 40.0f + m_pos.y, 0.0f);
+	pVtx[3].pos = D3DXVECTOR3(40.0f + m_pos.x, 40.0f + m_pos.y, 0.0f);
+
+	//頂点カラーの設定
+	pVtx[0].col = D3DXCOLOR(1.0f, 1.0f, 1.0f, 1.0f);
+	pVtx[1].col = D3DXCOLOR(1.0f, 1.0f, 1.0f, 1.0f);
+	pVtx[2].col = D3DXCOLOR(1.0f, 1.0f, 1.0f, 1.0f);
+	pVtx[3].col = D3DXCOLOR(1.0f, 1.0f, 1.0f, 1.0f);
+
+	//頂点バッファをアンロックする
+	m_aVerBuff->Unlock();
+}
+
+//========================================================
+// リザルトの頂点座標を設定
 //========================================================
 void CObject2D::SetVtxResult()
 {
@@ -257,7 +267,7 @@ void CObject2D::SetVtxResult()
 }
 
 //========================================================
-//ブロックの頂点座標を設定
+// タイムの頂点座標を設定
 //========================================================
 void CObject2D::SetVtxTime(int aTexU, int nCnt)
 {
@@ -283,7 +293,7 @@ void CObject2D::SetVtxTime(int aTexU, int nCnt)
 }
 
 //========================================================
-//ランキングの頂点座標を設定
+// ランキングの頂点座標を設定
 //========================================================
 void CObject2D::SetVtxRanking(int aTexU, int nCnt, int nCnt2)
 {
@@ -375,4 +385,88 @@ void CObject2D::SetPos(D3DXVECTOR3 pos)
 void CObject2D::SetRot(D3DXVECTOR3 rot)
 {
 	m_rot = rot;
+}
+
+//========================================================
+//位置を返す
+//========================================================
+int CObject2D::SetTex(const char TexName[32])
+{
+	CTexture *pTexture = CManager::GetInstance()->GetTexture();
+
+	int nIdxTexture = 0;
+	bool bTexture = false;
+
+	for (int nCnt = 0; nCnt < TEXTURE_MAX; nCnt++)
+	{
+		if (TexName == pTexture->GetName(nCnt))
+		{
+			nIdxTexture = nCnt;
+			bTexture = true;
+			break;
+		}
+	}
+
+	if (bTexture == false)
+	{
+		nIdxTexture = pTexture->Regist(TexName);
+	}
+
+	return nIdxTexture;
+}
+
+//========================================================
+//アルファテストを有効にする
+//========================================================
+void CObject2D::AlphaTestValid()
+{
+	LPDIRECT3DDEVICE9 pDevice = CManager::GetInstance()->GetRenderer()->GetDevice();
+
+	// アルファテストを有効にする
+	pDevice->SetRenderState(D3DRS_ALPHATESTENABLE, TRUE);
+	pDevice->SetRenderState(D3DRS_ALPHAFUNC, D3DCMP_GREATER);
+	pDevice->SetRenderState(D3DRS_ALPHAREF, 0);
+
+	CManager::GetInstance()->GetRenderer()->SetDevice(pDevice);
+}
+
+//========================================================
+//アルファテストを無効にする
+//========================================================
+void CObject2D::AlphaTestInvalid()
+{
+	LPDIRECT3DDEVICE9 pDevice = CManager::GetInstance()->GetRenderer()->GetDevice();
+
+	// アルファテストを無効にする
+	pDevice->SetRenderState(D3DRS_ALPHATESTENABLE, FALSE);
+	pDevice->SetRenderState(D3DRS_ALPHAFUNC, D3DCMP_ALWAYS);
+	pDevice->SetRenderState(D3DRS_ALPHAREF, 0);
+
+	CManager::GetInstance()->GetRenderer()->SetDevice(pDevice);
+}
+
+//========================================================
+//αブレンディングを加算合成に設定
+//========================================================
+void CObject2D::AlphaBlendValid()
+{
+	LPDIRECT3DDEVICE9 pDevice = CManager::GetInstance()->GetRenderer()->GetDevice();
+
+	//αブレンディングを加算合成に設定
+	pDevice->SetRenderState(D3DRS_BLENDOP, D3DBLENDOP_ADD);
+	pDevice->SetRenderState(D3DRS_SRCBLEND, D3DBLEND_SRCALPHA);
+	pDevice->SetRenderState(D3DRS_DESTBLEND, D3DBLEND_ONE);
+}
+
+//========================================================
+//αブレンディングを減算合成に設定
+//========================================================
+void CObject2D::AlphaBlendInvalid()
+{
+	LPDIRECT3DDEVICE9 pDevice = CManager::GetInstance()->GetRenderer()->GetDevice();
+
+	//αブレンディングを減算合成に設定
+	pDevice->SetRenderState(D3DRS_BLENDOP, D3DBLENDOP_ADD);
+	pDevice->SetRenderState(D3DRS_SRCBLEND, D3DBLEND_SRCALPHA);
+	pDevice->SetRenderState(D3DRS_DESTBLEND, D3DBLEND_INVSRCALPHA);
 }

@@ -19,10 +19,10 @@ class CEnemy3D : public CObjectX
 {
 public:
 	CEnemy3D(int nPriority = 6);									//コンストラクタ
-	CEnemy3D(D3DXVECTOR3 pos, int nPriority = 6);					//オーバーライドされたコンストラクタ
+	CEnemy3D(D3DXVECTOR3 pos, D3DXVECTOR3 rot, int nPriority = 6);					//オーバーライドされたコンストラクタ
 	~CEnemy3D();								//デストラクタ
 
-	static CEnemy3D *Create(D3DXVECTOR3 pos, int nIdx);	//敵の生成
+	static CEnemy3D *Create(D3DXVECTOR3 pos, D3DXVECTOR3 rot, int nIdx);	//敵の生成
 
 	HRESULT Init(int nIdx);							//初期化処理
 	void Uninit(void);							//終了処理

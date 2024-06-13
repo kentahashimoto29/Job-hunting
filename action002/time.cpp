@@ -53,8 +53,9 @@ HRESULT CTime::Init(void)
 
 	for (int nCnt = 0; nCnt < TEXTURE_MAX; nCnt++)
 	{
-		if ("data\\TEXTURE\\number000.png" == pTexture->GetName(nCnt))
+		if ("data\\TEXTURE\\number_blackclover_07.png" == pTexture->GetName(nCnt))
 		{
+			m_nIdxTexture = nCnt;
 			bTexture = true;
 			break;
 		}
@@ -62,7 +63,7 @@ HRESULT CTime::Init(void)
 
 	if (bTexture == false)
 	{
-		m_nIdxTexture = pTexture->Regist("data\\TEXTURE\\number000.png");
+		m_nIdxTexture = pTexture->Regist("data\\TEXTURE\\number_blackclover_07.png");
 	}
 
 	for (int nCnt = 0; nCnt < TIME_MAX; nCnt++)
@@ -127,20 +128,14 @@ void CTime::Draw(void)
 {
 	LPDIRECT3DDEVICE9 pDevice = CManager::GetInstance()->GetRenderer()->GetDevice();
 
-	// アルファテストを有効にする
-	pDevice->SetRenderState(D3DRS_ALPHATESTENABLE, TRUE);
-	pDevice->SetRenderState(D3DRS_ALPHAFUNC, D3DCMP_GREATER);
-	pDevice->SetRenderState(D3DRS_ALPHAREF, 0);
-
 	for (int nCnt = 0; nCnt < TIME_MAX; nCnt++)
 	{
-		m_apObject2D[nCnt]->Draw();
-	}
+		m_apObject2D[nCnt]->AlphaTestValid();
 
-	// アルファテストを無効にする
-	pDevice->SetRenderState(D3DRS_ALPHATESTENABLE, FALSE);
-	pDevice->SetRenderState(D3DRS_ALPHAFUNC, D3DCMP_ALWAYS);
-	pDevice->SetRenderState(D3DRS_ALPHAREF, 0);
+		m_apObject2D[nCnt]->Draw();
+
+		m_apObject2D[nCnt]->AlphaTestInvalid();
+	}
 }
 
 //========================================================

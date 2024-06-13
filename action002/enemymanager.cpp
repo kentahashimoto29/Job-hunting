@@ -4,6 +4,7 @@
 //Author 橋本賢太
 //
 //========================================================
+#include <time.h>
 #include "enemymanager.h"
 #include "game.h"
 
@@ -47,8 +48,10 @@ CEnemyManager *CEnemyManager::Create()
 //========================================================
 HRESULT CEnemyManager::Init(void)
 {
-	SetEnemy(D3DXVECTOR3(-200.0f, 0.0f, 200.0f));
-	SetEnemy(D3DXVECTOR3(200.0f, 0.0f, 200.0f));
+	SetEnemy(D3DXVECTOR3(-200.0f, 0.0f, 200.0f), D3DXVECTOR3(0.0f, 0.0f, 0.0f));
+	SetEnemy(D3DXVECTOR3(200.0f, 0.0f, 200.0f), D3DXVECTOR3(0.0f, 0.0f, 0.0f));
+
+	srand((unsigned int)time(NULL));
 
 	return S_OK;
 }
@@ -81,15 +84,19 @@ void CEnemyManager::Update(void)
 
 	m_nCreCnt++;
 
-	//Wキーを押したとき
+	//Nキーを押したとき
 	if (pInputKeyboard->GetTrigger(DIK_N) == true)
 	{
-		SetEnemy(D3DXVECTOR3(0.0f, 0.0f, 200.0f));
+		SetEnemy(D3DXVECTOR3(0.0f, 0.0f, 200.0f), D3DXVECTOR3(0.0f, 0.0f, 0.0f));
 	}
 
 	if (m_nCreCnt >= 60 * 2)
 	{
-		SetEnemy(D3DXVECTOR3(0.0f, 0.0f, 0.0f));
+		float f = (float)((rand() % 628 + 0) / 100) - D3DX_PI;
+
+		SetEnemy(D3DXVECTOR3(0.0f, 0.0f, 0.0f), D3DXVECTOR3(0.0f, f, 0.0f));
+
+		//スポーンはマップを４つの区画に分けてプレイヤーのいない区画に湧くようにする
 
 		m_nCreCnt = 0;
 	}
@@ -129,7 +136,7 @@ void CEnemyManager::Kill(void)
 //==========================================================================
 // 敵配置
 //==========================================================================
-CEnemy3D **CEnemyManager::SetEnemy(D3DXVECTOR3 pos)
+CEnemy3D **CEnemyManager::SetEnemy(D3DXVECTOR3 pos, D3DXVECTOR3 rot)
 {
 	CEnemy3D *pEnemy[16];
 	memset(&pEnemy[0], NULL, sizeof(pEnemy));
@@ -144,7 +151,7 @@ CEnemy3D **CEnemyManager::SetEnemy(D3DXVECTOR3 pos)
 
 
 			// 敵の生成
-			m_pEnemy3D[nCnt] = CEnemy3D::Create(pos, nCnt);			// 種類
+			m_pEnemy3D[nCnt] = CEnemy3D::Create(pos, rot, nCnt);			// 種類
 
 			if (m_pEnemy3D[nCnt] == NULL)
 			{// 失敗していたら

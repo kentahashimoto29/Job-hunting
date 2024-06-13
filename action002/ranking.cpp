@@ -8,6 +8,10 @@
 #include "manager.h"
 #include "game.h"
 
+//========================================================
+//静的メンバ変数
+//========================================================
+int CRanking::CurScore = 0;
 int CRanking::m_nIdxTexture = 0;
 
 //========================================================
@@ -53,7 +57,7 @@ HRESULT CRanking::Init(void)
 
 	for (int nCnt = 0; nCnt < TEXTURE_MAX; nCnt++)
 	{
-		if ("data\\TEXTURE\\number000.png" == pTexture->GetName(nCnt))
+		if ("data\\TEXTURE\\number_blackclover_07.png" == pTexture->GetName(nCnt))
 		{
 			bTexture = true;
 			m_nIdxTexture = nCnt;
@@ -63,7 +67,7 @@ HRESULT CRanking::Init(void)
 
 	if (bTexture == false)
 	{
-		m_nIdxTexture = pTexture->Regist("data\\TEXTURE\\number000.png");
+		m_nIdxTexture = pTexture->Regist("data\\TEXTURE\\number_blackclover_07.png");
 	}
 
 	for (int nCnt = 0; nCnt < NUMBER_MAX; nCnt++)
@@ -90,11 +94,9 @@ HRESULT CRanking::Init(void)
 			fscanf(pFile, "%d", &m_nRankingScore[nCnt]);
 		}
 
-		int CurScore = CGame::GetTime()->GetInitTime() - CGame::GetTime()->GetTime();
-
 		for (int nCnt = 0; nCnt < RANKING_MAX; nCnt++)
 		{
-			if (CurScore < m_nRankingScore[nCnt])
+			if (CurScore > m_nRankingScore[nCnt])
 			{
 				int nData = m_nRankingScore[nCnt];
 
@@ -110,6 +112,8 @@ HRESULT CRanking::Init(void)
 		}
 	}
 
+	fclose(pFile);
+
 	//ファイルを開く
 	pFile = fopen("data\\ranking.txt", "w");			//(ファイル名を指定,　モードの指定”w”で書き込み)
 
@@ -121,6 +125,8 @@ HRESULT CRanking::Init(void)
 			fprintf(pFile, "%d\n", m_nRankingScore[nCnt]);
 		}
 	}
+
+	fclose(pFile);
 
 	return S_OK;
 }
@@ -134,6 +140,8 @@ void CRanking::Uninit(void)
 	{
 		m_apObject2D[nCnt]->Uninit();
 	}
+
+	Release();
 }
 
 //========================================================
@@ -149,7 +157,7 @@ void CRanking::Update(void)
 //========================================================
 void CRanking::Draw(void)
 {
-	for (int nCnt = 0; nCnt < SCORE_NUM; nCnt++)
+	for (int nCnt = 0; nCnt < NUMBER_MAX; nCnt++)
 	{
 		m_apObject2D[nCnt]->Draw();
 	}
@@ -169,6 +177,14 @@ void CRanking::SetScore(int nScore, int nCntR)
 	{
 		m_apObject2D[nCnt + 3 * nCntR]->SetVtxRanking(m_aTexU[nCnt], nCnt, nCntR);
 	}
+}
+
+//========================================================
+//今回のスコア設定処理
+//========================================================
+void CRanking::SetCurScore(int nScore)
+{
+	CurScore = nScore;
 }
 
 //========================================================

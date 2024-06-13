@@ -132,6 +132,8 @@ HRESULT CPlayer3D::Init(void)
 
 	m_nType = MOTION_NEUTRAL;
 
+	m_nOldType = m_nType;
+
 	CObject::SetType(TYPE_PLAYER_3D);
 
 	return S_OK;
@@ -198,11 +200,6 @@ void CPlayer3D::Update(void)
 			m_move.x = sinf(D3DX_PI * 0.0f + pCamera->GetRot().y) * WALK_DATA;
 
 			m_Destrot.y = D3DX_PI * 1.0f + pCamera->GetRot().y;
-
-			if (m_move.x != 0)
-			{
-				m_move.x -= m_move.x * 0.2f;
-			}
 		}
 
 
@@ -255,11 +252,6 @@ void CPlayer3D::Update(void)
 			m_move.x = sinf(D3DX_PI * 1.0f + pCamera->GetRot().y) * WALK_DATA;
 
 			m_Destrot.y = D3DX_PI * 0.0f + pCamera->GetRot().y;
-
-			if (m_move.x != 0)
-			{
-				m_move.x -= m_move.x * 0.2f;
-			}
 		}
 
 
@@ -297,11 +289,6 @@ void CPlayer3D::Update(void)
 		{
 			m_move.z = cosf(D3DX_PI * -0.5f + pCamera->GetRot().y) * WALK_DATA;
 			m_move.x = sinf(D3DX_PI * -0.5f + pCamera->GetRot().y) * WALK_DATA;
-
-			if (m_move.z != 0)
-			{
-				m_move.z -= m_move.z * 0.2f;
-			}
 		}
 
 		else
@@ -333,10 +320,10 @@ void CPlayer3D::Update(void)
 			m_move.z = cosf(D3DX_PI * 0.5f + pCamera->GetRot().y) * WALK_DATA;
 			m_move.x = sinf(D3DX_PI * 0.5f + pCamera->GetRot().y) * WALK_DATA;
 
-			if (m_move.z != 0)
-			{
-				m_move.z -= m_move.z * 0.2f;
-			}
+			//if (m_move.z != 0)
+			//{
+			//	m_move.z -= m_move.z * 0.2f;
+			//}
 		}
 
 		else
@@ -388,7 +375,7 @@ void CPlayer3D::Update(void)
 	if (pInputKeyboard->GetPress(DIK_E) == true)
 	{
 		m_nSkill = TYPE_ACCEL;
-		m_nSkillTime = 10;
+		m_nSkillTime = 3;
 	}
 
 
@@ -414,7 +401,7 @@ void CPlayer3D::Update(void)
 
 
 	//èdóÕÇÃç≈ëÂílêßå‰
-	if (m_move.y <= -GRAVITY_MAX)
+ 	if (m_move.y <= -GRAVITY_MAX)
 	{
 		m_move.y = -GRAVITY_MAX;
 	}
@@ -526,7 +513,7 @@ void CPlayer3D::Update(void)
 	{
 		if (m_bJump == false)
 		{
-			m_pMotion->Set(m_pMotion->TYPE_MOVE);
+			//m_pMotion->Set(m_pMotion->TYPE_MOVE);
 		}
 	}
 
@@ -570,22 +557,36 @@ void CPlayer3D::Update(void)
 
 	if (m_nType == MOTION_MOVE)
 	{
-		m_pMotion->SetType(m_pMotion->TYPE_MOVE);
+		if (m_nOldType != MOTION_MOVE)
+		{
+			m_pMotion->Set(m_pMotion->TYPE_MOVE);
+
+			m_pMotion->SetType(m_pMotion->TYPE_MOVE);
+		}
 	}
 
 	if (m_nType == MOTION_NEUTRAL)
 	{
-		m_pMotion->SetType(m_pMotion->TYPE_STAND);
+		if (m_nOldType != MOTION_NEUTRAL)
+		{
+			m_pMotion->SetType(m_pMotion->TYPE_STAND);
+		}
 	}
 
 	else if (m_nType == MOTION_JUMP)
 	{
-		m_pMotion->SetType(m_pMotion->TYPE_JUMP);
+		if (m_nOldType != MOTION_JUMP)
+		{
+			m_pMotion->SetType(m_pMotion->TYPE_JUMP);
+		}
 	}
 
 	else if (m_nType == MOTION_LANDING)
 	{
-		m_pMotion->SetType(m_pMotion->TYPE_LAND);
+		if (m_nOldType != MOTION_LANDING)
+		{
+			m_pMotion->SetType(m_pMotion->TYPE_LAND);
+		}
 	}
 
 	m_pMotion->Updata();
@@ -594,6 +595,8 @@ void CPlayer3D::Update(void)
 	{
 		Respawn();
 	}
+
+	m_nOldType = m_nType;
 }
 
 //========================================================

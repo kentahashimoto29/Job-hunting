@@ -26,7 +26,7 @@ public:
 
 	void Release(int nIdx);
 	void Kill(void);
-	CEnemy3D **CEnemyManager::SetEnemy(D3DXVECTOR3 pos);
+	CEnemy3D **SetEnemy(D3DXVECTOR3 pos, D3DXVECTOR3 rot);
 
 	static int GetNum(void);					//‘”‚ğ•Ô‚·
 	CEnemy3D **GetEnemy(void);	// “Gæ“¾

@@ -4,11 +4,12 @@
 //Author 橋本賢太
 //
 //========================================================
-#ifndef _GOAL_H_
-#define _GOAL_H_
+#ifndef _TITLE_H_
+#define _TITLE_H_
 #include "main.h"
 #include "manager.h"
 class CObject2D;
+class CTitle_Obj2D;
 
 //===================================
 //タイトルのクラス
@@ -31,7 +32,9 @@ public:
 	D3DXVECTOR3 m_pos;						//オブジェクトの位置
 
 private:
-	CObject2D *m_apObject2D[1];				//タイトルのオブジェクト
+	CObject2D *m_apObject2D[2];				//タイトルのオブジェクト
+	static CTitle_Obj2D *m_apTitleObj;
+
 	static int m_nIdxTexture;				//テクスチャの番号
 
 	bool b;

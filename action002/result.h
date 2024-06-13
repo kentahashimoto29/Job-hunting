@@ -9,6 +9,8 @@
 #include "main.h"
 #include "manager.h"
 #include "object2D.h"
+#include "ranking.h"
+
 
 //===================================
 //リザルトのクラス
@@ -24,15 +26,17 @@ public:
 	void Update(void);						//更新処理
 	void Draw(void);						//描画処理
 
-	D3DXVECTOR3 GetPos(void);				//位置を返す
+	static CRanking *GetRanking();		//アイテムマネージャーのポインタを返す関数
 
+	D3DXVECTOR3 GetPos(void);				//位置を返す
 	D3DXVECTOR3 m_pos;						//オブジェクトの位置
 
 private:
 	CObject2D *m_apObject2D[1];				//タイトルのオブジェクト
 
-	static int m_nIdxTexture;				//テクスチャの番号
+	static CRanking *m_pRanking;		//アイテムマネージャーのポインタを返す関数
 
+	static int m_nIdxTexture;				//テクスチャの番号
 	bool b;
 };
 

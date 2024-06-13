@@ -12,7 +12,7 @@
 //マクロ定義
 #define SCORE_NUM									(3)		//スコアの桁数
 #define RANKING_MAX									(5)		//スコアの桁数
-#define NUMBER_MAX									(15)		//スコアの桁数
+#define NUMBER_MAX									(15)	//スコアの桁数
 
 
 //===================================
@@ -32,6 +32,7 @@ public:
 	void Draw(void);						//描画処理
 
 	void SetScore(int nScore, int nCntR);	//設定処理
+	static void SetCurScore(int nScore);	//今回のスコア設定処理
 	D3DXVECTOR3 GetPos(void);				//位置を返す
 	void SetPos(D3DXVECTOR3 pos);
 	void SetRot(D3DXVECTOR3 rot);
@@ -40,9 +41,10 @@ public:
 
 private:
 	static int m_nIdxTexture;				//テクスチャの番号
-	CObject2D *m_apObject2D[NUMBER_MAX];		//スコアのオブジェクト
+	CObject2D *m_apObject2D[NUMBER_MAX];	//スコアのオブジェクト
 	int m_aTexU[SCORE_NUM];					//テクスチャのスコア更新用変数
 	int m_nRankingScore[RANKING_MAX];		//スコア
+	static int CurScore;
 
 	bool b;
 };

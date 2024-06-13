@@ -21,9 +21,10 @@ CEnemy3D::CEnemy3D(int nPriority) : CObjectX(nPriority)
 //========================================================
 //オーバーライドされたコンストラクタ
 //========================================================
-CEnemy3D::CEnemy3D(D3DXVECTOR3 pos, int nPriority) : CObjectX(nPriority)
+CEnemy3D::CEnemy3D(D3DXVECTOR3 pos, D3DXVECTOR3 rot, int nPriority) : CObjectX(nPriority)
 {
 	m_pos = pos;
+	m_rot = rot;
 	m_nLife = 3;
 	bCollision = false;
 }
@@ -39,12 +40,12 @@ CEnemy3D::~CEnemy3D()
 //========================================================
 //生成処理
 //========================================================
-CEnemy3D *CEnemy3D::Create(D3DXVECTOR3 pos, int nIdx)
+CEnemy3D *CEnemy3D::Create(D3DXVECTOR3 pos, D3DXVECTOR3 rot, int nIdx)
 {
 	CEnemy3D *pEnemy3D;
 
 	//2Dオブジェクトの生成
-	pEnemy3D = new CEnemy3D(pos);
+	pEnemy3D = new CEnemy3D(pos, rot);
 
 	//初期化処理
 	pEnemy3D->Init(nIdx);
@@ -266,10 +267,11 @@ bool CEnemy3D::Collision(CPlayer3D *pPlayer, CItemThrow *pItemThrow)
 	{
 		if (pPlayer->CollisionEnemy(m_pos, m_VtxMax, m_VtxMin) == true)
 		{
+			CGame::GetScore()->AddScore(1);
+
 			Release();
 
 			CEnemyManager *p = CGame::GetEnemyManager();
-
 			p->Release(m_nIdx);
 
 			b = true;
