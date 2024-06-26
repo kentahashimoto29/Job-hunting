@@ -17,6 +17,9 @@ public:
 	typedef enum
 	{
 		TYPE_NONE = 0,
+		TYPE_OBJECT_2D,
+		TYPE_OBJECT_3D,
+		TYPE_OBJECT_X,
 		TYPE_PLATER,
 		TYPE_PLAYER_3D,
 		TYPE_FACE_X,

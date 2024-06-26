@@ -29,9 +29,10 @@ public:
 	void SetVtxScore(int aTexU, int nCnt);					//スコアの頂点座標を設定
 	void SetVtxBlock(D3DXVECTOR3 pos);						//ブロックの頂点座標を設定
 	void SetVtxResult(void);								//リザルトの頂点座標を設定
-	void SetVtxTitle(void);								//タイトルの頂点座標を設定
+	void SetVtxTitle(void);									//タイトルの頂点座標を設定
 	void SetVtxTime(int aTexU, int nCnt);					//タイムの頂点座標を設定
 	void SetVtxRanking(int aTexU, int nCnt, int nCnt2);		//ランキングの頂点座標を設定
+	void SetVtxSkillUI(void);								//ランキングの頂点座標を設定
 	void SetVtxFade(void);									//リザルトの頂点座標を設定
 
 	D3DXVECTOR3 GetPos(void);								//位置を返す

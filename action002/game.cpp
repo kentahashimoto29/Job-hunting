@@ -7,6 +7,8 @@
 #include "game.h"
 #include "manager.h"
 #include "fade.h"
+#include "Skill_UI.h"
+#include "wall_obj_manager.h"
 
 #define PLAYER_SPAWN_X							(1400.0f)
 #define FEILD_WIDTH								(16)
@@ -20,12 +22,14 @@
 //========================================================
 CPlayer3D *CGame::m_pPlayer3D = NULL;
 CEnemyManager *CGame::m_pEnemyManager = NULL;
+CWallObjManager *CGame::m_pWallManager = NULL;
 CBlock3D *CGame::m_pBlock3D = NULL;
 CDeathBlock *CGame::m_pDeathBlock = NULL;
 CThroughBlock *CGame::m_pThroughBlock = NULL;
 CItemManager *CGame::m_pItemManager = NULL;
 CTime *CGame::m_pTime = NULL;
 CScore *CGame::m_pScore = NULL;
+CSkill_UI *CGame::m_pSkillUI = NULL;
 float CGame::m_nInitPos = 0.0f;
 int CGame::m_nScore = 0;
 
@@ -60,9 +64,13 @@ HRESULT CGame::Init(void)
 
 	m_pEnemyManager = CEnemyManager::Create();
 
+	m_pWallManager = CWallObjManager::Create();
+
 	m_pItemManager = CItemManager::Create();
 
 	m_pScore = CScore::Create();
+
+	m_pSkillUI = CSkill_UI::Create();
 
 	for (int nCntHeight = 0; nCntHeight < FEILD_HEIGHT; nCntHeight++)
 	{
@@ -143,6 +151,14 @@ void CGame::Uninit(void)
 	}
 
 	//NULLチェック
+	if (m_pSkillUI != NULL)
+	{
+		//終了処理
+		m_pScore->Uninit();
+		m_pScore = NULL;
+	}
+
+	//NULLチェック
 	if (m_pPlayer3D != NULL)
 	{
 		//終了処理
@@ -156,6 +172,14 @@ void CGame::Uninit(void)
 		//終了処理
 		m_pEnemyManager->Uninit();
 		m_pEnemyManager = NULL;
+	}
+
+	//NULLチェック
+	if (m_pWallManager != NULL)
+	{
+		//終了処理
+		m_pWallManager->Uninit();
+		m_pWallManager = NULL;
 	}
 
 	//NULLチェック
@@ -226,6 +250,7 @@ void CGame::Update(void)
 
 	m_pEnemyManager->Update();
 	m_pItemManager->Update();
+	m_pWallManager->Update();
 }
 
 //========================================================
@@ -293,6 +318,14 @@ CScore *CGame::GetScore(void)
 	return m_pScore;
 }
 
+//========================================================
+//スコアのポインタを返す関数
+//========================================================
+CSkill_UI *CGame::GetSkillUI(void)
+{
+	return m_pSkillUI;
+}
+
 
 //========================================================
 //敵マネージャーのポインタを返す関数
@@ -300,6 +333,14 @@ CScore *CGame::GetScore(void)
 CEnemyManager *CGame::GetEnemyManager(void)
 {
 	return m_pEnemyManager;
+}
+
+//========================================================
+//敵マネージャーのポインタを返す関数
+//========================================================
+CWallObjManager *CGame::GetWallManager(void)
+{
+	return m_pWallManager;
 }
 
 //========================================================

@@ -497,13 +497,6 @@ void CPlayer3D::Update(void)
 	}
 
 
-	//’e‚Ì”­ŽË
-	/*if (pInputMouse->OnMouseDown(pInputMouse->TYPE_LEFT) == true)
-	{
-	CBullet3D::Create(m_pos, m_rot, 1.0f);
-	CManager::GetSound()->PlaySound(CSound::SOUND_LABEL_SE_SHOT);
-	}*/
-
 
 	//‘–‚é‚Æ‚«‚Ìƒ‚[ƒVƒ‡ƒ“
 	if (pInputKeyboard->GetTrigger(DIK_A) == true ||
@@ -978,6 +971,7 @@ bool CPlayer3D::Collisionbool(D3DXVECTOR3 *pPos, D3DXVECTOR3 vtxMax, D3DXVECTOR3
 			else
 			{
 				m_move.y = 0.0f;
+				m_pos.y = pPos->y + vtxMin.y - m_VtxMax.y;
 
 				if (type == TYPE_BLOCK_DEATH)
 				{
@@ -1021,6 +1015,8 @@ bool CPlayer3D::Collisionbool(D3DXVECTOR3 *pPos, D3DXVECTOR3 vtxMax, D3DXVECTOR3
 				m_bJump = false;
 				m_move.y = 0.0f;
 
+				m_pos.y = pPos->y + vtxMax.y;
+
 				if (type == TYPE_BLOCK_DEATH)
 				{
 					b = true;
@@ -1060,7 +1056,8 @@ bool CPlayer3D::Collisionbool(D3DXVECTOR3 *pPos, D3DXVECTOR3 vtxMax, D3DXVECTOR3
 
 			else
 			{
-				m_move.x = 0.0f;
+w				m_move.x = 0.0f;
+				m_pos.x = pPos->x + vtxMax.x + m_VtxMax.x;
 
 				if (type == TYPE_BLOCK_DEATH)
 				{
@@ -1102,6 +1099,7 @@ bool CPlayer3D::Collisionbool(D3DXVECTOR3 *pPos, D3DXVECTOR3 vtxMax, D3DXVECTOR3
 			else
 			{
 				m_move.x = 0.0f;
+				m_pos.x = pPos->x + vtxMin.x + m_VtxMin.x;
 
 				if (type == TYPE_BLOCK_DEATH)
 				{
@@ -1143,6 +1141,7 @@ bool CPlayer3D::Collisionbool(D3DXVECTOR3 *pPos, D3DXVECTOR3 vtxMax, D3DXVECTOR3
 			else
 			{
 				m_move.z = 0.0f;
+				m_pos.z = pPos->z + vtxMin.z + m_VtxMin.z;
 			}
 		}
 
@@ -1179,6 +1178,7 @@ bool CPlayer3D::Collisionbool(D3DXVECTOR3 *pPos, D3DXVECTOR3 vtxMax, D3DXVECTOR3
 			else
 			{
 				m_move.z = 0.0f;
+				m_pos.z = pPos->z + vtxMax.z + m_VtxMax.z;
 			}
 		}
 	}

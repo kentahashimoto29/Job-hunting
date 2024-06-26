@@ -48,20 +48,19 @@ CSkill_UI *CSkill_UI::Create()
 //========================================================
 HRESULT CSkill_UI::Init(void)
 {
-			m_apObject2D = new CObject2D;
+	m_apObject2D = new CObject2D;
 
-			m_nIdxTexture = m_apObject2D->SetTex("data\\TEXTURE\\イヴェルカーナ.png");
+	m_nIdxTexture = m_apObject2D->SetTex("data\\TEXTURE\\イヴェルカーナ.png");
 
-			m_apObject2D->BindTexture(m_nIdxTexture);
+	m_apObject2D->BindTexture(m_nIdxTexture);
 
-			m_apObject2D->Init();
+	m_apObject2D->Init();
 
-			//m_apObject2D->SetPos(D3DXVECTOR3(640.0f, 360.0f, 0.0f));
+	m_apObject2D->SetPos(D3DXVECTOR3(1000.0f, 200.0f, 0.0f));
 
-			m_apObject2D->SetVtxResult();
+	m_apObject2D->SetVtxSkillUI();
 
-			m_apObject2D->SetType(CObject::TYPE_TITLE);
-
+	m_apObject2D->SetType(CObject::TYPE_OBJECT_2D);
 
 	return S_OK;
 }
@@ -71,7 +70,7 @@ HRESULT CSkill_UI::Init(void)
 //========================================================
 void CSkill_UI::Uninit(void)
 {
-		m_apObject2D->Uninit();
+	m_apObject2D->Uninit();
 	Release();
 }
 
@@ -80,7 +79,6 @@ void CSkill_UI::Uninit(void)
 //========================================================
 void CSkill_UI::Update(void)
 {
-			m_apObject2D->SetColor(m_col);
 
 }
 
@@ -89,7 +87,7 @@ void CSkill_UI::Update(void)
 //========================================================
 void CSkill_UI::Draw(void)
 {
-		m_apObject2D->Draw();
+	m_apObject2D->Draw();
 }
 
 //========================================================

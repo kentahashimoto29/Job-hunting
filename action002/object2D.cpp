@@ -319,6 +319,26 @@ void CObject2D::SetVtxRanking(int aTexU, int nCnt, int nCnt2)
 }
 
 //========================================================
+// ランキングの頂点座標を設定
+//========================================================
+void CObject2D::SetVtxSkillUI(void)
+{
+	VERTEX_2D *pVtx;         //頂点情報へのポインタ
+
+							 //頂点バッファをロックする
+	m_aVerBuff->Lock(0, 0, (void**)&pVtx, 0);
+
+	//頂点座標の設定
+	pVtx[0].pos = D3DXVECTOR3(-40.0f + m_pos.x, -40.0f + m_pos.y, 0.0f);
+	pVtx[1].pos = D3DXVECTOR3(40.0f + m_pos.x, -40.0f + m_pos.y, 0.0f);
+	pVtx[2].pos = D3DXVECTOR3(-40.0f + m_pos.x, 40.0f + m_pos.y, 0.0f);
+	pVtx[3].pos = D3DXVECTOR3(40.0f + m_pos.x, 40.0f + m_pos.y, 0.0f);
+
+	//頂点バッファをアンロックする
+	m_aVerBuff->Unlock();
+}
+
+//========================================================
 //ブロックの頂点座標を設定
 //========================================================
 void CObject2D::SetVtxFade()

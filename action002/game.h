@@ -18,6 +18,8 @@
 #include "field.h"
 #include "wall.h"
 #include "item_manager.h"
+class CSkill_UI;
+class CWallObjManager;
 
 //===================================
 //ゲームのクラス
@@ -42,7 +44,9 @@ public:
 	static CTime *GetTime();					//タイムのポインタを返す関数
 	static CScore *GetScore();					//スコアのポインタを返す関数
 	static CEnemyManager *GetEnemyManager();	//敵マネージャーのポインタを返す関数
+	static CWallObjManager *GetWallManager();	//敵マネージャーのポインタを返す関数
 	static CItemManager *GetItemManager();		//アイテムマネージャーのポインタを返す関数
+	static CSkill_UI *GetSkillUI();				//アイテムマネージャーのポインタを返す関数
 	CField *GetField();							//フィールドのポインタを返す関数
 	CWall *GetWall();							//壁のポインタを返す関数
 
@@ -60,7 +64,9 @@ private:
 	static CTime *m_pTime;						//タイムのポインタ
 	static CScore *m_pScore;					//スコアのポインタ
 	static CEnemyManager *m_pEnemyManager;		//エネミー3Dのポインタ
+	static CWallObjManager *m_pWallManager;		//エネミー3Dのポインタ
 	static CItemManager *m_pItemManager;		//アイテムマネージャーのポインタ
+	static CSkill_UI *m_pSkillUI;				//アイテムマネージャーのポインタ
 	CField *m_pField[256];						//フィールドのポインタ
 	CWall *m_pWall[256];						//壁のポインタ
 
