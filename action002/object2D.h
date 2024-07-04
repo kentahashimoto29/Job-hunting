@@ -29,10 +29,12 @@ public:
 	void SetVtxScore(int aTexU, int nCnt);					//スコアの頂点座標を設定
 	void SetVtxBlock(D3DXVECTOR3 pos);						//ブロックの頂点座標を設定
 	void SetVtxResult(void);								//リザルトの頂点座標を設定
+	void SetVtxTitleEnter(void);							//タイトルENTERの頂点座標を設定
 	void SetVtxTitle(void);									//タイトルの頂点座標を設定
 	void SetVtxTime(int aTexU, int nCnt);					//タイムの頂点座標を設定
 	void SetVtxRanking(int aTexU, int nCnt, int nCnt2);		//ランキングの頂点座標を設定
-	void SetVtxSkillUI(void);								//ランキングの頂点座標を設定
+	void SetVtxSkillUI(void);								//スキルUIの頂点座標を設定
+	void SetVtxGaugeUI(void);								//ゲージUIの頂点座標を設定
 	void SetVtxFade(void);									//リザルトの頂点座標を設定
 
 	D3DXVECTOR3 GetPos(void);								//位置を返す
@@ -47,12 +49,19 @@ public:
 	void AlphaBlendValid();
 	void AlphaBlendInvalid();
 
+	void SetGauge(float nGauge) { m_nGauge = nGauge; }
+	void SetGaugeMax(float nGaugeMax) { m_nGaugeMax = nGaugeMax;}
+	float GetGauge() { return m_nGauge; }
+	float GetGaugeMax() { return m_nGaugeMax; }
 
 	LPDIRECT3DVERTEXBUFFER9 m_aVerBuff;			//頂点情報へのポインタ
 	D3DXVECTOR3 m_pos;							//オブジェクトの位置
 
 private:
 	int m_nTexture;								//テクスチャの番号
+
+	float m_nGauge;
+	float m_nGaugeMax;
 };
 
 #endif

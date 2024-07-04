@@ -31,13 +31,17 @@ public:
 	void SetRot(D3DXVECTOR3 rot);
 
 	void BlinkingCol();
+	void EnterBlinkingCol();
+	static int GetBlinkingCnt() { return BlinkingCnt; }
 
 	D3DXVECTOR3 m_pos;						//オブジェクトの位置
 
 private:
 	float m_Alpha;
+	static int BlinkingCnt;
+
 	D3DXCOLOR m_col;
-	CObject2D *m_apObject2D[2];				//タイトルのオブジェクト
+	CObject2D *m_apObject2D[3];				//タイトルのオブジェクト
 	static int m_nIdxTexture;				//テクスチャの番号
 
 	bool b;

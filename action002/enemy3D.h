@@ -32,7 +32,7 @@ public:
 	D3DXVECTOR3 GetPos(void);					//位置を返す
 
 	void HitEnemy(void);						//敵のダメージ処理
-	bool Collision(CPlayer3D *pPlayer, CItemThrow *pItemThrow);
+	bool Collision();
 
 private:
 

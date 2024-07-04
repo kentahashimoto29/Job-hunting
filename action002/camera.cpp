@@ -201,7 +201,7 @@ void CCamera::SetPos(D3DXVECTOR3 posV, D3DXVECTOR3 posR)
 //========================================================
 void CCamera::SetPosGame(D3DXVECTOR3 posV, D3DXVECTOR3 posR)
 {
-	m_posV = D3DXVECTOR3(posV.x, posV.y + 150.0f, posV.z - 300.0f);
+	m_posV = D3DXVECTOR3(posV.x, posV.y + 90.0f, posV.z - 200.0f);
 	m_posR = D3DXVECTOR3(posR.x, posR.y + 40.0f, posR.z);
 	m_rot = D3DXVECTOR3(0.0f, 0.0f, 0.0f);
 	m_vecU = D3DXVECTOR3(0.0f, 1.0f, 0.0f);

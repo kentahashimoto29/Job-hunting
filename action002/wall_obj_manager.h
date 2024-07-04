@@ -29,14 +29,18 @@ public:
 	CWallObj **SetWall(D3DXVECTOR3 pos, D3DXVECTOR3 rot);
 
 	static int GetNum(void);					//総数を返す
-	CWallObj **GetWall(void);	// 敵取得
+	CWallObj **GetWall(void);					// 敵取得
+
+	void ReadWall();
 
 private:
 
-	CWallObj *m_pWall[16];					//エネミー3Dのポインタ
-	static int m_nNum;							//総数
+	CWallObj *m_pWall[32];					//壁のポインタ
+	static int m_nNum;						//総数
 
-	int m_nCreCnt;
+	int m_nCreateNum;						//総数
+	D3DXVECTOR3 m_nReadPos[256];
+	D3DXVECTOR3 m_nReadRot[256];
 };
 
 #endif

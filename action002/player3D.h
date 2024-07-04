@@ -93,6 +93,8 @@ private:
 	int m_nSkillTime;
 	int m_nCnt;
 
+	int m_nSkillCoolTime;
+
 	bool m_bJump;
 	bool m_bGoal;
 	bool m_bWalk;

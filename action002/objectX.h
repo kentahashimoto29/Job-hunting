@@ -36,5 +36,7 @@ public:
 	D3DXVECTOR3 m_rot;				//向き
 
 private:
+	int m_IdxTexture[64];				//テクスチャの番号
+
 };
 #endif

@@ -17,7 +17,6 @@ int CWallObjManager::m_nNum = 0;
 CWallObjManager::CWallObjManager()
 {
 	memset(&m_pWall[0], NULL, sizeof(m_pWall));		// 
-	m_nCreCnt = 0;
 }
 
 //========================================================
@@ -47,9 +46,14 @@ CWallObjManager *CWallObjManager::Create()
 //========================================================
 //初期化処理
 //========================================================
-HRESULT CWallObjManager::Init(void)
+HRESULT CWallObjManager::Init()
 {
-	SetWall(D3DXVECTOR3(1000.0f, 0.0f, 1000.0f), D3DXVECTOR3(0.0f, 0.0f, 0.0f));
+	ReadWall();
+
+	for (int nCntWall = 0; nCntWall < m_nCreateNum; nCntWall++)
+	{
+		SetWall(m_nReadPos[nCntWall], m_nReadRot[nCntWall]);
+	}
 
 	return S_OK;
 }
@@ -57,7 +61,7 @@ HRESULT CWallObjManager::Init(void)
 //========================================================
 //終了処理
 //========================================================
-void CWallObjManager::Uninit(void)
+void CWallObjManager::Uninit()
 {
 	for (int nCntWall = 0; nCntWall < 16; nCntWall++)
 	{
@@ -75,7 +79,7 @@ void CWallObjManager::Uninit(void)
 //========================================================
 //更新処理
 //========================================================
-void CWallObjManager::Update(void)
+void CWallObjManager::Update()
 {
 	
 }
@@ -99,7 +103,7 @@ void CWallObjManager::Release(int nIdx)
 //==========================================================================
 // 破棄
 //==========================================================================
-void CWallObjManager::Kill(void)
+void CWallObjManager::Kill()
 {
 	for (int nCntEnemy = 0; nCntEnemy < 16; nCntEnemy++)
 	{
@@ -153,7 +157,7 @@ CWallObj **CWallObjManager::SetWall(D3DXVECTOR3 pos, D3DXVECTOR3 rot)
 //========================================================
 //位置を返す
 //========================================================
-int CWallObjManager::GetNum(void)
+int CWallObjManager::GetNum()
 {
 	return m_nNum;
 }
@@ -161,7 +165,62 @@ int CWallObjManager::GetNum(void)
 //==========================================================================
 // 敵取得
 //==========================================================================
-CWallObj **CWallObjManager::GetWall(void)
+CWallObj **CWallObjManager::GetWall()
 {
 	return &m_pWall[0];
+}
+
+//==========================================================================
+// 敵取得
+//==========================================================================
+void CWallObjManager::ReadWall()
+{
+	int nCnt = 0;
+	char aString[1024];
+	FILE *pFile;	//ファイルポインタを宣言
+
+					//ファイルを開く
+	pFile = fopen("data\\TEXT\\wall.txt", "r");			//(ファイル名を指定,　モードの指定”r”で読み込み)
+
+	//NULLチェック
+	if (pFile == NULL)
+	{
+		fclose(pFile);
+		return;
+	}
+
+	while (1)
+	{
+		fscanf(pFile, "%s", &aString[0]);
+
+		//文字列比較
+		if (strcmp(aString, "POS") == 0)
+		{
+			fscanf(pFile, "%s", &aString[0]);
+
+			fscanf(pFile, "%f", &m_nReadPos[nCnt].x);
+			fscanf(pFile, "%f", &m_nReadPos[nCnt].y);
+			fscanf(pFile, "%f", &m_nReadPos[nCnt].z);
+		}
+
+		//文字列比較
+		if (strcmp(aString, "ROT") == 0)
+		{
+			fscanf(pFile, "%s", &aString[0]);
+
+			fscanf(pFile, "%f", &m_nReadRot[nCnt].x);
+			fscanf(pFile, "%f", &m_nReadRot[nCnt].y);
+			fscanf(pFile, "%f", &m_nReadRot[nCnt].z);
+
+			nCnt++;
+		}
+
+		if (strcmp(aString, "END") == 0)
+		{
+			m_nCreateNum = nCnt;
+			break;
+		}
+	}
+
+	fclose(pFile);
 }

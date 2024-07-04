@@ -14,7 +14,7 @@ int CTime::m_nIdxTexture = 0;
 //========================================================
 CTime::CTime(int nPriority) : CObject(nPriority)
 {
-	m_nTime = 100;
+	m_nTime = 30;
 	m_nInitTime = m_nTime;
 }
 

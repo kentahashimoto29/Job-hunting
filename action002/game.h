@@ -18,8 +18,8 @@
 #include "field.h"
 #include "wall.h"
 #include "item_manager.h"
+#include "wall_obj_manager.h"
 class CSkill_UI;
-class CWallObjManager;
 
 //===================================
 //ƒQ[ƒ€‚ÌƒNƒ‰ƒX

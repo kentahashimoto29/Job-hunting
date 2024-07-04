@@ -89,7 +89,7 @@ void CMotion::Load(void)
 	FILE *pFile;	//ファイルポインタを宣言
 
 	//ファイルを開く
-	pFile = fopen("data\\motion.txt", "r");			//(ファイル名を指定,　モードの指定”r”で読み込み)
+	pFile = fopen("data\\TEXT\\motion.txt", "r");			//(ファイル名を指定,　モードの指定”r”で読み込み)
 
 	//NULLチェック
 	if (pFile != NULL)

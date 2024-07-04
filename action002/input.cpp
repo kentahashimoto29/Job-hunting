@@ -134,6 +134,9 @@ void CInputKeyboard::Update(void)
 	{
 		for (nCntKey = 0; nCntKey < NUM_KEY_MAX; nCntKey++)
 		{
+			m_aKeyOldState[nCntKey] = m_aKeyState[nCntKey];
+			m_aKeyOldStateTrigger[nCntKey] = m_aKeyStateTrigger[nCntKey];
+
 			m_aKeyStateTrigger[nCntKey] = (m_aKeyState[nCntKey] ^ aKeyState[nCntKey]) & aKeyState[nCntKey];			//キーボードのトリガー情報を保存
 			m_aKeyState[nCntKey] = aKeyState[nCntKey];																//キーボードのプレス情報を保存
 		}
@@ -146,7 +149,7 @@ void CInputKeyboard::Update(void)
 }
 
 //========================================================
-//キーボードのプレス情報を取得
+// キーボードのプレス情報を取得
 //========================================================
 bool CInputKeyboard::GetPress(int nKey)
 {
@@ -154,11 +157,27 @@ bool CInputKeyboard::GetPress(int nKey)
 }
 
 //========================================================
-//キーボードのトリガー情報を取得
+// キーボードのトリガー情報を取得
 //========================================================
 bool CInputKeyboard::GetTrigger(int nKey)
 {
 	return (m_aKeyStateTrigger[nKey] & 0x80) ? true : false;
+}
+
+//========================================================
+// ひとつ前のキーボードのプレス情報を取得
+//========================================================
+bool CInputKeyboard::GetOldSPress(int nKey)
+{
+	return (m_aKeyOldState[nKey] & 0x80) ? true : false;
+}
+
+//========================================================
+// ひとつ前のキーボードのトリガー情報を取得
+//========================================================
+bool CInputKeyboard::GetOldSTrigger(int nKey)
+{
+	return (m_aKeyOldStateTrigger[nKey] & 0x80) ? true : false;
 }
 
 //========================================================

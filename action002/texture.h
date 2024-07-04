@@ -8,7 +8,7 @@
 #define _TEXTURE_H_
 #include "main.h"
 
-#define TEXTURE_MAX									(1024)	//テクスチャの最大数
+#define TEXTURE_MAX									(64)	//テクスチャの最大数
 
 //===================================
 //テクスチャのクラス

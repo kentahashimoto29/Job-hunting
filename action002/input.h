@@ -40,10 +40,14 @@ public:
 	void Update(void);									//更新処理
 	bool GetPress(int nKey);							//キーボードのプレス情報を取得
 	bool GetTrigger(int nKey);							//キーボードのトリガー情報を取得
+	bool GetOldSPress(int nKey);						//ひとつ前のキーボードのプレス情報を取得
+	bool GetOldSTrigger(int nKey);						//ひとつ前のキーボードのトリガー情報を取得
 
 private:
 	BYTE m_aKeyState[256];								//キーボードの情報
 	BYTE m_aKeyStateTrigger[256];						//キーボードのトリガー情報
+	BYTE m_aKeyOldState[256];							//ひとつ前のキーボードの情報
+	BYTE m_aKeyOldStateTrigger[256];					//ひとつ前のキーボードのトリガー情報
 };
 
 //===================================

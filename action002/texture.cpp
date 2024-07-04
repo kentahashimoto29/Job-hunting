@@ -16,7 +16,8 @@ CTexture::CTexture()
 {
 	for (int nCnt = 0; nCnt < TEXTURE_MAX; nCnt++)
 	{
-		CTexture::m_apTexture[nCnt] = NULL;
+		m_apTexture[nCnt] = NULL;
+		m_aFilename[nCnt] = {};
 	}
 }
 
@@ -57,6 +58,11 @@ void CTexture::Unload(void)
 //========================================================
 int CTexture::Regist(const char *pFilename)
 {
+	if (pFilename == NULL)
+	{
+		return -1;
+	}
+
 	CRenderer *pRenderer = CManager::GetInstance()->GetRenderer();
 
 	LPDIRECT3DDEVICE9 pDevice = pRenderer->GetDevice();

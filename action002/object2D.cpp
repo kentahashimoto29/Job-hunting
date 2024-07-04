@@ -125,13 +125,32 @@ void CObject2D::Draw(void)
 	pDevice->SetFVF(FVF_VERTEX_2D);
 
 	//テクスチャの設定
-	pDevice->SetTexture(0, CManager::GetInstance()->GetTexture()->GetAddress(m_nTexture));
+	if (m_nTexture != -1)
+	{
+		pDevice->SetTexture(0, CManager::GetInstance()->GetTexture()->GetAddress(m_nTexture));
+	}
+
+	else
+	{
+		pDevice->SetTexture(0, NULL);
+	}
+
+
+	// アルファテストを有効にする
+	pDevice->SetRenderState(D3DRS_ALPHATESTENABLE, TRUE);
+	pDevice->SetRenderState(D3DRS_ALPHAFUNC, D3DCMP_GREATER);
+	pDevice->SetRenderState(D3DRS_ALPHAREF, 0);
 
 	//描画
 	pDevice->DrawPrimitive(
 		D3DPT_TRIANGLESTRIP,				//プリミティブの種類
 		0,									//最初の頂点インデックス
 		2);									//プリミティブ数
+
+	// アルファテストを無効にする
+	pDevice->SetRenderState(D3DRS_ALPHATESTENABLE, FALSE);
+	pDevice->SetRenderState(D3DRS_ALPHAFUNC, D3DCMP_ALWAYS);
+	pDevice->SetRenderState(D3DRS_ALPHAREF, 0);
 }
 
 //========================================================
@@ -217,7 +236,7 @@ void CObject2D::SetVtxBlock(D3DXVECTOR3 pos)
 //========================================================
 // タイトルの頂点座標を設定
 //========================================================
-void CObject2D::SetVtxTitle()
+void CObject2D::SetVtxTitleEnter()
 {
 	VERTEX_2D *pVtx;         //頂点情報へのポインタ
 
@@ -229,6 +248,32 @@ void CObject2D::SetVtxTitle()
 	pVtx[1].pos = D3DXVECTOR3(40.0f + m_pos.x, -40.0f + m_pos.y, 0.0f);
 	pVtx[2].pos = D3DXVECTOR3(-40.0f + m_pos.x, 40.0f + m_pos.y, 0.0f);
 	pVtx[3].pos = D3DXVECTOR3(40.0f + m_pos.x, 40.0f + m_pos.y, 0.0f);
+
+	//頂点カラーの設定
+	pVtx[0].col = D3DXCOLOR(1.0f, 1.0f, 1.0f, 1.0f);
+	pVtx[1].col = D3DXCOLOR(1.0f, 1.0f, 1.0f, 1.0f);
+	pVtx[2].col = D3DXCOLOR(1.0f, 1.0f, 1.0f, 1.0f);
+	pVtx[3].col = D3DXCOLOR(1.0f, 1.0f, 1.0f, 1.0f);
+
+	//頂点バッファをアンロックする
+	m_aVerBuff->Unlock();
+}
+
+//========================================================
+// タイトルの頂点座標を設定
+//========================================================
+void CObject2D::SetVtxTitle()
+{
+	VERTEX_2D *pVtx;         //頂点情報へのポインタ
+
+							 //頂点バッファをロックする
+	m_aVerBuff->Lock(0, 0, (void**)&pVtx, 0);
+
+	//頂点座標の設定
+	pVtx[0].pos = D3DXVECTOR3(m_pos.x - 360.0f, m_pos.y - 40.0f, 0.0f);
+	pVtx[1].pos = D3DXVECTOR3(m_pos.x + 360.0f, m_pos.y - 40.0f, 0.0f);
+	pVtx[2].pos = D3DXVECTOR3(m_pos.x - 360.0f, m_pos.y + 40.0f, 0.0f);
+	pVtx[3].pos = D3DXVECTOR3(m_pos.x + 360.0f, m_pos.y + 40.0f, 0.0f);
 
 	//頂点カラーの設定
 	pVtx[0].col = D3DXCOLOR(1.0f, 1.0f, 1.0f, 1.0f);
@@ -319,7 +364,7 @@ void CObject2D::SetVtxRanking(int aTexU, int nCnt, int nCnt2)
 }
 
 //========================================================
-// ランキングの頂点座標を設定
+// スキルUIの頂点座標を設定
 //========================================================
 void CObject2D::SetVtxSkillUI(void)
 {
@@ -329,10 +374,30 @@ void CObject2D::SetVtxSkillUI(void)
 	m_aVerBuff->Lock(0, 0, (void**)&pVtx, 0);
 
 	//頂点座標の設定
-	pVtx[0].pos = D3DXVECTOR3(-40.0f + m_pos.x, -40.0f + m_pos.y, 0.0f);
-	pVtx[1].pos = D3DXVECTOR3(40.0f + m_pos.x, -40.0f + m_pos.y, 0.0f);
-	pVtx[2].pos = D3DXVECTOR3(-40.0f + m_pos.x, 40.0f + m_pos.y, 0.0f);
-	pVtx[3].pos = D3DXVECTOR3(40.0f + m_pos.x, 40.0f + m_pos.y, 0.0f);
+	pVtx[0].pos = D3DXVECTOR3(m_pos.x, m_pos.y - 80.0f, 0.0f);
+	pVtx[1].pos = D3DXVECTOR3(m_pos.x + 80.0f, m_pos.y - 80.0f, 0.0f);
+	pVtx[2].pos = D3DXVECTOR3(m_pos.x, m_pos.y, 0.0f);
+	pVtx[3].pos = D3DXVECTOR3(m_pos.x + 80.0f, m_pos.y, 0.0f);
+
+	//頂点バッファをアンロックする
+	m_aVerBuff->Unlock();
+}
+
+//========================================================
+// ゲージUIの頂点座標を設定
+//========================================================
+void CObject2D::SetVtxGaugeUI(void)
+{
+	VERTEX_2D *pVtx;         //頂点情報へのポインタ
+
+							 //頂点バッファをロックする
+	m_aVerBuff->Lock(0, 0, (void**)&pVtx, 0);
+
+	//頂点座標の設定
+	pVtx[0].pos = D3DXVECTOR3(m_pos.x, m_pos.y - 80.0f * (m_nGauge / m_nGaugeMax), 0.0f);
+	pVtx[1].pos = D3DXVECTOR3(m_pos.x + 80.0f,  m_pos.y - 80.0f * (m_nGauge / m_nGaugeMax), 0.0f);
+	pVtx[2].pos = D3DXVECTOR3(m_pos.x, m_pos.y, 0.0f);
+	pVtx[3].pos = D3DXVECTOR3(m_pos.x + 80.0f, m_pos.y, 0.0f);
 
 	//頂点バッファをアンロックする
 	m_aVerBuff->Unlock();
@@ -412,6 +477,11 @@ void CObject2D::SetRot(D3DXVECTOR3 rot)
 //========================================================
 int CObject2D::SetTex(const char TexName[32])
 {
+	if (TexName == NULL)
+	{
+		return -1;
+	}
+
 	CTexture *pTexture = CManager::GetInstance()->GetTexture();
 
 	int nIdxTexture = 0;

@@ -10,6 +10,7 @@
 #include "Player3D.h"
 #include "block3D.h"
 #include "item_throw.h"
+#include "wall_obj.h"
 
 //========================================================
 //コンストラクタ
@@ -66,7 +67,7 @@ HRESULT CEnemy3D::Init(int nIdx)
 	LPDIRECT3DDEVICE9 pDevice = CManager::GetInstance()->GetRenderer()->GetDevice();
 
 	//Xファイルの読み込み
-	D3DXLoadMeshFromX("data\\MODEL\\enemy_Sample000.x",
+	D3DXLoadMeshFromX("data\\MODEL\\ghost.x",
 		D3DXMESH_SYSTEMMEM,
 		pDevice,
 		NULL,
@@ -156,8 +157,8 @@ void CEnemy3D::Update(void)
 	CPlayer3D *pPlayer = CGame::GetPlayer3D();
 
 	//投げアイテムの情報を取得
-	CItemThrow **ppItemThrow = CGame::GetItemManager()->GetItemThrow();
-	CItemThrow *pItemThrow = *ppItemThrow;
+	//CItemThrow **ppItemThrow = CGame::GetItemManager()->GetItemThrow();
+	//CItemThrow *pItemThrow = *ppItemThrow;
 
 	//ブロック3Dの取得
 	CBlock3D *pBlock = CGame::GetBlock3D();
@@ -190,7 +191,7 @@ void CEnemy3D::Update(void)
 	//pBlock->Collision(&m_pos, &m_Oldpos, &m_move, m_VtxMax, m_VtxMin);
 
 	
-	bCollision = Collision(pPlayer, pItemThrow);
+	bCollision = Collision();
 
 	if (bCollision == true)
 	{
@@ -259,8 +260,18 @@ void CEnemy3D::HitEnemy(void)
 //========================================================
 //当たり判定の処理
 //========================================================
-bool CEnemy3D::Collision(CPlayer3D *pPlayer, CItemThrow *pItemThrow)
+bool CEnemy3D::Collision()
 {
+	//プレイヤーの情報を取得
+	CPlayer3D *pPlayer = CGame::GetPlayer3D();
+
+	//投げアイテムの情報を取得
+	CItemThrow **ppItemThrow = CGame::GetItemManager()->GetItemThrow();
+	CItemThrow *pItemThrow = *ppItemThrow;
+
+	CWallObj **ppWall = CGame::GetWallManager()->GetWall();
+	CWallObj *pWall = *ppWall;
+
 	bool b = false;
 
 	if (pPlayer != NULL)
@@ -294,6 +305,22 @@ bool CEnemy3D::Collision(CPlayer3D *pPlayer, CItemThrow *pItemThrow)
 
 			return b;
 		}
+	}
+
+	if (pWall != NULL)
+	{
+		do
+		{
+			if (pWall->Collision(&m_pos,m_Oldpos, m_VtxMax, m_VtxMin) == true)
+			{
+				b = true;
+
+				return b;
+			}
+
+			ppWall++;
+			pWall = *ppWall;
+		} while (pWall != NULL);
 	}
 
 	return b;

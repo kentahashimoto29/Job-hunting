@@ -8,7 +8,6 @@
 #include "manager.h"
 #include "fade.h"
 #include "Skill_UI.h"
-#include "wall_obj_manager.h"
 
 #define PLAYER_SPAWN_X							(1400.0f)
 #define FEILD_WIDTH								(16)
@@ -154,8 +153,8 @@ void CGame::Uninit(void)
 	if (m_pSkillUI != NULL)
 	{
 		//終了処理
-		m_pScore->Uninit();
-		m_pScore = NULL;
+		m_pSkillUI->Uninit();
+		m_pSkillUI = NULL;
 	}
 
 	//NULLチェック
@@ -236,7 +235,19 @@ void CGame::Update(void)
 		}
 	}
 
-	if (CEnemyManager::GetNum() <= 0)
+	if (m_pEnemyManager->GetNum() <= 0)
+	{
+		if (b != true)
+		{
+			if (CManager::GetInstance()->GetFade()->GetState() == CFade::FADE_NONE)
+			{
+				CManager::GetInstance()->GetFade()->SetFade(CManager::GetInstance()->GetScene()->MODE_RESULT);
+				b = true;
+			}
+		}
+	}
+
+	if (m_pTime->GetTime() <= 0)
 	{
 		if (b != true)
 		{

@@ -121,6 +121,8 @@ HRESULT CWallObj::Init(int nIdx)
 		pVtxBuff += dwSizeFVF;					//頂点フォーマットのサイズ分ポインタを進める
 	}
 
+	ReguVtx();
+
 	//頂点バッファをアンロック
 	m_pMesh->UnlockVertexBuffer();
 
@@ -189,8 +191,10 @@ void CWallObj::HitEnemy(void)
 //=======================================
 //モデルの当たり判定
 //=======================================
-void CWallObj::Collision(D3DXVECTOR3 *pPos, D3DXVECTOR3 vtxMax, D3DXVECTOR3 vtxMin)
+bool CWallObj::Collision(D3DXVECTOR3 *pPos, D3DXVECTOR3 OldPos, D3DXVECTOR3 vtxMax, D3DXVECTOR3 vtxMin)
 {
+	bool b = false;
+
 	//プレイヤーがブロックにめり込む
 	if (pPos->x + vtxMin.x < m_pos.x + m_VtxMax.x &&
 		pPos->x + vtxMax.x > m_pos.x + m_VtxMin.x &&
@@ -203,35 +207,36 @@ void CWallObj::Collision(D3DXVECTOR3 *pPos, D3DXVECTOR3 vtxMax, D3DXVECTOR3 vtxM
 		//下
 		//============================
 		if (pPos->y + vtxMin.y <= m_pos.y + m_VtxMax.y &&
-			pPos->y + vtxMin.y >= m_Oldpos.y + m_VtxMax.y)
+			OldPos.y + vtxMin.y >= m_pos.y + m_VtxMax.y)
 		{
 			//左からぶつかった
 			if (pPos->x + vtxMin.x <= m_pos.x + m_VtxMax.x &&
-				pPos->x + vtxMin.x >= m_Oldpos.x + m_VtxMax.x)
+				OldPos.x + vtxMin.x >= m_pos.x + m_VtxMax.x)
 			{
 			}
 
 			//右からぶつかった
 			else  if (pPos->x + vtxMax.x >= m_pos.x + m_VtxMin.x &&
-				pPos->x + vtxMax.x <= m_Oldpos.x + m_VtxMin.x)
+				OldPos.x + vtxMax.x <= m_pos.x + m_VtxMin.x)
 			{
 			}
 
 			//正面からぶつかった
 			else  if (pPos->z + vtxMin.z <= m_pos.z + m_VtxMax.z &&
-				pPos->z + vtxMin.z >= m_Oldpos.z + m_VtxMax.z)
+				OldPos.z + vtxMin.z >= m_pos.z + m_VtxMax.z)
 			{
 			}
 
 			//裏からぶつかった
 			else  if (pPos->z + vtxMax.z >= m_pos.z + m_VtxMin.z &&
-				pPos->z + vtxMax.z <= m_Oldpos.z + m_VtxMin.z)
+				OldPos.z + vtxMax.z <= m_pos.z + m_VtxMin.z)
 			{
 			}
 
 			else
 			{
-				m_pos.y = pPos->y + vtxMin.y - m_VtxMax.y;
+				pPos->y = m_pos.y - vtxMin.y - m_VtxMax.y;
+				b = true;
 			}
 		}
 
@@ -239,182 +244,189 @@ void CWallObj::Collision(D3DXVECTOR3 *pPos, D3DXVECTOR3 vtxMax, D3DXVECTOR3 vtxM
 		//上
 		//================================
 		if (pPos->y + vtxMax.y >= m_pos.y + m_VtxMin.y &&
-			pPos->y + vtxMax.y <= m_Oldpos.y + m_VtxMin.y)
+			OldPos.y + vtxMax.y <= m_pos.y + m_VtxMin.y)
 		{
 			//左からぶつかった
 			if (pPos->x + vtxMin.x <= m_pos.x + m_VtxMax.x &&
-				pPos->x + vtxMin.x >= m_Oldpos.x + m_VtxMax.x)
+				OldPos.x + vtxMin.x >= m_pos.x + m_VtxMax.x)
 			{
 			}
 
 			//右からぶつかった
 			else  if (pPos->x + vtxMax.x >= m_pos.x + m_VtxMin.x &&
-				pPos->x + vtxMax.x <= m_Oldpos.x + m_VtxMin.x)
+				OldPos.x + vtxMax.x <= m_pos.x + m_VtxMin.x)
 			{
 			}
 
 			//正面からぶつかった
 			else  if (pPos->z + vtxMin.z <= m_pos.z + m_VtxMax.z &&
-				pPos->z + vtxMin.z >= m_Oldpos.z + m_VtxMax.z)
+				OldPos.z + vtxMin.z >= m_pos.z + m_VtxMax.z)
 			{
 			}
 
 			//裏からぶつかった
 			else  if (pPos->z + vtxMax.z >= m_pos.z + m_VtxMin.z &&
-				pPos->z + vtxMax.z <= m_Oldpos.z + m_VtxMin.z)
+				OldPos.z + vtxMax.z <= m_pos.z + m_VtxMin.z)
 			{
 			}
 
 			else
 			{
-				m_pos.y = pPos->y + vtxMax.y;
+				pPos->y = m_pos.y - vtxMax.y;
+				b = true;
+			}
+		}
+
+		//============================
+		//右
+		//============================
+		if (pPos->x + vtxMax.x >= m_pos.x + m_VtxMin.x &&
+			OldPos.x + vtxMax.x <= m_pos.x + m_VtxMin.x)
+		{
+			//下からぶつかった
+			if (pPos->y + vtxMin.y <= m_pos.y + m_VtxMax.y &&
+				OldPos.y + vtxMin.y >= m_pos.y + m_VtxMax.y)
+			{
+			}
+
+			//上からぶつかった
+			else if (pPos->y + vtxMax.y >= m_pos.y + m_VtxMin.y &&
+				OldPos.y + vtxMax.y <= m_pos.y + m_VtxMin.y)
+			{
+			}
+
+			//正面からぶつかった
+			else  if (pPos->z + vtxMin.z <= m_pos.z + m_VtxMax.z &&
+				OldPos.z + vtxMin.z >= m_pos.z + m_VtxMax.z)
+			{
+			}
+
+			//裏からぶつかった
+			else  if (pPos->z + vtxMax.z >= pPos->z + m_VtxMin.z &&
+				OldPos.z + vtxMax.z <= m_pos.z + m_VtxMin.z)
+			{
+			}
+
+			else
+			{
+				pPos->x = m_pos.x - vtxMax.x + m_VtxMin.x;
+				b = true;
+			}
+		}
+
+		//============================
+		//左
+		//============================
+		if (pPos->x + vtxMin.x <= m_pos.x + m_VtxMax.x &&
+			OldPos.x + vtxMin.x >= m_pos.x + m_VtxMax.x)
+		{
+			//下からぶつかった
+			if (pPos->y + vtxMin.y <= m_pos.y + m_VtxMax.y &&
+				OldPos.y + vtxMin.y >= m_pos.y + m_VtxMax.y)
+			{
+			}
+
+			//上からぶつかった
+			else if (pPos->y + vtxMax.y >= m_pos.y + m_VtxMin.y &&
+				OldPos.y + vtxMax.y <= m_pos.y + m_VtxMin.y)
+			{
+			}
+
+			//正面からぶつかった
+			else  if (pPos->z + vtxMin.z <= pPos->z + m_VtxMax.z &&
+				OldPos.z + vtxMin.z >= m_pos.z + m_VtxMax.z)
+			{
+			}
+
+			//裏からぶつかった
+			else  if (pPos->z + vtxMax.z >= pPos->z + m_VtxMin.z &&
+				OldPos.z + vtxMax.z <= m_pos.z + m_VtxMin.z)
+			{
+			}
+
+			else
+			{
+				pPos->x = m_pos.x - vtxMin.x + m_VtxMax.x;
+				b = true;
+			}
+		}
+
+		//============================
+		//正面
+		//============================
+		if (pPos->z + vtxMin.z <= m_pos.z + m_VtxMax.z &&
+			OldPos.z + vtxMin.z >= m_pos.z + m_VtxMax.z)
+		{
+			//下からぶつかった
+			if (pPos->y + vtxMin.y <= m_pos.y + m_VtxMax.y &&
+				OldPos.y + vtxMin.y >= m_pos.y + m_VtxMax.y)
+			{
+			}
+
+			//上からぶつかった
+			else if (pPos->y + vtxMax.y >= m_pos.y + m_VtxMin.y &&
+				OldPos.y + vtxMax.y <= m_pos.y + m_VtxMin.y)
+			{
+			}
+
+			//右からぶつかった
+			else if (pPos->x + vtxMax.x >= m_pos.x + m_VtxMin.x &&
+				OldPos.x + vtxMax.x <= m_pos.x + m_VtxMin.x)
+			{
+			}
+
+			//左からぶつかった
+			else if (pPos->x + vtxMin.x <= m_pos.x + m_VtxMax.x &&
+				OldPos.x + vtxMin.x >= m_pos.x + m_VtxMax.x)
+			{
+			}
+
+			else
+			{
+				pPos->z = m_pos.z - vtxMin.z + m_VtxMax.z;
+				b = true;
+			}
+		}
+
+		//============================
+		//裏
+		//============================
+		if (pPos->z + vtxMax.z >= m_pos.z + m_VtxMin.z &&
+			OldPos.z + vtxMax.z <= m_pos.z + m_VtxMin.z)
+		{
+			//下からぶつかった
+			if (pPos->y + vtxMin.y <= m_pos.y + m_VtxMax.y &&
+				OldPos.y + vtxMin.y >= m_pos.y + m_VtxMax.y)
+			{
+			}
+
+			//上からぶつかった
+			else if (pPos->y + vtxMax.y >= m_pos.y + m_VtxMin.y &&
+				OldPos.y + vtxMax.y <= m_pos.y + m_VtxMin.y)
+			{
+			}
+
+			//右からぶつかった
+			else if (pPos->x + vtxMax.x >= m_pos.x + m_VtxMin.x &&
+				OldPos.x + vtxMax.x <= m_pos.x + m_VtxMin.x)
+			{
+			}
+
+			//左からぶつかった
+			else if (pPos->x + vtxMin.x <= m_pos.x + m_VtxMax.x &&
+				OldPos.x + vtxMin.x >= m_pos.x + m_VtxMax.x)
+			{
+			}
+
+			else
+			{
+				pPos->z = m_pos.z - vtxMax.z + m_VtxMin.z;
+				b = true;
 			}
 		}
 	}
 
-	//============================
-	//右
-	//============================
-	if (pPos->x + vtxMax.x >= m_pos.x + m_VtxMin.x &&
-		pPos->x + vtxMax.x <= m_Oldpos.x + m_VtxMin.x)
-	{
-		//下からぶつかった
-		if (pPos->y + vtxMin.y <= m_pos.y + m_VtxMax.y &&
-			pPos->y + vtxMin.y >= m_Oldpos.y + m_VtxMax.y)
-		{
-		}
-
-		//上からぶつかった
-		else if (pPos->y + vtxMax.y >= m_pos.y + m_VtxMin.y &&
-			pPos->y + vtxMax.y <= m_Oldpos.y + m_VtxMin.y)
-		{
-		}
-
-		//正面からぶつかった
-		else  if (pPos->z + vtxMin.z <= m_pos.z + m_VtxMax.z &&
-			pPos->z + vtxMin.z >= m_Oldpos.z + m_VtxMax.z)
-		{
-		}
-
-		//裏からぶつかった
-		else  if (pPos->z + vtxMax.z >= pPos->z + m_VtxMin.z &&
-			pPos->z + vtxMax.z <= m_Oldpos.z + m_VtxMin.z)
-		{
-		}
-
-		else
-		{
-			m_pos.x = pPos->x + vtxMax.x + m_VtxMax.x;
-		}
-	}
-
-	//============================
-	//左
-	//============================
-	if (pPos->x + vtxMin.x <= m_pos.x + m_VtxMax.x &&
-		pPos->x + vtxMin.x >= m_Oldpos.x + m_VtxMax.x)
-	{
-		//下からぶつかった
-		if (pPos->y + vtxMin.y <= m_pos.y + m_VtxMax.y &&
-			pPos->y + vtxMin.y >= m_Oldpos.y + m_VtxMax.y)
-		{
-		}
-
-		//上からぶつかった
-		else if (pPos->y + vtxMax.y >= m_pos.y + m_VtxMin.y &&
-			pPos->y + vtxMax.y <= m_Oldpos.y + m_VtxMin.y)
-		{
-		}
-
-		//正面からぶつかった
-		else  if (pPos->z + vtxMin.z <= pPos->z + m_VtxMax.z &&
-			pPos->z + vtxMin.z >= m_Oldpos.z + m_VtxMax.z)
-		{
-		}
-
-		//裏からぶつかった
-		else  if (pPos->z + vtxMax.z >= pPos->z + m_VtxMin.z &&
-			pPos->z + vtxMax.z <= m_Oldpos.z + m_VtxMin.z)
-		{
-		}
-
-		else
-		{
-			m_pos.x = pPos->x + vtxMin.x + m_VtxMin.x;
-		}
-	}
-
-	//============================
-	//正面
-	//============================
-	if (pPos->z + vtxMin.z <= m_pos.z + m_VtxMax.z &&
-		pPos->z + vtxMin.z >= m_Oldpos.z + m_VtxMax.z)
-	{
-		//下からぶつかった
-		if (pPos->y + vtxMin.y <= m_pos.y + m_VtxMax.y &&
-			pPos->y + vtxMin.y >= m_Oldpos.y + m_VtxMax.y)
-		{
-		}
-
-		//上からぶつかった
-		else if (pPos->y + vtxMax.y >= m_pos.y + m_VtxMin.y &&
-			pPos->y + vtxMax.y <= m_Oldpos.y + m_VtxMin.y)
-		{
-		}
-
-		//右からぶつかった
-		else if (pPos->x + vtxMax.x >= m_pos.x + m_VtxMin.x &&
-			pPos->x + vtxMax.x <= m_Oldpos.x + m_VtxMin.x)
-		{
-		}
-
-		//左からぶつかった
-		else if (pPos->x + vtxMin.x <= m_pos.x + m_VtxMax.x &&
-			pPos->x + vtxMin.x >= m_Oldpos.x + m_VtxMax.x)
-		{
-		}
-
-		else
-		{
-			m_pos.z = pPos->z + vtxMin.z + m_VtxMin.z;
-		}
-	}
-
-	//============================
-	//裏
-	//============================
-	if (pPos->z + vtxMax.z >= m_pos.z + m_VtxMin.z &&
-		pPos->z + vtxMax.z <= m_Oldpos.z + m_VtxMin.z)
-	{
-		//下からぶつかった
-		if (pPos->y + vtxMin.y <= m_pos.y + m_VtxMax.y &&
-			pPos->y + vtxMin.y >= m_Oldpos.y + m_VtxMax.y)
-		{
-		}
-
-		//上からぶつかった
-		else if (pPos->y + vtxMax.y >= m_pos.y + m_VtxMin.y &&
-			pPos->y + vtxMax.y <= m_Oldpos.y + m_VtxMin.y)
-		{
-		}
-
-		//右からぶつかった
-		else if (pPos->x + vtxMax.x >= m_pos.x + m_VtxMin.x &&
-			pPos->x + vtxMax.x <= m_Oldpos.x + m_VtxMin.x)
-		{
-		}
-
-		//左からぶつかった
-		else if (pPos->x + vtxMin.x <= m_pos.x + m_VtxMax.x &&
-			pPos->x + vtxMin.x >= m_Oldpos.x + m_VtxMax.x)
-		{
-		}
-
-		else
-		{
-			m_pos.z = pPos->z + vtxMax.z + m_VtxMax.z;
-		}
-	}
+	return b;
 }
 
 //========================================================
@@ -430,4 +442,21 @@ bool CWallObj::Collision(CPlayer3D *pPlayer, CItemThrow *pItemThrow)
 	}
 
 	return b;
+}
+
+//========================================================
+//当たり判定の処理
+//========================================================
+void CWallObj::ReguVtx()
+{
+	D3DXVECTOR3 keepMin = m_VtxMin;
+	D3DXVECTOR3 keepMax = m_VtxMax;
+
+
+	m_VtxMin.x = cosf(m_rot.y) * keepMin.x + sinf(m_rot.y) * keepMin.z;
+	m_VtxMin.z = cosf(m_rot.y) * keepMin.z + sinf(m_rot.y) * keepMin.x;
+
+	m_VtxMax.x = cosf(m_rot.y) * keepMax.x + sinf(m_rot.y) * keepMax.z;
+	m_VtxMax.z = cosf(m_rot.y) * keepMax.z + sinf(m_rot.y) * keepMax.x;
+
 }

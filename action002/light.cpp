@@ -7,6 +7,8 @@
 #include "light.h"
 #include "manager.h"
 
+#define LIGHT_MAX	(4)
+
 //========================================================
 //コンストラクタ
 //========================================================
@@ -36,12 +38,12 @@ HRESULT CLight::Init(void)
 	ZeroMemory(&m_Light, sizeof(D3DLIGHT9));
 
 	//ライトの種類を設定
-	for (int nCnt = 0; nCnt < 4; nCnt++)
+	for (int nCnt = 0; nCnt < LIGHT_MAX; nCnt++)
 	{
 		m_Light[nCnt].Type = D3DLIGHT_DIRECTIONAL;
 
 		//ライトの拡散光を設定
-		m_Light[nCnt].Diffuse = D3DXCOLOR(1.0f, 1.0f, 1.0f, 1.0f);
+		m_Light[nCnt].Diffuse = D3DXCOLOR(0.36f, 0.32f, 0.37f, 1.0f);
 	}
 
 	//ライトの方向を設定
@@ -51,7 +53,7 @@ HRESULT CLight::Init(void)
 
 	//ライトの方向を設定
 	vecDir = D3DXVECTOR3(-0.1f, -0.2f, -0.1f);
-	D3DXVec3Normalize(&vecDir, &vecDir);             //ベクトルを正規化する
+	D3DXVec3Normalize(&vecDir, &vecDir);             //ベクトルを正規化するhj
 	m_Light[1].Direction = vecDir;
 
 	//ライトの方向を設定
@@ -60,21 +62,18 @@ HRESULT CLight::Init(void)
 	m_Light[2].Direction = vecDir;
 
 	//ライトの方向を設定
-	vecDir = D3DXVECTOR3(0.1f, 0.2f, -0.1f);
+	vecDir = D3DXVECTOR3(0.1f, 0.2f, 0.1f);
 	D3DXVec3Normalize(&vecDir, &vecDir);             //ベクトルを正規化する
 	m_Light[3].Direction = vecDir;
 
-	//ライトを設定する
-	pDevice->SetLight(0, &m_Light[0]);
-	pDevice->SetLight(1, &m_Light[1]);
-	pDevice->SetLight(2, &m_Light[2]);
-	pDevice->SetLight(3, &m_Light[3]);
+	for (int nCnt = 0; nCnt < LIGHT_MAX; nCnt++)
+	{
+		//ライトを設定する
+		pDevice->SetLight(nCnt, &m_Light[nCnt]);
 
-	//ライトを有効にする
-	pDevice->LightEnable(0, TRUE);
-	pDevice->LightEnable(1, TRUE);
-	pDevice->LightEnable(2, TRUE);
-	pDevice->LightEnable(3, TRUE);
+		//ライトを有効にする
+		pDevice->LightEnable(nCnt, TRUE);
+	}
 
 	return S_OK;
 }

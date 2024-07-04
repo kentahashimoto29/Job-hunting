@@ -27,13 +27,14 @@ public:
 	void Release(int nIdx);
 	void Kill(void);
 	CEnemy3D **SetEnemy(D3DXVECTOR3 pos, D3DXVECTOR3 rot);
+	void SectionSpawn();
 
 	static int GetNum(void);					//総数を返す
 	CEnemy3D **GetEnemy(void);	// 敵取得
 
 private:
 
-	CEnemy3D *m_pEnemy3D[16];					//エネミー3Dのポインタ
+	CEnemy3D *m_pEnemy3D[512];					//エネミー3Dのポインタ
 	static int m_nNum;							//総数
 
 	int m_nCreCnt;

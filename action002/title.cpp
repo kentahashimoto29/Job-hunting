@@ -61,7 +61,7 @@ void CTitle::Update(void)
 	//ƒ}ƒEƒX‚ÌŽæ“¾
 	CInputMouse *pInputMouse = CManager::GetInstance()->GetInputMouse();
 
-	 if (pInputKeyboard->GetTrigger(DIK_RETURN) == true)
+	if (CTitle_Obj2D::GetBlinkingCnt() >= 60 * 2)
 	{
 		if (b != true)
 		{

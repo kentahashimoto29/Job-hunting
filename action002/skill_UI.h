@@ -30,11 +30,14 @@ public:
 	void SetPos(D3DXVECTOR3 pos);
 	void SetRot(D3DXVECTOR3 rot);
 
+	CObject2D *GetObjectGauge2D() { return m_apObjectGauge2D; }
+
 	D3DXVECTOR3 m_pos;						//オブジェクトの位置
 
 private:
 	D3DXCOLOR m_col;
 	CObject2D *m_apObject2D;				//タイトルのオブジェクト
+	CObject2D *m_apObjectGauge2D;			//タイトルのオブジェクト
 	static int m_nIdxTexture;				//テクスチャの番号
 
 	bool b;
