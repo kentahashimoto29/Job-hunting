@@ -48,13 +48,13 @@ CSkill_UI *CSkill_UI::Create()
 //========================================================
 HRESULT CSkill_UI::Init(void)
 {
-	m_apObject2D = new CObject2D;
-	m_nIdxTexture = m_apObject2D->SetTex("data\\TEXTURE\\イヴェルカーナ.png");
-	m_apObject2D->BindTexture(m_nIdxTexture);
-	m_apObject2D->Init();
-	m_apObject2D->SetPos(D3DXVECTOR3(150.0f, 650.0f, 0.0f));
-	m_apObject2D->SetVtxSkillUI();
-	m_apObject2D->SetType(CObject::TYPE_OBJECT_2D);
+	//m_apObject2D = new CObject2D;
+	//m_nIdxTexture = m_apObject2D->SetTex("data\\TEXTURE\\イヴェルカーナ.png");
+	//m_apObject2D->BindTexture(m_nIdxTexture);
+	//m_apObject2D->Init();
+	//m_apObject2D->SetPos(D3DXVECTOR3(150.0f, 650.0f, 0.0f));
+	//m_apObject2D->SetVtxSkillUI();
+	//m_apObject2D->SetType(CObject::TYPE_OBJECT_2D);
 
 	m_apObjectGauge2D = new CObject2D;
 	m_nIdxTexture = m_apObjectGauge2D->SetTex(NULL);
@@ -74,8 +74,15 @@ HRESULT CSkill_UI::Init(void)
 //========================================================
 void CSkill_UI::Uninit(void)
 {
-	m_apObject2D->Uninit();
-	m_apObjectGauge2D->Uninit();
+	if (m_apObject2D != NULL)
+	{
+		m_apObject2D->Uninit();
+	}
+
+	if (m_apObjectGauge2D != NULL)
+	{
+		m_apObjectGauge2D->Uninit();
+	}
 	Release();
 }
 
@@ -84,7 +91,10 @@ void CSkill_UI::Uninit(void)
 //========================================================
 void CSkill_UI::Update(void)
 {
-	m_apObjectGauge2D->SetVtxGaugeUI();
+	if (m_apObjectGauge2D != NULL)
+	{
+		m_apObjectGauge2D->SetVtxGaugeUI();
+	}
 }
 
 //========================================================
@@ -92,8 +102,14 @@ void CSkill_UI::Update(void)
 //========================================================
 void CSkill_UI::Draw(void)
 {
-	m_apObjectGauge2D->Draw();
-	m_apObject2D->Draw();
+	if (m_apObjectGauge2D != NULL)
+	{
+		m_apObjectGauge2D->Draw();
+	}
+	if (m_apObject2D != NULL)
+	{
+		m_apObject2D->Draw();
+	}
 }
 
 //========================================================

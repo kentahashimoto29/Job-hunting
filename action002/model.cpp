@@ -5,6 +5,7 @@
 //
 //========================================================
 #include "Model.h"
+#include "Xmodel.h"
 #include "manager.h"
 #include "camera.h"
 #include "bullet3D.h"
@@ -103,8 +104,13 @@ void CModel::SetRot(D3DXVECTOR3 rot)
 //========================================================
 HRESULT CModel::Init(const char *pFilename)
 {
+	CTexture *pT = CManager::GetInstance()->GetTexture();
+
+
 	//デバイスの取得
 	LPDIRECT3DDEVICE9 pDevice = CManager::GetInstance()->GetRenderer()->GetDevice();
+
+	//CManager::GetInstance()->GetXmodel()->Regist(pFilename);
 
 	//Xファイルの読み込み
 	D3DXLoadMeshFromX(pFilename,
@@ -115,6 +121,38 @@ HRESULT CModel::Init(const char *pFilename)
 		NULL,
 		&m_dwNumMat,
 		&m_pMesh);
+
+	D3DXMATERIAL *pMat = (D3DXMATERIAL*)m_pBuffMat->GetBufferPointer();							//
+
+	CTexture *pTexture = CManager::GetInstance()->GetTexture();
+
+	bool bTexture = false;
+
+	for (int nCntMat = 0; nCntMat < (int)m_dwNumMat; nCntMat++)
+	{
+		if (pMat[nCntMat].pTextureFilename != nullptr)
+		{
+			for (int nCnt = 0; nCnt < TEXTURE_MAX; nCnt++)
+			{
+				if (pTexture->GetName(nCnt) != NULL)
+				{
+					if (strcmp(pMat[nCntMat].pTextureFilename, pTexture->GetName(nCnt)) == 0)
+					{
+						m_IdxTexture[nCntMat] = nCnt;
+						bTexture = true;
+						break;
+					}
+				}
+			}
+		}
+
+		if (bTexture == false)
+		{
+			m_IdxTexture[nCntMat] = pTexture->Regist(pMat[nCntMat].pTextureFilename);
+		}
+
+	}
+
 
 	return S_OK;
 }
@@ -159,6 +197,8 @@ void CModel::Draw(void)
 	D3DXMATRIX mtxRot, mtxTrans, mtxParent;		//計算用マトリックス
 	D3DMATERIAL9 matDef;						//
 	D3DXMATERIAL *pMat;							//
+
+	CTexture *pTexture = CManager::GetInstance()->GetTexture();
 
 	//ワールドマトリックスの初期化
 	D3DXMatrixIdentity(&m_mtxWorld);
@@ -210,9 +250,17 @@ void CModel::Draw(void)
 		pDevice->SetMaterial(&pMat[nCntMat].MatD3D);
 
 		//テクスチャの設定
-		pDevice->SetTexture(0, NULL);
+		if (m_IdxTexture[nCntMat] != -1)
+		{
+			pDevice->SetTexture(0, pTexture->GetAddress(m_IdxTexture[nCntMat]));
+		}
 
-		//モデル(パーツ)の描画
+		else
+		{
+			pDevice->SetTexture(0, NULL);
+		}
+
+		//モデル(パーツ)も描画
 		m_pMesh->DrawSubset(nCntMat);
 	}
 

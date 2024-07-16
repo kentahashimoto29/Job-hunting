@@ -33,6 +33,8 @@ public:
 	void Draw(void);													//描画処理
 
 private:
+	int m_IdxTexture[64];				//テクスチャの番号
+
 	LPD3DXMESH m_pMesh;				//メッシュへのポインタ
 	LPD3DXBUFFER m_pBuffMat;		//マテリアルへのポインタ
 	DWORD m_dwNumMat;				//マテリアルの数

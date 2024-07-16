@@ -1,7 +1,7 @@
 //========================================================
 //
-//ウインドウの生成等 (score.cpp)
-//Author 橋本賢太
+// ウインドウの生成等 (score.cpp)
+// Author 橋本賢太
 //
 //========================================================
 #include "ranking.h"
@@ -9,21 +9,25 @@
 #include "game.h"
 
 //========================================================
-//静的メンバ変数
+// 静的メンバ変数
 //========================================================
 int CRanking::CurScore = 0;
 int CRanking::m_nIdxTexture = 0;
 
 //========================================================
-//コンストラクタ
+// コンストラクタ
 //========================================================
 CRanking::CRanking()
 {
 	m_nRankingScore[RANKING_MAX] = {};
+	m_nNewRec = -1;
+	m_bNewRec = false;
+	m_Alpha = 0.0f;
+	m_col = D3DXCOLOR(1.0f, 1.0f, 1.0f, 1.0f);
 }
 
 //========================================================
-//デストラクタ
+// デストラクタ
 //========================================================
 CRanking::~CRanking()
 {
@@ -31,64 +35,65 @@ CRanking::~CRanking()
 }
 
 //========================================================
-//生成処理
+// 生成処理
 //========================================================
 CRanking *CRanking::Create()
 {
-	CRanking *pScore;
+	CRanking *pRanking;
 
-	//2Dオブジェクトの生成
-	pScore = new CRanking();
+	// 2Dオブジェクトの生成
+	pRanking = new CRanking();
 
-	//初期化処理
-	pScore->Init();
+	// 初期化処理
+	pRanking->Init();
 
-	return pScore;
+	return pRanking;
 }
 
 //========================================================
-//初期化処理
+// 初期化処理
 //========================================================
 HRESULT CRanking::Init(void)
 {
-	CTexture *pTexture = CManager::GetInstance()->GetTexture();
-
-	bool bTexture = false;
-
-	for (int nCnt = 0; nCnt < TEXTURE_MAX; nCnt++)
-	{
-		if ("data\\TEXTURE\\number_blackclover_07.png" == pTexture->GetName(nCnt))
-		{
-			bTexture = true;
-			m_nIdxTexture = nCnt;
-			break;
-		}
-	}
-
-	if (bTexture == false)
-	{
-		m_nIdxTexture = pTexture->Regist("data\\TEXTURE\\number_blackclover_07.png");
-	}
-
 	for (int nCnt = 0; nCnt < NUMBER_MAX; nCnt++)
 	{
 		m_apObject2D[nCnt] = new CObject2D;
 
 		m_apObject2D[nCnt]->Init();
 
+		m_apObject2D[nCnt]->SetPos(D3DXVECTOR3(620.0f, 110.0f, 0.0f));
+
+		m_nIdxTexture = m_apObject2D[nCnt]->SetTex("data\\TEXTURE\\number_blackclover_07.png");
+
 		m_apObject2D[nCnt]->BindTexture(m_nIdxTexture);
 	}
 
+	for (int nCnt = 0; nCnt < RANKING_MAX; nCnt++)
+	{
+		m_apObject2DRank[nCnt] = new CObject2D;
 
+		m_apObject2DRank[nCnt]->Init();
 
-	FILE *pFile;	//ファイルポインタを宣言
+		m_apObject2DRank[nCnt]->SetPos(m_apObject2D[nCnt]->m_pos);
 
-					//ファイルを開く
+		m_apObject2DRank[nCnt]->SetVtxRanking(nCnt + 1, nCnt);
+
+		m_nIdxTexture = m_apObject2DRank[nCnt]->SetTex("data\\TEXTURE\\number_blackclover_07.png");
+
+		m_apObject2DRank[nCnt]->BindTexture(m_nIdxTexture);
+	}
+
+	FILE *pFile;	// ファイルポインタを宣言
+
+					// ファイルを開く
 	pFile = fopen("data\\TEXT\\ranking.txt", "r");			//(ファイル名を指定,　モードの指定”r”で読み込み)
 
-													//NULLチェック
+	// NULLチェック
 	if (pFile != NULL)
 	{
+		// 今回のスコアを保持
+		int nPreScore = CurScore;
+
 		for (int nCnt = 0; nCnt < RANKING_MAX; nCnt++)
 		{
 			fscanf(pFile, "%d", &m_nRankingScore[nCnt]);
@@ -110,14 +115,33 @@ HRESULT CRanking::Init(void)
 		{
 			SetScore(m_nRankingScore[nCnt], nCnt);
 		}
+
+		for (int nCnt = 0; nCnt < RANKING_MAX; nCnt++)
+		{
+			// 今回のスコアがランキングに入っていた場合
+			if (nPreScore == m_nRankingScore[nCnt])
+			{
+				//m_apObject2D[nCnt * SCORE_NUM]->SetColor(D3DXCOLOR(1.0f, 0.4f, 0.3f, 1.0f));
+				//m_apObject2D[nCnt * SCORE_NUM + 1]->SetColor(D3DXCOLOR(1.0f, 0.4f, 0.3f, 1.0f));
+				//m_apObject2D[nCnt * SCORE_NUM + 2]->SetColor(D3DXCOLOR(1.0f, 0.4f, 0.3f, 1.0f));
+
+				m_nNewRec = nCnt;
+				m_bNewRec = true;
+
+				//m_col = D3DXCOLOR(1.0f, 0.4f, 0.3f, 1.0f);
+
+				m_Alpha = -0.015f;
+				break;
+			}
+		}
 	}
 
 	fclose(pFile);
 
-	//ファイルを開く
-	pFile = fopen("data\\TEXT\\ranking.txt", "w");			//(ファイル名を指定,　モードの指定”w”で書き込み)
+	// ファイルを開く
+	pFile = fopen("data\\TEXT\\ranking.txt", "w");			// (ファイル名を指定,　モードの指定”w”で書き込み)
 
-														//NULLチェック
+														// NULLチェック
 	if (pFile != NULL)
 	{
 		for (int nCnt = 0; nCnt < RANKING_MAX; nCnt++)
@@ -132,7 +156,7 @@ HRESULT CRanking::Init(void)
 }
 
 //========================================================
-//終了処理
+// 終了処理
 //========================================================
 void CRanking::Uninit(void)
 {
@@ -141,19 +165,31 @@ void CRanking::Uninit(void)
 		m_apObject2D[nCnt]->Uninit();
 	}
 
+	for (int nCnt = 0; nCnt < RANKING_MAX; nCnt++)
+	{
+		m_apObject2DRank[nCnt]->Uninit();
+	}
+
 	Release();
 }
 
 //========================================================
-//更新処理
+// 更新処理
 //========================================================
 void CRanking::Update(void)
 {
+	if (m_bNewRec == true)
+	{
+		BlinkingCol();
 
+		m_apObject2D[m_nNewRec * SCORE_NUM]->SetColor(m_col);
+		m_apObject2D[m_nNewRec * SCORE_NUM + 1]->SetColor(m_col);
+		m_apObject2D[m_nNewRec * SCORE_NUM + 2]->SetColor(m_col);
+	}
 }
 
 //========================================================
-//描画処理
+// 描画処理
 //========================================================
 void CRanking::Draw(void)
 {
@@ -161,10 +197,15 @@ void CRanking::Draw(void)
 	{
 		m_apObject2D[nCnt]->Draw();
 	}
+
+	for (int nCnt = 0; nCnt < RANKING_MAX; nCnt++)
+	{
+		m_apObject2DRank[nCnt]->Draw();
+	}
 }
 
 //========================================================
-//設定処理
+// 設定処理
 //========================================================
 void CRanking::SetScore(int nScore, int nCntR)
 {
@@ -175,12 +216,12 @@ void CRanking::SetScore(int nScore, int nCntR)
 
 	for (int nCnt = 0; nCnt < SCORE_NUM; nCnt++)
 	{
-		m_apObject2D[nCnt + 3 * nCntR]->SetVtxRanking(m_aTexU[nCnt], nCnt, nCntR);
+		m_apObject2D[nCnt + 3 * nCntR]->SetVtxRankingScore(m_aTexU[nCnt], nCnt, nCntR);
 	}
 }
 
 //========================================================
-//今回のスコア設定処理
+// 今回のスコア設定処理
 //========================================================
 void CRanking::SetCurScore(int nScore)
 {
@@ -188,7 +229,7 @@ void CRanking::SetCurScore(int nScore)
 }
 
 //========================================================
-//位置を返す
+// 位置を返す
 //========================================================
 D3DXVECTOR3 CRanking::GetPos(void)
 {
@@ -196,7 +237,7 @@ D3DXVECTOR3 CRanking::GetPos(void)
 }
 
 //========================================================
-//位置を返す
+// 位置を返す
 //========================================================
 void CRanking::SetPos(D3DXVECTOR3 pos)
 {
@@ -204,9 +245,31 @@ void CRanking::SetPos(D3DXVECTOR3 pos)
 }
 
 //========================================================
-//位置を返す
+// 位置を返す
 //========================================================
 void CRanking::SetRot(D3DXVECTOR3 rot)
 {
 	m_rot = rot;
+}
+
+//========================================================
+// 点滅処理
+//========================================================
+void CRanking::BlinkingCol(void)
+{
+	if (m_col.a > 1.0f)
+	{
+		m_col.a = 1.0f;
+
+		m_Alpha = -0.015f;
+	}
+
+	else if (m_col.a < 0.2f)
+	{
+		m_col.a = 0.2f;
+
+		m_Alpha = 0.015f;
+	}
+
+	m_col.a += m_Alpha;
 }

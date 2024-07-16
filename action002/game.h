@@ -64,7 +64,7 @@ private:
 	static CTime *m_pTime;						//タイムのポインタ
 	static CScore *m_pScore;					//スコアのポインタ
 	static CEnemyManager *m_pEnemyManager;		//エネミー3Dのポインタ
-	static CWallObjManager *m_pWallManager;		//エネミー3Dのポインタ
+	static CWallObjManager *m_pWallManager;		//壁3Dのポインタ
 	static CItemManager *m_pItemManager;		//アイテムマネージャーのポインタ
 	static CSkill_UI *m_pSkillUI;				//アイテムマネージャーのポインタ
 	CField *m_pField[256];						//フィールドのポインタ

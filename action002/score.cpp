@@ -53,6 +53,11 @@ HRESULT CScore::Init(void)
 
 		m_apObject2D[nCnt]->Init();
 
+		m_apObject2D[nCnt]->SetPos(D3DXVECTOR3(880.0f, 70.0f, 0.0f));
+
+		m_apObject2D[nCnt]->SetsizeX(40.0f);
+		m_apObject2D[nCnt]->SetsizeY(50.0f);
+
 		m_nIdxTexture = m_apObject2D[nCnt]->SetTex("data\\TEXTURE\\number_blackclover_07.png");
 
 		m_apObject2D[nCnt]->BindTexture(m_nIdxTexture);
@@ -95,11 +100,7 @@ void CScore::Draw(void)
 {
 	for (int nCnt = 0; nCnt < SCORE_MAX; nCnt++)
 	{
-		m_apObject2D[nCnt]->AlphaTestValid();
-
 		m_apObject2D[nCnt]->Draw();
-
-		m_apObject2D[nCnt]->AlphaTestInvalid();
 	}
 }
 

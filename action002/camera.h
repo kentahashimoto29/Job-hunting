@@ -30,8 +30,10 @@ public:
 	void Update(void);									//更新処理
 	void SetCamera(void);								//カメラの設定処理
 	void SetPos(D3DXVECTOR3 posV, D3DXVECTOR3 posR);	//位置の設定処理
-	void SetPosGame(D3DXVECTOR3 posV, D3DXVECTOR3 posR);	//位置の設定処理
+	void SetPosGame(D3DXVECTOR3 posV, D3DXVECTOR3 posR);//位置の設定処理
+	void SetPosTitle();									//位置の設定処理
 
+	void SetRot(D3DXVECTOR3 rot) { m_rot = rot; }		//向きを設定
 	D3DXVECTOR3 GetRot(void);							//向きを返す
 
 private:

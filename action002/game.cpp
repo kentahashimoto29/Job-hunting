@@ -10,11 +10,15 @@
 #include "Skill_UI.h"
 
 #define PLAYER_SPAWN_X							(1400.0f)
-#define FEILD_WIDTH								(16)
-#define FEILD_HEIGHT							(16)
-#define WALL_WIDTH								(16)
-#define WALL_HEIGHT								(2)
+#define FEILD_WIDTH_NUM							(16)
+#define FEILD_HEIGHT_NUM						(16)
+#define WALL_WIDTH_NUM							(16)
+#define WALL_HEIGHT_NUM							(2)
 #define WALL_NUM								(4)
+#define FEILD_WIDTH								(100.0f)
+#define FEILD_HEIGHT							(100.0f)
+#define WALL_WIDTH								(100.0f)
+#define WALL_HEIGHT								(100.0f)
 
 //========================================================
 //静的メンバ変数
@@ -56,6 +60,7 @@ CGame::~CGame()
 //========================================================
 HRESULT CGame::Init(void)
 {
+	CTexture *T = CManager::GetInstance()->GetTexture();
 
 	m_pTime = CTime::Create();
 
@@ -71,47 +76,47 @@ HRESULT CGame::Init(void)
 
 	m_pSkillUI = CSkill_UI::Create();
 
-	for (int nCntHeight = 0; nCntHeight < FEILD_HEIGHT; nCntHeight++)
+	for (int nCntHeight = 0; nCntHeight < FEILD_HEIGHT_NUM; nCntHeight++)
 	{
-		for (int nCntWidth = 0; nCntWidth < FEILD_WIDTH; nCntWidth++)
+		for (int nCntWidth = 0; nCntWidth < FEILD_WIDTH_NUM; nCntWidth++)
 		{
-			m_pField[nCntWidth + nCntHeight * FEILD_WIDTH] = 
-				CField::Create(D3DXVECTOR3(100.0f * nCntWidth, 0.0f, 100.0f * nCntHeight), D3DXVECTOR3(0.0f, 0.0f, 0.0f));
+			m_pField[nCntWidth + nCntHeight * FEILD_WIDTH_NUM] =
+				CField::Create(D3DXVECTOR3(FEILD_WIDTH * nCntWidth, 0.0f, FEILD_HEIGHT * nCntHeight), D3DXVECTOR3(0.0f, 0.0f, 0.0f));
 		}
 	}
 
-	m_nInitPos = ((100.0f * WALL_WIDTH) - 50.0f);
+	m_nInitPos = ((100.0f * WALL_WIDTH_NUM) - 50.0f);
 
 
-	for (int nCntHeight = 0; nCntHeight < WALL_HEIGHT; nCntHeight++)
+	for (int nCntHeight = 0; nCntHeight < WALL_HEIGHT_NUM; nCntHeight++)
 	{
 		for (int nCntNum = 0; nCntNum < WALL_NUM; nCntNum++)
 		{
-			for (int nCntWidth = 0; nCntWidth < WALL_WIDTH; nCntWidth++)
+			for (int nCntWidth = 0; nCntWidth < WALL_WIDTH_NUM; nCntWidth++)
 			{
 				switch (nCntNum)
 				{
 				case 0:
-					m_pWall[nCntWidth + nCntNum * WALL_WIDTH + nCntHeight * WALL_NUM * WALL_WIDTH] =
-						CWall::Create(D3DXVECTOR3(-50.0f, 50.0f + 100.0f * nCntHeight, 100.0f * nCntWidth), D3DXVECTOR3(0.0f, -D3DX_PI / 2, 0.0f));
+					m_pWall[nCntWidth + nCntNum * WALL_WIDTH_NUM + nCntHeight * WALL_NUM * WALL_WIDTH_NUM] =
+						CWall::Create(D3DXVECTOR3(-50.0f, 50.0f + WALL_HEIGHT * nCntHeight, WALL_WIDTH * nCntWidth), D3DXVECTOR3(0.0f, -D3DX_PI / 2, 0.0f));
 					break;
 
 
 				case 1:
-					m_pWall[nCntWidth + nCntNum * WALL_WIDTH + nCntHeight * WALL_NUM * WALL_WIDTH] =
-						CWall::Create(D3DXVECTOR3(100.0f * nCntWidth, 50.0f + 100.0f * nCntHeight, m_nInitPos), D3DXVECTOR3(0.0f, 0.0f, 0.0f));
+					m_pWall[nCntWidth + nCntNum * WALL_WIDTH_NUM + nCntHeight * WALL_NUM * WALL_WIDTH_NUM] =
+						CWall::Create(D3DXVECTOR3(WALL_WIDTH * nCntWidth, 50.0f + WALL_HEIGHT * nCntHeight, m_nInitPos), D3DXVECTOR3(0.0f, 0.0f, 0.0f));
 					break;
 
 
 				case 2:
-					m_pWall[nCntWidth + nCntNum * WALL_WIDTH + nCntHeight * WALL_NUM * WALL_WIDTH] =
-						CWall::Create(D3DXVECTOR3(m_nInitPos, 50.0f + 100.0f * nCntHeight, (m_nInitPos - 50.0f) - 100.0f * nCntWidth), D3DXVECTOR3(0.0f, D3DX_PI / 2, 0.0f));
+					m_pWall[nCntWidth + nCntNum * WALL_WIDTH_NUM + nCntHeight * WALL_NUM * WALL_WIDTH_NUM] =
+						CWall::Create(D3DXVECTOR3(m_nInitPos, 50.0f + WALL_HEIGHT * nCntHeight, (m_nInitPos - 50.0f) - WALL_WIDTH * nCntWidth), D3DXVECTOR3(0.0f, D3DX_PI / 2, 0.0f));
 					break;
 
 
 				case 3:
-					m_pWall[nCntWidth + nCntNum * WALL_WIDTH + nCntHeight * WALL_NUM * WALL_WIDTH] =
-						CWall::Create(D3DXVECTOR3(-100.0f * nCntWidth + (m_nInitPos - 50.0f), 50.0f + 100.0f * nCntHeight, -50.0f), D3DXVECTOR3(0.0f, D3DX_PI, 0.0f));
+					m_pWall[nCntWidth + nCntNum * WALL_WIDTH_NUM + nCntHeight * WALL_NUM * WALL_WIDTH_NUM] =
+						CWall::Create(D3DXVECTOR3(-WALL_WIDTH * nCntWidth + (m_nInitPos - 50.0f), 50.0f + WALL_HEIGHT * nCntHeight, -50.0f), D3DXVECTOR3(0.0f, D3DX_PI, 0.0f));
 					break;
 
 
@@ -123,7 +128,7 @@ HRESULT CGame::Init(void)
 	}
 
 	CManager::GetInstance()->GetCamera()->SetPosGame(m_pPlayer3D->GetPos(), m_pPlayer3D->GetPos());
-
+	CManager::GetInstance()->GetCamera()->SetRot(D3DXVECTOR3(0.0, 0.0, 0.0));
 
 	return S_OK;
 }
@@ -189,7 +194,7 @@ void CGame::Uninit(void)
 		m_pItemManager = NULL;
 	}
 
-	for (int nCntField = 0; nCntField < FEILD_WIDTH * FEILD_HEIGHT; nCntField++)
+	for (int nCntField = 0; nCntField < FEILD_WIDTH_NUM * FEILD_HEIGHT_NUM; nCntField++)
 	{
 		//NULLチェック
 		if (m_pField[nCntField] != NULL)
@@ -199,7 +204,7 @@ void CGame::Uninit(void)
 		}
 	}
 
-	for (int nCntWall = 0; nCntWall < WALL_WIDTH * WALL_HEIGHT * WALL_NUM; nCntWall++)
+	for (int nCntWall = 0; nCntWall < WALL_WIDTH_NUM * WALL_HEIGHT_NUM * WALL_NUM; nCntWall++)
 	{
 		//NULLチェック
 		if (m_pWall[nCntWall] != NULL)
@@ -257,6 +262,13 @@ void CGame::Update(void)
 				b = true;
 			}
 		}
+	}
+
+	if (pInputKeyboard->GetTrigger(DIK_T) == true)
+	{
+		CTexture *pT = CManager::GetInstance()->GetTexture();
+
+		int i = 0;
 	}
 
 	m_pEnemyManager->Update();

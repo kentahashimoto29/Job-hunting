@@ -189,6 +189,7 @@
     <ClInclude Include="ranking.h" />
     <ClInclude Include="renderer.h" />
     <ClInclude Include="result.h" />
+    <ClInclude Include="result_obj2D.h" />
     <ClInclude Include="score.h" />
     <ClInclude Include="skill_UI.h" />
     <ClInclude Include="sound.h" />
@@ -200,6 +201,7 @@
     <ClInclude Include="wall.h" />
     <ClInclude Include="wall_obj.h" />
     <ClInclude Include="wall_obj_manager.h" />
+    <ClInclude Include="Xmodel.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="bg.cpp" />
@@ -238,6 +240,7 @@
     <ClCompile Include="ranking.cpp" />
     <ClCompile Include="renderer.cpp" />
     <ClCompile Include="result.cpp" />
+    <ClCompile Include="result_obj2D.cpp" />
     <ClCompile Include="score.cpp" />
     <ClCompile Include="skill_UI.cpp" />
     <ClCompile Include="sound.cpp" />
@@ -249,6 +252,7 @@
     <ClCompile Include="wall.cpp" />
     <ClCompile Include="wall_obj.cpp" />
     <ClCompile Include="wall_obj_manager.cpp" />
+    <ClCompile Include="Xmodel.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

@@ -7,7 +7,8 @@
 #include "texture.h"
 #include "manager.h"
 
-int CTexture::m_nNumAll = -1;
+int CTexture::m_nNumAll = 0;
+char CTexture::m_aFilename[TEXTURE_MAX][64] = {};
 
 //========================================================
 //コンストラクタ
@@ -17,7 +18,6 @@ CTexture::CTexture()
 	for (int nCnt = 0; nCnt < TEXTURE_MAX; nCnt++)
 	{
 		m_apTexture[nCnt] = NULL;
-		m_aFilename[nCnt] = {};
 	}
 }
 
@@ -63,11 +63,15 @@ int CTexture::Regist(const char *pFilename)
 		return -1;
 	}
 
-	CRenderer *pRenderer = CManager::GetInstance()->GetRenderer();
+	for (int nCntTex = 0; nCntTex < m_nNumAll; nCntTex++)
+	{
+		if (strcmp(&m_aFilename[nCntTex][0], pFilename) == 0)
+		{
+			return nCntTex;
+		}
+	}
 
-	LPDIRECT3DDEVICE9 pDevice = pRenderer->GetDevice();
-
-	m_nNumAll++;
+	LPDIRECT3DDEVICE9 pDevice = CManager::GetInstance()->GetRenderer()->GetDevice();
 
 	//テクスチャの読み込み
 	D3DXCreateTextureFromFile(
@@ -75,9 +79,11 @@ int CTexture::Regist(const char *pFilename)
 		pFilename,
 		&m_apTexture[m_nNumAll]);
 
-	m_aFilename[m_nNumAll] = pFilename;
+	strcpy(&m_aFilename[m_nNumAll][0], pFilename);
 
-	return m_nNumAll;
+	m_nNumAll++;
+
+	return m_nNumAll - 1;
 }
 
 //========================================================
@@ -93,5 +99,5 @@ LPDIRECT3DTEXTURE9 CTexture::GetAddress(int nIdx)
 //========================================================
 const char *CTexture::GetName(int nIdx)
 {
-	return m_aFilename[nIdx];
+	return &m_aFilename[nIdx][0];
 }

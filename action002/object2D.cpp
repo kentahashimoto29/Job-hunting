@@ -9,6 +9,14 @@
 #include "player.h"
 #include "block.h"
 
+#define RANKING_INTERVAL_Y		(100.0f)
+#define RANKING_INTERVAL_X		(160.0f)
+#define RANKINGSCORE_INTERVAL_X	(60.0f)
+#define RANKING_WIDTH			(80.0f)
+#define RANKING_HEIGHT			(100.0f)
+#define TIME_INTERVAL			(1.5f)
+#define SCORE_INTERVAL			(1.5f)
+
 //========================================================
 //コンストラクタ
 //========================================================
@@ -162,6 +170,26 @@ void CObject2D::BindTexture(int nTexture)
 }
 
 //========================================================
+//頂点座標を設定
+//========================================================
+void CObject2D::SetVtx(D3DXVECTOR3 pos, float sizeX, float sizeY)
+{
+	VERTEX_2D *pVtx;			//頂点情報へのポインタ
+
+								//頂点バッファをロックする
+	m_aVerBuff->Lock(0, 0, (void**)&pVtx, 0);
+
+	//頂点座標の設定
+	pVtx[0].pos = D3DXVECTOR3(pos.x - sizeX, pos.y - sizeY, pos.z);
+	pVtx[1].pos = D3DXVECTOR3(pos.x + sizeX, pos.y - sizeY, pos.z);
+	pVtx[2].pos = D3DXVECTOR3(pos.x - sizeX, pos.y + sizeY, pos.z);
+	pVtx[3].pos = D3DXVECTOR3(pos.x + sizeX, pos.y + sizeY, pos.z);
+
+	//頂点バッファをアンロックする
+	m_aVerBuff->Unlock();
+}
+
+//========================================================
 //背景の頂点座標を設定
 //========================================================
 void CObject2D::SetVtxBG(float aTexV)
@@ -198,10 +226,10 @@ void CObject2D::SetVtxScore(int aTexU, int nCnt)
 	m_aVerBuff->Lock(0, 0, (void**)&pVtx, 0);
 
 	//頂点座標の設定
-	pVtx[0].pos = D3DXVECTOR3(nCnt * 40 + 850.0f, 20.0f, 0.0f);
-	pVtx[1].pos = D3DXVECTOR3(nCnt * 40 + 890.0f, 20.0f, 0.0f);
-	pVtx[2].pos = D3DXVECTOR3(nCnt * 40 + 850.0f, 70.0f, 0.0f);
-	pVtx[3].pos = D3DXVECTOR3(nCnt * 40 + 890.0f, 70.0f, 0.0f);
+	pVtx[0].pos = D3DXVECTOR3(nCnt * (m_sizeX * SCORE_INTERVAL) + m_pos.x - m_sizeX, m_pos.y - m_sizeY, 0.0f);
+	pVtx[1].pos = D3DXVECTOR3(nCnt * (m_sizeX * SCORE_INTERVAL) + m_pos.x + m_sizeX, m_pos.y - m_sizeY, 0.0f);
+	pVtx[2].pos = D3DXVECTOR3(nCnt * (m_sizeX * SCORE_INTERVAL) + m_pos.x - m_sizeX, m_pos.y + m_sizeY, 0.0f);
+	pVtx[3].pos = D3DXVECTOR3(nCnt * (m_sizeX * SCORE_INTERVAL) + m_pos.x + m_sizeX, m_pos.y + m_sizeY, 0.0f);
 
 	//テクスチャ座標の設定
 	pVtx[0].tex = D3DXVECTOR2(aTexU * 0.1f, 0.0f);
@@ -236,7 +264,7 @@ void CObject2D::SetVtxBlock(D3DXVECTOR3 pos)
 //========================================================
 // タイトルの頂点座標を設定
 //========================================================
-void CObject2D::SetVtxTitleEnter()
+void CObject2D::SetVtxTitleStart()
 {
 	VERTEX_2D *pVtx;         //頂点情報へのポインタ
 
@@ -244,10 +272,10 @@ void CObject2D::SetVtxTitleEnter()
 	m_aVerBuff->Lock(0, 0, (void**)&pVtx, 0);
 
 	//頂点座標の設定
-	pVtx[0].pos = D3DXVECTOR3(-40.0f + m_pos.x, -40.0f + m_pos.y, 0.0f);
-	pVtx[1].pos = D3DXVECTOR3(40.0f + m_pos.x, -40.0f + m_pos.y, 0.0f);
-	pVtx[2].pos = D3DXVECTOR3(-40.0f + m_pos.x, 40.0f + m_pos.y, 0.0f);
-	pVtx[3].pos = D3DXVECTOR3(40.0f + m_pos.x, 40.0f + m_pos.y, 0.0f);
+	pVtx[0].pos = D3DXVECTOR3(-140.0f + m_pos.x, -40.0f + m_pos.y, 0.0f);
+	pVtx[1].pos = D3DXVECTOR3(140.0f + m_pos.x, -40.0f + m_pos.y, 0.0f);
+	pVtx[2].pos = D3DXVECTOR3(-140.0f + m_pos.x, 40.0f + m_pos.y, 0.0f);
+	pVtx[3].pos = D3DXVECTOR3(140.0f + m_pos.x, 40.0f + m_pos.y, 0.0f);
 
 	//頂点カラーの設定
 	pVtx[0].col = D3DXCOLOR(1.0f, 1.0f, 1.0f, 1.0f);
@@ -270,10 +298,10 @@ void CObject2D::SetVtxTitle()
 	m_aVerBuff->Lock(0, 0, (void**)&pVtx, 0);
 
 	//頂点座標の設定
-	pVtx[0].pos = D3DXVECTOR3(m_pos.x - 360.0f, m_pos.y - 40.0f, 0.0f);
-	pVtx[1].pos = D3DXVECTOR3(m_pos.x + 360.0f, m_pos.y - 40.0f, 0.0f);
-	pVtx[2].pos = D3DXVECTOR3(m_pos.x - 360.0f, m_pos.y + 40.0f, 0.0f);
-	pVtx[3].pos = D3DXVECTOR3(m_pos.x + 360.0f, m_pos.y + 40.0f, 0.0f);
+	pVtx[0].pos = D3DXVECTOR3(m_pos.x - 400.0f, m_pos.y - 80.0f, 0.0f);
+	pVtx[1].pos = D3DXVECTOR3(m_pos.x + 400.0f, m_pos.y - 80.0f, 0.0f);
+	pVtx[2].pos = D3DXVECTOR3(m_pos.x - 400.0f, m_pos.y + 80.0f, 0.0f);
+	pVtx[3].pos = D3DXVECTOR3(m_pos.x + 400.0f, m_pos.y + 80.0f, 0.0f);
 
 	//頂点カラーの設定
 	pVtx[0].col = D3DXCOLOR(1.0f, 1.0f, 1.0f, 1.0f);
@@ -322,10 +350,10 @@ void CObject2D::SetVtxTime(int aTexU, int nCnt)
 	m_aVerBuff->Lock(0, 0, (void**)&pVtx, 0);
 
 	//頂点座標の設定
-	pVtx[0].pos = D3DXVECTOR3(nCnt * 40 + 450.0f, 20.0f, 0.0f);
-	pVtx[1].pos = D3DXVECTOR3(nCnt * 40 + 490.0f, 20.0f, 0.0f);
-	pVtx[2].pos = D3DXVECTOR3(nCnt * 40 + 450.0f, 70.0f, 0.0f);
-	pVtx[3].pos = D3DXVECTOR3(nCnt * 40 + 490.0f, 70.0f, 0.0f);
+	pVtx[0].pos = D3DXVECTOR3(nCnt * (m_sizeX * TIME_INTERVAL) + m_pos.x - m_sizeX, m_pos.y - m_sizeY, 0.0f);
+	pVtx[1].pos = D3DXVECTOR3(nCnt * (m_sizeX * TIME_INTERVAL) + m_pos.x + m_sizeX, m_pos.y - m_sizeY, 0.0f);
+	pVtx[2].pos = D3DXVECTOR3(nCnt * (m_sizeX * TIME_INTERVAL) + m_pos.x - m_sizeX, m_pos.y + m_sizeY, 0.0f);
+	pVtx[3].pos = D3DXVECTOR3(nCnt * (m_sizeX * TIME_INTERVAL) + m_pos.x + m_sizeX, m_pos.y + m_sizeY, 0.0f);
 
 	//テクスチャ座標の設定
 	pVtx[0].tex = D3DXVECTOR2(aTexU * 0.1f, 0.0f);
@@ -340,7 +368,7 @@ void CObject2D::SetVtxTime(int aTexU, int nCnt)
 //========================================================
 // ランキングの頂点座標を設定
 //========================================================
-void CObject2D::SetVtxRanking(int aTexU, int nCnt, int nCnt2)
+void CObject2D::SetVtxRankingScore(int aTexU, int nCnt, int nCnt2)
 {
 	VERTEX_2D *pVtx;         //頂点情報へのポインタ
 
@@ -348,10 +376,36 @@ void CObject2D::SetVtxRanking(int aTexU, int nCnt, int nCnt2)
 	m_aVerBuff->Lock(0, 0, (void**)&pVtx, 0);
 
 	//頂点座標の設定
-	pVtx[0].pos = D3DXVECTOR3(nCnt * 40 + 580.0f, nCnt2 * 50 + 20.0f, 0.0f);
-	pVtx[1].pos = D3DXVECTOR3(nCnt * 40 + 620.0f, nCnt2 * 50 + 20.0f, 0.0f);
-	pVtx[2].pos = D3DXVECTOR3(nCnt * 40 + 580.0f, nCnt2 * 50 + 70.0f, 0.0f);
-	pVtx[3].pos = D3DXVECTOR3(nCnt * 40 + 620.0f, nCnt2 * 50 + 70.0f, 0.0f);
+	pVtx[0].pos = D3DXVECTOR3(nCnt * RANKINGSCORE_INTERVAL_X + m_pos.x, nCnt2 * RANKING_INTERVAL_Y + m_pos.y, 0.0f);
+	pVtx[1].pos = D3DXVECTOR3(nCnt * RANKINGSCORE_INTERVAL_X + m_pos.x + RANKING_WIDTH, nCnt2 * RANKING_INTERVAL_Y + m_pos.y, 0.0f);
+	pVtx[2].pos = D3DXVECTOR3(nCnt * RANKINGSCORE_INTERVAL_X + m_pos.x, nCnt2 * RANKING_INTERVAL_Y + m_pos.y + RANKING_HEIGHT, 0.0f);
+	pVtx[3].pos = D3DXVECTOR3(nCnt * RANKINGSCORE_INTERVAL_X + m_pos.x + RANKING_WIDTH, nCnt2 * RANKING_INTERVAL_Y + m_pos.y + RANKING_HEIGHT, 0.0f);
+
+	//テクスチャ座標の設定
+	pVtx[0].tex = D3DXVECTOR2(aTexU * 0.1f, 0.0f);
+	pVtx[1].tex = D3DXVECTOR2(aTexU * 0.1f + 0.1f, 0.0f);
+	pVtx[2].tex = D3DXVECTOR2(aTexU * 0.1f, 1.0f);
+	pVtx[3].tex = D3DXVECTOR2(aTexU * 0.1f + 0.1f, 1.0f);
+
+	//頂点バッファをアンロックする
+	m_aVerBuff->Unlock();
+}
+
+//========================================================
+// ランキングの頂点座標を設定
+//========================================================
+void CObject2D::SetVtxRanking(int aTexU, int nCnt)
+{
+	VERTEX_2D *pVtx;         //頂点情報へのポインタ
+
+							 //頂点バッファをロックする
+	m_aVerBuff->Lock(0, 0, (void**)&pVtx, 0);
+
+	//頂点座標の設定
+	pVtx[0].pos = D3DXVECTOR3(m_pos.x - RANKING_INTERVAL_X, nCnt * RANKING_INTERVAL_Y + m_pos.y, 0.0f);
+	pVtx[1].pos = D3DXVECTOR3(m_pos.x - RANKING_INTERVAL_X + RANKING_WIDTH, nCnt * RANKING_INTERVAL_Y + m_pos.y, 0.0f);
+	pVtx[2].pos = D3DXVECTOR3(m_pos.x - RANKING_INTERVAL_X, nCnt * RANKING_INTERVAL_Y + m_pos.y + RANKING_HEIGHT, 0.0f);
+	pVtx[3].pos = D3DXVECTOR3(m_pos.x - RANKING_INTERVAL_X + RANKING_WIDTH, nCnt * RANKING_INTERVAL_Y + m_pos.y + RANKING_HEIGHT, 0.0f);
 
 	//テクスチャ座標の設定
 	pVtx[0].tex = D3DXVECTOR2(aTexU * 0.1f, 0.0f);
@@ -374,7 +428,7 @@ void CObject2D::SetVtxSkillUI(void)
 	m_aVerBuff->Lock(0, 0, (void**)&pVtx, 0);
 
 	//頂点座標の設定
-	pVtx[0].pos = D3DXVECTOR3(m_pos.x, m_pos.y - 80.0f, 0.0f);
+	pVtx[0].pos = D3DXVECTOR3(m_pos.x, m_pos.y - 0.0f, 0.0f);
 	pVtx[1].pos = D3DXVECTOR3(m_pos.x + 80.0f, m_pos.y - 80.0f, 0.0f);
 	pVtx[2].pos = D3DXVECTOR3(m_pos.x, m_pos.y, 0.0f);
 	pVtx[3].pos = D3DXVECTOR3(m_pos.x + 80.0f, m_pos.y, 0.0f);
@@ -394,10 +448,10 @@ void CObject2D::SetVtxGaugeUI(void)
 	m_aVerBuff->Lock(0, 0, (void**)&pVtx, 0);
 
 	//頂点座標の設定
-	pVtx[0].pos = D3DXVECTOR3(m_pos.x, m_pos.y - 80.0f * (m_nGauge / m_nGaugeMax), 0.0f);
-	pVtx[1].pos = D3DXVECTOR3(m_pos.x + 80.0f,  m_pos.y - 80.0f * (m_nGauge / m_nGaugeMax), 0.0f);
+	pVtx[0].pos = D3DXVECTOR3(m_pos.x, m_pos.y - 100.0f * (m_nGauge / m_nGaugeMax), 0.0f);
+	pVtx[1].pos = D3DXVECTOR3(m_pos.x + 40.0f,  m_pos.y - 100.0f * (m_nGauge / m_nGaugeMax), 0.0f);
 	pVtx[2].pos = D3DXVECTOR3(m_pos.x, m_pos.y, 0.0f);
-	pVtx[3].pos = D3DXVECTOR3(m_pos.x + 80.0f, m_pos.y, 0.0f);
+	pVtx[3].pos = D3DXVECTOR3(m_pos.x + 40.0f, m_pos.y, 0.0f);
 
 	//頂点バッファをアンロックする
 	m_aVerBuff->Unlock();
@@ -475,7 +529,7 @@ void CObject2D::SetRot(D3DXVECTOR3 rot)
 //========================================================
 //位置を返す
 //========================================================
-int CObject2D::SetTex(const char TexName[32])
+int CObject2D::SetTex(const char TexName[64])
 {
 	if (TexName == NULL)
 	{

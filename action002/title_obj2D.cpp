@@ -21,6 +21,7 @@ CTitle_Obj2D::CTitle_Obj2D()
 {
 	m_Alpha = 0.0f;
 	m_col = D3DXCOLOR(1.0f, 1.0f, 1.0f, 1.0f);
+	BlinkingCnt = 0;
 	b = false;
 }
 
@@ -59,26 +60,26 @@ HRESULT CTitle_Obj2D::Init(void)
 		{
 			// 背景
 		case 0:
-			m_apObject2D[i] = new CObject2D;
+			//m_apObject2D[i] = new CObject2D;
 
-			m_nIdxTexture = m_apObject2D[i]->SetTex("data\\TEXTURE\\イヴェルカーナ.png");
+			//m_nIdxTexture = m_apObject2D[i]->SetTex("data\\TEXTURE\\イヴェルカーナ.png");
 
-			m_apObject2D[i]->BindTexture(m_nIdxTexture);
+			//m_apObject2D[i]->BindTexture(m_nIdxTexture);
 
-			m_apObject2D[i]->Init();
+			//m_apObject2D[i]->Init();
 
 			//m_apObject2D[i]->SetPos(D3DXVECTOR3(640.0f, 360.0f, 0.0f));
 
-			m_apObject2D[i]->SetVtxResult();
+			//m_apObject2D[i]->SetVtxResult();
 
-			m_apObject2D[i]->SetType(CObject::TYPE_TITLE);
+			//m_apObject2D[i]->SetType(CObject::TYPE_TITLE);
 			break;
 
 			// ENTERロゴ
 		case 1:
 			m_apObject2D[i] = new CObject2D;
 
-			m_nIdxTexture = m_apObject2D[i]->SetTex("data\\TEXTURE\\enemy000.png");
+			m_nIdxTexture = m_apObject2D[i]->SetTex("data\\TEXTURE\\gamestart.png");
 
 			m_apObject2D[i]->BindTexture(m_nIdxTexture);
 
@@ -86,7 +87,7 @@ HRESULT CTitle_Obj2D::Init(void)
 
 			m_apObject2D[i]->SetPos(D3DXVECTOR3(640.0f, 560.0f, 0.0f));
 
-			m_apObject2D[i]->SetVtxTitleEnter();
+			m_apObject2D[i]->SetVtxTitleStart();
 
 			m_apObject2D[i]->SetType(CObject::TYPE_TITLE);
 			break;
@@ -121,7 +122,10 @@ void CTitle_Obj2D::Uninit(void)
 {
 	for (int nCnt = 0; nCnt < OBJ_MAX; nCnt++)
 	{
-		m_apObject2D[nCnt]->Uninit();
+		if (m_apObject2D[nCnt] != NULL)
+		{
+			m_apObject2D[nCnt]->Uninit();
+		}
 	}
 	Release();
 }
@@ -176,7 +180,10 @@ void CTitle_Obj2D::Draw(void)
 {
 	for (int nCnt = 0; nCnt < OBJ_MAX; nCnt++)
 	{
-		m_apObject2D[nCnt]->Draw();
+		if (m_apObject2D[nCnt] != NULL)
+		{
+			m_apObject2D[nCnt]->Draw();
+		}
 	}
 }
 

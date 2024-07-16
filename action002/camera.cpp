@@ -8,6 +8,7 @@
 #include "manager.h"
 #include "input.h"
 #include "game.h"
+#include "title.h"
 
 //========================================================
 //コンストラクタ
@@ -203,6 +204,34 @@ void CCamera::SetPosGame(D3DXVECTOR3 posV, D3DXVECTOR3 posR)
 {
 	m_posV = D3DXVECTOR3(posV.x, posV.y + 90.0f, posV.z - 200.0f);
 	m_posR = D3DXVECTOR3(posR.x, posR.y + 40.0f, posR.z);
+	m_rot = D3DXVECTOR3(0.0f, 0.0f, 0.0f);
+	m_vecU = D3DXVECTOR3(0.0f, 1.0f, 0.0f);
+
+	//対角線の長さを算出
+	//m_Distance = sqrtf(m_posV.y * m_posV.y + m_posV.z * m_posV.z);
+
+	m_Distance = -m_posV.z;
+
+	//対角線の角度を算出
+	m_Angle = atan2f(m_posV.y, -(m_posV.z - m_posR.z));
+
+	m_rot.x = m_Angle;
+
+	x = 0.0f;
+	y = 0.0f;
+
+	y = m_rot.x;
+}
+
+//========================================================
+//カメラの位置
+//========================================================
+void CCamera::SetPosTitle()
+{
+
+
+	m_posV = D3DXVECTOR3(2000.0f, 500.0f, 2000.0f);
+	m_posR = D3DXVECTOR3((1600.0f / 2) - 50.0f, 0.0f, (1600.0f / 2) - 50.0f);
 	m_rot = D3DXVECTOR3(0.0f, 0.0f, 0.0f);
 	m_vecU = D3DXVECTOR3(0.0f, 1.0f, 0.0f);
 

@@ -8,6 +8,10 @@
 #define _TITLE_H_
 #include "main.h"
 #include "manager.h"
+#include "wall_obj_manager.h"
+#include "field.h"
+#include "wall.h"
+
 class CObject2D;
 class CTitle_Obj2D;
 
@@ -34,8 +38,12 @@ public:
 private:
 	CObject2D *m_apObject2D[2];				//タイトルのオブジェクト
 	static CTitle_Obj2D *m_apTitleObj;
+	static CWallObjManager *m_pWallManager;		//壁3Dのポインタ
+	CField *m_pField[256];						//フィールドのポインタ
+	CWall *m_pWall[256];						//壁のポインタ
 
 	static int m_nIdxTexture;				//テクスチャの番号
+	static float m_nInitPos;
 
 	bool b;
 };

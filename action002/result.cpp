@@ -5,14 +5,18 @@
 //
 //========================================================
 #include "result.h"
+#include "result_obj2D.h"
 #include "manager.h"
 #include "object2D.h"
 #include "fade.h"
+
+#define OBJ_MAX (1)
 
 //========================================================
 //静的メンバ変数
 //========================================================
 CRanking *CResult::m_pRanking = NULL;
+CResult_Obj2D *CResult::m_apResultObj = NULL;
 int CResult::m_nIdxTexture = 0;
 
 //========================================================
@@ -36,32 +40,7 @@ CResult::~CResult()
 //========================================================
 HRESULT CResult::Init(void)
 {
-	CTexture *pTexture = CManager::GetInstance()->GetTexture();
-
-	bool bTexture = false;
-
-	for (int nCnt = 0; nCnt < TEXTURE_MAX; nCnt++)
-	{
-		if ("data\\TEXTURE\\Goal001.jpg" == pTexture->GetName(nCnt))
-		{
-			bTexture = true;
-			break;
-		}
-	}
-
-	if (bTexture == false)
-	{
-		m_nIdxTexture = pTexture->Regist("data\\TEXTURE\\Goal001.jpg");
-	}
-
-	m_apObject2D[0] = new CObject2D;
-
-	m_apObject2D[0]->BindTexture(m_nIdxTexture);
-
-	m_apObject2D[0]->Init();
-
-	m_apObject2D[0]->SetVtxResult();
-
+	m_apResultObj = CResult_Obj2D::Create();
 	m_pRanking = CRanking::Create();
 
 	return S_OK;
@@ -72,8 +51,22 @@ HRESULT CResult::Init(void)
 //========================================================
 void CResult::Uninit(void)
 {
-	m_apObject2D[0]->Uninit();
-	m_pRanking->Uninit();
+	//NULLチェック
+	if (m_apResultObj != NULL)
+	{
+		//終了処理
+		m_apResultObj->Uninit();
+		m_apResultObj = NULL;
+	}
+
+	//NULLチェック
+	if (m_pRanking != NULL)
+	{
+		//終了処理
+		m_pRanking->Uninit();
+		m_pRanking = NULL;
+	}
+
 	CScene::Uninit();
 }
 
@@ -103,7 +96,7 @@ void CResult::Update(void)
 //========================================================
 void CResult::Draw(void)
 {
-	m_apObject2D[0]->Draw();
+	m_apResultObj->Draw();
 	m_pRanking->Draw();
 }
 

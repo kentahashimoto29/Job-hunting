@@ -148,20 +148,25 @@ void CWallObj::Uninit(void)
 //========================================================
 void CWallObj::Update(void)
 {
-	//プレイヤーの情報を取得
-	CPlayer3D *pPlayer = CGame::GetPlayer3D();
 
-	//投げアイテムの情報を取得
-	CItemThrow **ppItemThrow = CGame::GetItemManager()->GetItemThrow();
-	CItemThrow *pItemThrow = *ppItemThrow;
+	CScene::MODE mode = CManager::GetInstance()->GetScene()->GetMode();
 
-	bCollision = CWallObj::Collision(pPlayer, pItemThrow);
-
-	if (bCollision == true)
+	if (CManager::GetInstance()->GetScene()->GetMode() == CScene::MODE_GAME)
 	{
-		return;
-	}
+		//プレイヤーの情報を取得
+		CPlayer3D *pPlayer = CGame::GetPlayer3D();
 
+		//投げアイテムの情報を取得
+		CItemThrow **ppItemThrow = CGame::GetItemManager()->GetItemThrow();
+		CItemThrow *pItemThrow = *ppItemThrow;
+
+		bCollision = CWallObj::Collision(pPlayer, pItemThrow);
+
+		if (bCollision == true)
+		{
+			return;
+		}
+	}
 }
 
 //========================================================

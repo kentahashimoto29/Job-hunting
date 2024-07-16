@@ -47,30 +47,18 @@ CTime *CTime::Create()
 //========================================================
 HRESULT CTime::Init(void)
 {
-	CTexture *pTexture = CManager::GetInstance()->GetTexture();
-
-	bool bTexture = false;
-
-	for (int nCnt = 0; nCnt < TEXTURE_MAX; nCnt++)
-	{
-		if ("data\\TEXTURE\\number_blackclover_07.png" == pTexture->GetName(nCnt))
-		{
-			m_nIdxTexture = nCnt;
-			bTexture = true;
-			break;
-		}
-	}
-
-	if (bTexture == false)
-	{
-		m_nIdxTexture = pTexture->Regist("data\\TEXTURE\\number_blackclover_07.png");
-	}
-
 	for (int nCnt = 0; nCnt < TIME_MAX; nCnt++)
 	{
 		m_apObject2D[nCnt] = new CObject2D();
 
 		m_apObject2D[nCnt]->Init();
+
+		m_apObject2D[nCnt]->SetPos(D3DXVECTOR3(520.0f, 70.0f, 0.0f));
+
+		m_apObject2D[nCnt]->SetsizeX(40.0f);
+		m_apObject2D[nCnt]->SetsizeY(50.0f);
+
+		m_nIdxTexture = m_apObject2D[nCnt]->SetTex("data\\TEXTURE\\number_blackclover_07.png");
 
 		m_apObject2D[nCnt]->BindTexture(m_nIdxTexture);
 	}
@@ -130,11 +118,7 @@ void CTime::Draw(void)
 
 	for (int nCnt = 0; nCnt < TIME_MAX; nCnt++)
 	{
-		m_apObject2D[nCnt]->AlphaTestValid();
-
 		m_apObject2D[nCnt]->Draw();
-
-		m_apObject2D[nCnt]->AlphaTestInvalid();
 	}
 }
 

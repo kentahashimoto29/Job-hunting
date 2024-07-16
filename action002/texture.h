@@ -28,7 +28,7 @@ public:
 
 private:
 	LPDIRECT3DTEXTURE9 m_apTexture[TEXTURE_MAX];	//テクスチャのポインタ
-	const char *m_aFilename[TEXTURE_MAX];			//テクスチャの名前
+	static char m_aFilename[TEXTURE_MAX][64];		//テクスチャの名前
 	static int m_nNumAll;							//テクスチャの総数
 };
 

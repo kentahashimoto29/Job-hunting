@@ -13,6 +13,7 @@
 #include "camera.h"
 #include "light.h"
 #include "texture.h"
+#include "Xmodel.h"
 #include "object3D.h"
 #include "sound.h"
 class CFade;
@@ -73,16 +74,17 @@ public:
 	void Update(void);											//更新処理
 	void Draw(void);											//描画処理
 
-	static CManager *GetInstance();								//マネージャーのポインタを返す関数
-	CRenderer *GetRenderer();									//レンラダーのポインタを返す関数
-	CInputKeyboard *GetInputKeyboard();							//キーボードのポインタを返す関数
-	CInputMouse *GetInputMouse();								//マウスのポインタを返す関数
-	CTexture *GetTexture();										//テクスチャのポインタを返す関数
-	CCamera *GetCamera();										//カメラのポインタを返す関数
-	CLight *GetLight();											//ライトのポインタを返す関数
-	CScene *GetScene();											//シーンのポインタを返す関数
-	CSound *GetSound();											//サウンドのポインタを返す関数
-	CFade *GetFade();											//フェードのポインタを返す関数
+	static CManager *GetInstance();									//マネージャーのポインタを返す関数
+	CRenderer *GetRenderer() { return m_pRenderer; }				//レンラダーのポインタを返す関数
+	CInputKeyboard *GetInputKeyboard() { return m_pInputKeyboard; }	//キーボードのポインタを返す関数
+	CInputMouse *GetInputMouse() { return m_pInputMouse; }			//マウスのポインタを返す関数
+	CTexture *GetTexture() { return m_pTexture; }					//テクスチャのポインタを返す関数
+	CXmodel *GetXmodel() { return m_pXmodel; }						//Xモデルのポインタを返す関数
+	CCamera *GetCamera() { return m_pCamera; }						//カメラのポインタを返す関数
+	CLight *GetLight() { return m_pLight; }							//ライトのポインタを返す関数
+	CScene *GetScene() { return m_pScene; }							//シーンのポインタを返す関数
+	CSound *GetSound() { return m_pSound; }							//サウンドのポインタを返す関数
+	CFade *GetFade() { return m_pFade; }							//フェードのポインタを返す関数
 
 	void SetMode(CScene::MODE Mode);
 
@@ -92,6 +94,7 @@ private:
 	CInputKeyboard *m_pInputKeyboard;							//キーボードのポインタ
 	CInputMouse *m_pInputMouse;									//マウスのポインタ
 	CTexture *m_pTexture;										//テクスチャのポインタ
+	CXmodel *m_pXmodel;											//Xモデルのポインタ
 	CCamera *m_pCamera;											//カメラのポインタ
 	CLight *m_pLight;											//ライトのポインタ
 	CScene *m_pScene;											//シーンのポインタ

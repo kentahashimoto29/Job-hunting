@@ -11,6 +11,7 @@
 #include "object2D.h"
 #include "ranking.h"
 
+class CResult_Obj2D;
 
 //===================================
 //リザルトのクラス
@@ -32,7 +33,7 @@ public:
 	D3DXVECTOR3 m_pos;						//オブジェクトの位置
 
 private:
-	CObject2D *m_apObject2D[1];				//タイトルのオブジェクト
+	static CResult_Obj2D *m_apResultObj;
 
 	static CRanking *m_pRanking;		//アイテムマネージャーのポインタを返す関数
 
