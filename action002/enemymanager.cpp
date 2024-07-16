@@ -1,13 +1,14 @@
 //========================================================
 //
-//ウインドウの生成等 (bullet.cpp)
+//ウインドウの生成等 (enemymanager.cpp)
 //Author 橋本賢太
 //
 //========================================================
-#include <time.h>
 #include "enemymanager.h"
 #include "game.h"
 #include "fade.h"
+
+#include <time.h>
 
 int CEnemyManager::m_nNum = 0;
 

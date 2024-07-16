@@ -1,13 +1,14 @@
 //========================================================
 //
-//ウインドウの生成等 (bullet.cpp)
+//ウインドウの生成等 (wall_obj_manager.cpp)
 //Author 橋本賢太
 //
 //========================================================
-#include <time.h>
-#include "wall_obj.h"
 #include "wall_obj_manager.h"
+#include "wall_obj.h"
 #include "game.h"
+
+#include <time.h>
 
 int CWallObjManager::m_nNum = 0;
 

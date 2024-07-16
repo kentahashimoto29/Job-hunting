@@ -1,3 +1,57 @@
-﻿  object2D.cpp
-  action002.vcxproj -> C:\Users\student\Desktop\就職作品aaa\Job-hunting\action002\Debug\action002.exe
-  action002.vcxproj -> C:\Users\student\Desktop\就職作品aaa\Job-hunting\action002\Debug\action002.pdb (Full PDB)
+﻿  wall_obj_manager.cpp
+c:\users\student\desktop\就職作品aaa\job-hunting\action002\wall_obj_manager.cpp : fatal error C1041: プログラム データベース 'C:\Users\student\Desktop\就職作品aaa\Job-hunting\action002\Debug\vc140.idb' を開けません。複数の CL.EXE が同じ .PDB ファイルに書き込む場合、/FS を使用してください。
+  wall_obj.cpp
+c:\users\student\desktop\就職作品aaa\job-hunting\action002\wall_obj.cpp : fatal error C1041: プログラム データベース 'C:\Users\student\Desktop\就職作品aaa\Job-hunting\action002\Debug\vc140.idb' を開けません。複数の CL.EXE が同じ .PDB ファイルに書き込む場合、/FS を使用してください。
+  wall.cpp
+  title_obj2D.cpp
+  title.cpp
+  time.cpp
+  through_block.cpp
+  texture.cpp
+  skill_UI.cpp
+  result_obj2D.cpp
+  result.cpp
+  ranking.cpp
+  player3D.cpp
+  objectX.cpp
+  object2D.cpp
+  manager.cpp
+  item_manager.cpp
+  goal.cpp
+  game.cpp
+  field.cpp
+  コードを生成中...
+  コンパイル中...
+  fade.cpp
+  enemymanager.cpp
+  enemy3D.cpp
+  camera.cpp
+  Xmodel.cpp
+  コードを生成中...
+  コンパイル中...
+  score.cpp
+c:\users\student\desktop\就職作品aaa\job-hunting\action002\score.cpp : fatal error C1041: プログラム データベース 'C:\Users\student\Desktop\就職作品aaa\Job-hunting\action002\Debug\vc140.pdb' を開けません。複数の CL.EXE が同じ .PDB ファイルに書き込む場合、/FS を使用してください。
+  renderer.cpp
+  player.cpp
+  object3D.cpp
+  object.cpp
+  motion.cpp
+  model.cpp
+  mesh_object3D.cpp
+  main.cpp
+  light.cpp
+  item_throw.cpp
+  item3D.cpp
+  explosion.cpp
+  enemy.cpp
+  effect.cpp
+  death_block.cpp
+  bullet3D.cpp
+  bullet.cpp
+  block3D.cpp
+  block.cpp
+  コードを生成中...
+  コンパイル中...
+  billboard.cpp
+  bg.cpp
+  コードを生成中...
