@@ -1,8 +1,8 @@
 //========================================================
-//
-//ウインドウの生成等 (item_manager.cpp)
-//Author 橋本賢太
-//
+// 
+// ウインドウの生成等 (item_manager.cpp)
+// Author 橋本賢太
+// 
 //========================================================
 #include "item_manager.h"
 #include "game.h"
@@ -10,7 +10,7 @@
 int CItemManager::m_nNum = 0;
 
 //========================================================
-//コンストラクタ
+// コンストラクタ
 //========================================================
 CItemManager::CItemManager()
 {
@@ -18,7 +18,7 @@ CItemManager::CItemManager()
 }
 
 //========================================================
-//デストラクタ
+// デストラクタ
 //========================================================
 CItemManager::~CItemManager()
 {
@@ -26,23 +26,23 @@ CItemManager::~CItemManager()
 }
 
 //========================================================
-//生成処理
+// 生成処理
 //========================================================
 CItemManager *CItemManager::Create()
 {
 	CItemManager *pEnemyManager = NULL;
 
-	//2Dオブジェクトの生成
+	// 2Dオブジェクトの生成
 	pEnemyManager = new CItemManager;
 
-	//初期化処理
+	// 初期化処理
 	pEnemyManager->Init();
 
 	return pEnemyManager;
 }
 
 //========================================================
-//初期化処理
+// 初期化処理
 //========================================================
 HRESULT CItemManager::Init(void)
 {
@@ -50,7 +50,7 @@ HRESULT CItemManager::Init(void)
 }
 
 //========================================================
-//終了処理
+// 終了処理
 //========================================================
 void CItemManager::Uninit(void)
 {
@@ -68,14 +68,14 @@ void CItemManager::Uninit(void)
 }
 
 //========================================================
-//更新処理
+// 更新処理
 //========================================================
 void CItemManager::Update(void)
 {
-	//キーボードの取得
+	// キーボードの取得
 	CInputKeyboard *pInputKeyboard = CManager::GetInstance()->GetInputKeyboard();
 
-	//Wキーを押したとき
+	// Wキーを押したとき
 	if (pInputKeyboard->GetTrigger(DIK_V) == true)
 	{
 		SetItemThrow(D3DXVECTOR3(0.0f, 0.0f, 0.0f));
@@ -153,7 +153,7 @@ CItemThrow **CItemManager::SetItemThrow(D3DXVECTOR3 pos)
 }
 
 //========================================================
-//位置を返す
+// 位置を返す
 //========================================================
 int CItemManager::GetNum(void)
 {

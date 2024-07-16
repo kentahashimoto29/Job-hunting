@@ -1,8 +1,8 @@
 //========================================================
-//
-//ウインドウの生成等 (player3D.cpp)
-//Author 橋本賢太
-//
+// 
+// ウインドウの生成等 (player3D.cpp)
+// Author 橋本賢太
+// 
 //========================================================
 #include "player3D.h"
 #include "manager.h"
@@ -15,20 +15,20 @@
 #include "skill_UI.h"
 #include "object2D.h"
 
-#define DASH_DATA								(12.0f)		//ダッシュ時の速度
-#define DASH_COUNT								(20)		//ダッシュの効果時間
-#define JUMP_DATA								(7.0f)		//ジャンプの力
-#define GRAVITY_DATA							(0.24f)		//重力
-#define GRAVITY_MAX								(10.0f)		//終端速度
-#define WALLRUBBING_MAX							(1.5f)		//壁擦り時の最大速度
-#define WALK_DATA								(5.0f)		//
-#define AIR_WALK_DATA							(1.0f)		//
-#define WALK_MAX								(5.5f)		//
+#define DASH_DATA								(12.0f)		// ダッシュ時の速度
+#define DASH_COUNT								(20)		// ダッシュの効果時間
+#define JUMP_DATA								(7.0f)		// ジャンプの力
+#define GRAVITY_DATA							(0.24f)		// 重力
+#define GRAVITY_MAX								(10.0f)		// 終端速度
+#define WALLRUBBING_MAX							(1.5f)		// 壁擦り時の最大速度
+#define WALK_DATA								(5.0f)		// 
+#define AIR_WALK_DATA							(1.0f)		// 
+#define WALK_MAX								(5.5f)		// 
 
 int CPlayer3D::m_nIdxTexture = 0;
 
 //========================================================
-//コンストラクタ
+// コンストラクタ
 //========================================================
 CPlayer3D::CPlayer3D(int nPriority) : CObject(nPriority)
 {
@@ -36,7 +36,7 @@ CPlayer3D::CPlayer3D(int nPriority) : CObject(nPriority)
 }
 
 //========================================================
-//オーバーライドされたコンストラクタ
+// オーバーライドされたコンストラクタ
 //========================================================
 CPlayer3D::CPlayer3D(D3DXVECTOR3 pos, int nPriority) : CObject(nPriority)
 {
@@ -59,7 +59,7 @@ CPlayer3D::CPlayer3D(D3DXVECTOR3 pos, int nPriority) : CObject(nPriority)
 }
 
 //========================================================
-//デストラクタ
+// デストラクタ
 //========================================================
 CPlayer3D::~CPlayer3D()
 {
@@ -67,44 +67,44 @@ CPlayer3D::~CPlayer3D()
 }
 
 //========================================================
-//生成処理
+// 生成処理
 //========================================================
 CPlayer3D *CPlayer3D::Create(D3DXVECTOR3 pos)
 {
 	CPlayer3D *pPlayer3D;
 
-	//2Dオブジェクトの生成
+	// 2Dオブジェクトの生成
 	pPlayer3D = new CPlayer3D(pos);
 
-	//初期化処理
+	// 初期化処理
 	pPlayer3D->Init();
 
 	return pPlayer3D;
 }
 
 //========================================================
-//初期化処理
+// 初期化処理
 //========================================================
 HRESULT CPlayer3D::Init(void)
 {
-	//モデルの生成
-	m_apModel[0] = CModel::Create("data\\MODEL\\Body.x", D3DXVECTOR3(0.0f, 24.7f, 0.0f));					//体
-	m_apModel[1] = CModel::Create("data\\MODEL\\Neck.x", D3DXVECTOR3(0.0f, 22.0f, 0.0f));					//首
-	m_apModel[2] = CModel::Create("data\\MODEL\\Head.x", D3DXVECTOR3(0.0f, 3.0f, 0.0f));					//頭
-	m_apModel[3] = CModel::Create("data\\MODEL\\Up_Left_arm.x", D3DXVECTOR3(7.0f, 20.0f, 0.0f));			//左上腕
-	m_apModel[4] = CModel::Create("data\\MODEL\\Under_Left_arm.x", D3DXVECTOR3(10.0f, 0.0f, 0.0f));			//左前腕
-	m_apModel[5] = CModel::Create("data\\MODEL\\Left_Hand.x", D3DXVECTOR3(10.0f, 0.0f, 0.0f));				//左手
-	m_apModel[6] = CModel::Create("data\\MODEL\\Up_Right_arm.x", D3DXVECTOR3(-7.0f, 20.0f, 0.0f));			//右上腕
-	m_apModel[7] = CModel::Create("data\\MODEL\\Under_Right_arm.x", D3DXVECTOR3(-10.0f, 0.0f, 0.0f));		//右前腕
-	m_apModel[8] = CModel::Create("data\\MODEL\\Right_Hand.x", D3DXVECTOR3(-10.0f, 0.0f, 0.0f));			//右手
-	m_apModel[9] = CModel::Create("data\\MODEL\\Up_Left_Leg.x", D3DXVECTOR3(4.5f, 0.0f, 0.0f));				//左腿
-	m_apModel[10] = CModel::Create("data\\MODEL\\Under_Left_Leg.x", D3DXVECTOR3(0.0f, -11.0f, 0.0f));		//左脛
-	m_apModel[11] = CModel::Create("data\\MODEL\\Left_Shose.x", D3DXVECTOR3(0.0f, -11.0f, 0.0f));			//左足
-	m_apModel[12] = CModel::Create("data\\MODEL\\Up_Right_Leg.x", D3DXVECTOR3(-4.5f, 0.0f, 0.0f));			//右腿
-	m_apModel[13] = CModel::Create("data\\MODEL\\Under_Right_Leg.x", D3DXVECTOR3(0.0f, -11.0f, 0.0f));		//右脛
-	m_apModel[14] = CModel::Create("data\\MODEL\\Right_Shose.x", D3DXVECTOR3(0.0f, -11.0f, 0.0f));			//右足
+	// モデルの生成
+	m_apModel[0] = CModel::Create("data\\MODEL\\Body.x", D3DXVECTOR3(0.0f, 24.7f, 0.0f));					// 体
+	m_apModel[1] = CModel::Create("data\\MODEL\\Neck.x", D3DXVECTOR3(0.0f, 22.0f, 0.0f));					// 首
+	m_apModel[2] = CModel::Create("data\\MODEL\\Head.x", D3DXVECTOR3(0.0f, 3.0f, 0.0f));					// 頭
+	m_apModel[3] = CModel::Create("data\\MODEL\\Up_Left_arm.x", D3DXVECTOR3(7.0f, 20.0f, 0.0f));			// 左上腕
+	m_apModel[4] = CModel::Create("data\\MODEL\\Under_Left_arm.x", D3DXVECTOR3(10.0f, 0.0f, 0.0f));			// 左前腕
+	m_apModel[5] = CModel::Create("data\\MODEL\\Left_Hand.x", D3DXVECTOR3(10.0f, 0.0f, 0.0f));				// 左手
+	m_apModel[6] = CModel::Create("data\\MODEL\\Up_Right_arm.x", D3DXVECTOR3(-7.0f, 20.0f, 0.0f));			// 右上腕
+	m_apModel[7] = CModel::Create("data\\MODEL\\Under_Right_arm.x", D3DXVECTOR3(-10.0f, 0.0f, 0.0f));		// 右前腕
+	m_apModel[8] = CModel::Create("data\\MODEL\\Right_Hand.x", D3DXVECTOR3(-10.0f, 0.0f, 0.0f));			// 右手
+	m_apModel[9] = CModel::Create("data\\MODEL\\Up_Left_Leg.x", D3DXVECTOR3(4.5f, 0.0f, 0.0f));				// 左腿
+	m_apModel[10] = CModel::Create("data\\MODEL\\Under_Left_Leg.x", D3DXVECTOR3(0.0f, -11.0f, 0.0f));		// 左脛
+	m_apModel[11] = CModel::Create("data\\MODEL\\Left_Shose.x", D3DXVECTOR3(0.0f, -11.0f, 0.0f));			// 左足
+	m_apModel[12] = CModel::Create("data\\MODEL\\Up_Right_Leg.x", D3DXVECTOR3(-4.5f, 0.0f, 0.0f));			// 右腿
+	m_apModel[13] = CModel::Create("data\\MODEL\\Under_Right_Leg.x", D3DXVECTOR3(0.0f, -11.0f, 0.0f));		// 右脛
+	m_apModel[14] = CModel::Create("data\\MODEL\\Right_Shose.x", D3DXVECTOR3(0.0f, -11.0f, 0.0f));			// 右足
 
-	//親モデルの設定
+	// 親モデルの設定
 	m_apModel[0]->SetParent(NULL);
 	m_apModel[1]->SetParent(m_apModel[0]);
 	m_apModel[2]->SetParent(m_apModel[1]);
@@ -143,7 +143,7 @@ HRESULT CPlayer3D::Init(void)
 }
 
 //========================================================
-//終了処理
+// 終了処理
 //========================================================
 void CPlayer3D::Uninit(void)
 {
@@ -156,30 +156,30 @@ void CPlayer3D::Uninit(void)
 }
 
 //========================================================
-//更新処理
+// 更新処理
 //========================================================
 void CPlayer3D::Update(void)
 {
-	//キーボードの取得
+	// キーボードの取得
 	CInputKeyboard *pInputKeyboard = CManager::GetInstance()->GetInputKeyboard();
 
-	//マウスの取得
+	// マウスの取得
 	CInputMouse *pInputMouse = CManager::GetInstance()->GetInputMouse();
 
-	//カメラの取得
+	// カメラの取得
 	CCamera *pCamera = CManager::GetInstance()->GetCamera();
 
-	//ブロック3Dの取得
+	// ブロック3Dの取得
 	CBlock3D *pBlock = CGame::GetBlock3D();
 
 	m_Oldpos = m_pos;
 	m_bWalk = true;
 
 
-	//Wキーを押したとき
+	// Wキーを押したとき
 	if (pInputKeyboard->GetPress(DIK_W) == true)
 	{
-		//Dキーを押したとき
+		// Dキーを押したとき
 		if (pInputKeyboard->GetPress(DIK_D) == true)
 		{
 			m_move.z = cosf(D3DX_PI * 0.25f + pCamera->GetRot().y) * WALK_DATA;
@@ -188,7 +188,7 @@ void CPlayer3D::Update(void)
 			m_Destrot.y = D3DX_PI * -0.75f + pCamera->GetRot().y;
 		}
 
-		//Aキーを押したとき
+		// Aキーを押したとき
 		else if (pInputKeyboard->GetPress(DIK_A) == true)
 		{
 			m_move.z = cosf(D3DX_PI * -0.25f + pCamera->GetRot().y) * WALK_DATA;
@@ -215,10 +215,10 @@ void CPlayer3D::Update(void)
 		}
 	}
 
-	//Sキーを押したとき
+	// Sキーを押したとき
 	else if (pInputKeyboard->GetPress(DIK_S) == true)
 	{
-		//Dキーを押したとき
+		// Dキーを押したとき
 		if (pInputKeyboard->GetPress(DIK_D) == true)
 		{
 			m_move.z = cosf(D3DX_PI * 0.75f + pCamera->GetRot().y) * WALK_DATA;
@@ -227,7 +227,7 @@ void CPlayer3D::Update(void)
 			m_Destrot.y = D3DX_PI * -0.25f + pCamera->GetRot().y;
 		}
 
-		//Aキーを押したとき
+		// Aキーを押したとき
 		else if (pInputKeyboard->GetPress(DIK_A) == true)
 		{
 			m_move.z = cosf(D3DX_PI * -0.75f + pCamera->GetRot().y) * WALK_DATA;
@@ -255,7 +255,7 @@ void CPlayer3D::Update(void)
 	}
 
 
-	//Aキーを押したとき
+	// Aキーを押したとき
 	else if (pInputKeyboard->GetPress(DIK_A) == true)
 	{
 
@@ -263,7 +263,7 @@ void CPlayer3D::Update(void)
 
 
 
-		//空中の時
+		// 空中の時
 		if (m_bJump == false)
 		{
 			m_move.z = cosf(D3DX_PI * -0.5f + pCamera->GetRot().y) * WALK_DATA;
@@ -286,7 +286,7 @@ void CPlayer3D::Update(void)
 		}
 	}
 
-	//Dキーを押したとき
+	// Dキーを押したとき
 	else if (pInputKeyboard->GetPress(DIK_D) == true)
 	{
 		
@@ -318,12 +318,12 @@ void CPlayer3D::Update(void)
 
 
 
-	//移動キーを押さなかったとき
+	// 移動キーを押さなかったとき
 	else
 	{
 		m_bWalk = false;
 
-		//空中の時
+		// 空中の時
 		if (m_bJump == false)
 		{
 			m_move.x -= m_move.x * 0.2f;
@@ -389,12 +389,12 @@ void CPlayer3D::Update(void)
 		break;
 	}
 
-	//通常時の落下速度
+	// 通常時の落下速度
 	m_move.y -= GRAVITY_DATA;
 
 
 
-	//重力の最大値制御
+	// 重力の最大値制御
  	if (m_move.y <= -GRAVITY_MAX)
 	{
 		m_move.y = -GRAVITY_MAX;
@@ -411,27 +411,27 @@ void CPlayer3D::Update(void)
 	}
 
 
-	//横移動の最大値制御
-	//if (m_move.x <= -WALK_MAX)
-	//{
-	//	m_move.x = -WALK_MAX;
-	//}
+	// 横移動の最大値制御
+	// if (m_move.x <= -WALK_MAX)
+	// {
+	// 	m_move.x = -WALK_MAX;
+	// }
 
-	//else if (m_move.x >= WALK_MAX)
-	//{
-	//	m_move.x = WALK_MAX;
-	//}
+	// else if (m_move.x >= WALK_MAX)
+	// {
+	// 	m_move.x = WALK_MAX;
+	// }
 
-	////縦移動の最大値制御
-	//if (m_move.z <= -WALK_MAX)
-	//{
-	//	m_move.z = -WALK_MAX;
-	//}
+	// // 縦移動の最大値制御
+	// if (m_move.z <= -WALK_MAX)
+	// {
+	// 	m_move.z = -WALK_MAX;
+	// }
 
-	//else if (m_move.z >= WALK_MAX)
-	//{
-	//	m_move.z = WALK_MAX;
-	//}
+	// else if (m_move.z >= WALK_MAX)
+	// {
+	// 	m_move.z = WALK_MAX;
+	// }
 
 	if (m_pos.y <= 0)
 	{
@@ -441,10 +441,10 @@ void CPlayer3D::Update(void)
 	}
 
 
-	//ジャンプ
+	// ジャンプ
 	if (pInputKeyboard->GetTrigger(DIK_SPACE) == true)
 	{
-		//通常ジャンプ
+		// 通常ジャンプ
 		if (m_bJump == false)
 		{
 			m_bJump = true;
@@ -462,7 +462,7 @@ void CPlayer3D::Update(void)
 
 
 
-	//向きの補正
+	// 向きの補正
 	if (m_Diffrot.y > D3DX_PI)
 	{
 		m_Diffrot.y += -D3DX_PI * 2;
@@ -476,7 +476,7 @@ void CPlayer3D::Update(void)
 	m_rot.y += m_Diffrot.y * 0.1f;
 
 
-	//モデルの補正
+	// モデルの補正
 	if (m_rot.y > D3DX_PI)
 	{
 		m_rot.y = -D3DX_PI;
@@ -489,7 +489,7 @@ void CPlayer3D::Update(void)
 
 
 
-	//走るときのモーション
+	// 走るときのモーション
 	if (pInputKeyboard->GetTrigger(DIK_A) == true ||
 		pInputKeyboard->GetTrigger(DIK_D) == true ||
 		pInputKeyboard->GetTrigger(DIK_W) == true ||
@@ -497,7 +497,7 @@ void CPlayer3D::Update(void)
 	{
 		if (m_bJump == false)
 		{
-			//m_pMotion->Set(m_pMotion->TYPE_MOVE);
+			// m_pMotion->Set(m_pMotion->TYPE_MOVE);
 		}
 	}
 
@@ -586,29 +586,29 @@ void CPlayer3D::Update(void)
 }
 
 //========================================================
-//描画処理
+// 描画処理
 //========================================================
 void CPlayer3D::Draw(void)
 {
-	//デバイスの取得
+	// デバイスの取得
 	LPDIRECT3DDEVICE9 pDevice = CManager::GetInstance()->GetRenderer()->GetDevice();
 
-	D3DXMATRIX mtxRot, mtxTrans;				//計算用マトリックス
+	D3DXMATRIX mtxRot, mtxTrans;				// 計算用マトリックス
 
-												//ワールドマトリックスの初期化
+												// ワールドマトリックスの初期化
 	D3DXMatrixIdentity(&m_mtxWorld);
 
-	//向きを反映
+	// 向きを反映
 	D3DXMatrixRotationYawPitchRoll(&mtxRot, m_rot.y, m_rot.x, m_rot.z);
 
 	D3DXMatrixMultiply(&m_mtxWorld, &m_mtxWorld, &mtxRot);
 
-	//位置を反映
+	// 位置を反映
 	D3DXMatrixTranslation(&mtxTrans, m_pos.x, m_pos.y, m_pos.z);
 
 	D3DXMatrixMultiply(&m_mtxWorld, &m_mtxWorld, &mtxTrans);
 
-	//ワールドマトリックスの設定
+	// ワールドマトリックスの設定
 	pDevice->SetTransform(D3DTS_WORLD, &m_mtxWorld);
 
 	for (int nCnt = 0; nCnt < m_nNumModel; nCnt++)
@@ -618,7 +618,7 @@ void CPlayer3D::Draw(void)
 }
 
 //========================================================
-//マトリックスを返す
+// マトリックスを返す
 //========================================================
 D3DXMATRIX CPlayer3D::GetMtxWorld(void)
 {
@@ -626,7 +626,7 @@ D3DXMATRIX CPlayer3D::GetMtxWorld(void)
 }
 
 //========================================================
-//位置を返す
+// 位置を返す
 //========================================================
 D3DXVECTOR3 CPlayer3D::GetPos(void)
 {
@@ -634,7 +634,7 @@ D3DXVECTOR3 CPlayer3D::GetPos(void)
 }
 
 //========================================================
-//位置を返す
+// 位置を返す
 //========================================================
 D3DXVECTOR3 CPlayer3D::GetRot(void)
 {
@@ -642,7 +642,7 @@ D3DXVECTOR3 CPlayer3D::GetRot(void)
 }
 
 //========================================================
-//位置を返す
+// 位置を返す
 //========================================================
 void CPlayer3D::SetPos(D3DXVECTOR3 pos)
 {
@@ -650,7 +650,7 @@ void CPlayer3D::SetPos(D3DXVECTOR3 pos)
 }
 
 //========================================================
-//位置を返す
+// 位置を返す
 //========================================================
 void CPlayer3D::SetRot(D3DXVECTOR3 rot)
 {
@@ -658,7 +658,7 @@ void CPlayer3D::SetRot(D3DXVECTOR3 rot)
 }
 
 //========================================================
-//位置を返す
+// 位置を返す
 //========================================================
 D3DXVECTOR3 CPlayer3D::GetMove(void)
 {
@@ -666,7 +666,7 @@ D3DXVECTOR3 CPlayer3D::GetMove(void)
 }
 
 //========================================================
-//位置を返す
+// 位置を返す
 //========================================================
 CModel *CPlayer3D::GetModel(int nIdx)
 {
@@ -674,11 +674,11 @@ CModel *CPlayer3D::GetModel(int nIdx)
 }
 
 //=======================================
-//モデルの当たり判定
+// モデルの当たり判定
 //=======================================
 void CPlayer3D::Collision(D3DXVECTOR3 *pPos, D3DXVECTOR3 vtxMax, D3DXVECTOR3 vtxMin, TYPE type)
 {
-	//プレイヤーがブロックにめり込む
+	// プレイヤーがブロックにめり込む
 	if (pPos->x + vtxMin.x < m_pos.x + m_VtxMax.x &&
 		pPos->x + vtxMax.x > m_pos.x + m_VtxMin.x &&
 		pPos->y + vtxMin.y < m_pos.y + m_VtxMax.y &&
@@ -686,31 +686,31 @@ void CPlayer3D::Collision(D3DXVECTOR3 *pPos, D3DXVECTOR3 vtxMax, D3DXVECTOR3 vtx
 		pPos->z + vtxMin.z < m_pos.z + m_VtxMax.z &&
 		pPos->z + vtxMax.z > m_pos.z + m_VtxMin.z)
 	{
-		//============================
-		//下
-		//============================
+		// ============================
+		// 下
+		// ============================
 		if (pPos->y + vtxMin.y <= m_pos.y + m_VtxMax.y &&
 			pPos->y + vtxMin.y >= m_Oldpos.y + m_VtxMax.y)
 		{
-			//左からぶつかった
+			// 左からぶつかった
 			if (pPos->x + vtxMin.x <= m_pos.x + m_VtxMax.x &&
 				pPos->x + vtxMin.x >= m_Oldpos.x + m_VtxMax.x)
 			{
 			}
 
-			//右からぶつかった
+			// 右からぶつかった
 			else  if (pPos->x + vtxMax.x >= m_pos.x + m_VtxMin.x &&
 				pPos->x + vtxMax.x <= m_Oldpos.x + m_VtxMin.x)
 			{
 			}
 
-			//正面からぶつかった
+			// 正面からぶつかった
 			else  if (pPos->z + vtxMin.z <= m_pos.z + m_VtxMax.z &&
 				pPos->z + vtxMin.z >= m_Oldpos.z + m_VtxMax.z)
 			{
 			}
 
-			//裏からぶつかった
+			// 裏からぶつかった
 			else  if (pPos->z + vtxMax.z >= m_pos.z + m_VtxMin.z &&
 				pPos->z + vtxMax.z <= m_Oldpos.z + m_VtxMin.z)
 			{
@@ -723,31 +723,31 @@ void CPlayer3D::Collision(D3DXVECTOR3 *pPos, D3DXVECTOR3 vtxMax, D3DXVECTOR3 vtx
 			}
 		}
 
-		//================================
-		//上
-		//================================
+		// ================================
+		// 上
+		// ================================
 		if (pPos->y + vtxMax.y >= m_pos.y + m_VtxMin.y &&
 			pPos->y + vtxMax.y <= m_Oldpos.y + m_VtxMin.y)
 		{
-			//左からぶつかった
+			// 左からぶつかった
 			if (pPos->x + vtxMin.x <= m_pos.x + m_VtxMax.x &&
 				pPos->x + vtxMin.x >= m_Oldpos.x + m_VtxMax.x)
 			{
 			}
 
-			//右からぶつかった
+			// 右からぶつかった
 			else  if (pPos->x + vtxMax.x >= m_pos.x + m_VtxMin.x &&
 				pPos->x + vtxMax.x <= m_Oldpos.x + m_VtxMin.x)
 			{
 			}
 
-			//正面からぶつかった
+			// 正面からぶつかった
 			else  if (pPos->z + vtxMin.z <= m_pos.z + m_VtxMax.z &&
 				pPos->z + vtxMin.z >= m_Oldpos.z + m_VtxMax.z)
 			{
 			}
 
-			//裏からぶつかった
+			// 裏からぶつかった
 			else  if (pPos->z + vtxMax.z >= m_pos.z + m_VtxMin.z &&
 				pPos->z + vtxMax.z <= m_Oldpos.z + m_VtxMin.z)
 			{
@@ -763,31 +763,31 @@ void CPlayer3D::Collision(D3DXVECTOR3 *pPos, D3DXVECTOR3 vtxMax, D3DXVECTOR3 vtx
 		}
 
 
-		//============================
-		//右
-		//============================
+		// ============================
+		// 右
+		// ============================
 		if (pPos->x + vtxMax.x >= m_pos.x + m_VtxMin.x &&
 			pPos->x + vtxMax.x <= m_Oldpos.x + m_VtxMin.x)
 		{
-			//下からぶつかった
+			// 下からぶつかった
 			if (pPos->y + vtxMin.y <= m_pos.y + m_VtxMax.y &&
 				pPos->y + vtxMin.y >= m_Oldpos.y + m_VtxMax.y)
 			{
 			}
 
-			//上からぶつかった
+			// 上からぶつかった
 			else if (pPos->y + vtxMax.y >= m_pos.y + m_VtxMin.y &&
 				pPos->y + vtxMax.y <= m_Oldpos.y + m_VtxMin.y)
 			{
 			}
 
-			//正面からぶつかった
+			// 正面からぶつかった
 			else  if (pPos->z + vtxMin.z <= m_pos.z + m_VtxMax.z &&
 				pPos->z + vtxMin.z >= m_Oldpos.z + m_VtxMax.z)
 			{
 			}
 
-			//裏からぶつかった
+			// 裏からぶつかった
 			else  if (pPos->z + vtxMax.z >= pPos->z + m_VtxMin.z &&
 				pPos->z + vtxMax.z <= m_Oldpos.z + m_VtxMin.z)
 			{
@@ -802,31 +802,31 @@ void CPlayer3D::Collision(D3DXVECTOR3 *pPos, D3DXVECTOR3 vtxMax, D3DXVECTOR3 vtx
 			}
 		}
 
-		//============================
-		//左
-		//============================
+		// ============================
+		// 左
+		// ============================
 		if (pPos->x + vtxMin.x <= m_pos.x + m_VtxMax.x &&
 			pPos->x + vtxMin.x >= m_Oldpos.x + m_VtxMax.x)
 		{
-			//下からぶつかった
+			// 下からぶつかった
 			if (pPos->y + vtxMin.y <= m_pos.y + m_VtxMax.y &&
 				pPos->y + vtxMin.y >= m_Oldpos.y + m_VtxMax.y)
 			{
 			}
 
-			//上からぶつかった
+			// 上からぶつかった
 			else if (pPos->y + vtxMax.y >= m_pos.y + m_VtxMin.y &&
 				pPos->y + vtxMax.y <= m_Oldpos.y + m_VtxMin.y)
 			{
 			}
 
-			//正面からぶつかった
+			// 正面からぶつかった
 			else  if (pPos->z + vtxMin.z <= pPos->z + m_VtxMax.z &&
 				pPos->z + vtxMin.z >= m_Oldpos.z + m_VtxMax.z)
 			{
 			}
 
-			//裏からぶつかった
+			// 裏からぶつかった
 			else  if (pPos->z + vtxMax.z >= pPos->z + m_VtxMin.z &&
 				pPos->z + vtxMax.z <= m_Oldpos.z + m_VtxMin.z)
 			{
@@ -840,31 +840,31 @@ void CPlayer3D::Collision(D3DXVECTOR3 *pPos, D3DXVECTOR3 vtxMax, D3DXVECTOR3 vtx
 			}
 		}
 
-		//============================
-		//正面
-		//============================
+		// ============================
+		// 正面
+		// ============================
 		if (pPos->z + vtxMin.z <= m_pos.z + m_VtxMax.z &&
 			pPos->z + vtxMin.z >= m_Oldpos.z + m_VtxMax.z)
 		{
-			//下からぶつかった
+			// 下からぶつかった
 			if (pPos->y + vtxMin.y <= m_pos.y + m_VtxMax.y &&
 				pPos->y + vtxMin.y >= m_Oldpos.y + m_VtxMax.y)
 			{
 			}
 
-			//上からぶつかった
+			// 上からぶつかった
 			else if (pPos->y + vtxMax.y >= m_pos.y + m_VtxMin.y &&
 				pPos->y + vtxMax.y <= m_Oldpos.y + m_VtxMin.y)
 			{
 			}
 
-			//右からぶつかった
+			// 右からぶつかった
 			else if (pPos->x + vtxMax.x >= m_pos.x + m_VtxMin.x &&
 				pPos->x + vtxMax.x <= m_Oldpos.x + m_VtxMin.x)
 			{
 			}
 
-			//左からぶつかった
+			// 左からぶつかった
 			else if (pPos->x + vtxMin.x <= m_pos.x + m_VtxMax.x &&
 				pPos->x + vtxMin.x >= m_Oldpos.x + m_VtxMax.x)
 			{
@@ -877,31 +877,31 @@ void CPlayer3D::Collision(D3DXVECTOR3 *pPos, D3DXVECTOR3 vtxMax, D3DXVECTOR3 vtx
 			}
 		}
 
-		//============================
-		//裏
-		//============================
+		// ============================
+		// 裏
+		// ============================
 		if (pPos->z + vtxMax.z >= m_pos.z + m_VtxMin.z &&
 			pPos->z + vtxMax.z <= m_Oldpos.z + m_VtxMin.z)
 		{
-			//下からぶつかった
+			// 下からぶつかった
 			if (pPos->y + vtxMin.y <= m_pos.y + m_VtxMax.y &&
 				pPos->y + vtxMin.y >= m_Oldpos.y + m_VtxMax.y)
 			{
 			}
 
-			//上からぶつかった
+			// 上からぶつかった
 			else if (pPos->y + vtxMax.y >= m_pos.y + m_VtxMin.y &&
 				pPos->y + vtxMax.y <= m_Oldpos.y + m_VtxMin.y)
 			{
 			}
 
-			//右からぶつかった
+			// 右からぶつかった
 			else if (pPos->x + vtxMax.x >= m_pos.x + m_VtxMin.x &&
 				pPos->x + vtxMax.x <= m_Oldpos.x + m_VtxMin.x)
 			{
 			}
 
-			//左からぶつかった
+			// 左からぶつかった
 			else if (pPos->x + vtxMin.x <= m_pos.x + m_VtxMax.x &&
 				pPos->x + vtxMin.x >= m_Oldpos.x + m_VtxMax.x)
 			{
@@ -918,13 +918,13 @@ void CPlayer3D::Collision(D3DXVECTOR3 *pPos, D3DXVECTOR3 vtxMax, D3DXVECTOR3 vtx
 
 
 //=======================================
-//モデルの当たり判定
+// モデルの当たり判定
 //=======================================
 bool CPlayer3D::Collisionbool(D3DXVECTOR3 *pPos, D3DXVECTOR3 vtxMax, D3DXVECTOR3 vtxMin, TYPE type)
 {
 	bool b = false;
 
-	//プレイヤーがブロックにめり込む
+	// プレイヤーがブロックにめり込む
 	if (pPos->x + vtxMin.x < m_pos.x + m_VtxMax.x &&
 		pPos->x + vtxMax.x > m_pos.x + m_VtxMin.x &&
 		pPos->y + vtxMin.y < m_pos.y + m_VtxMax.y &&
@@ -932,31 +932,31 @@ bool CPlayer3D::Collisionbool(D3DXVECTOR3 *pPos, D3DXVECTOR3 vtxMax, D3DXVECTOR3
 		pPos->z + vtxMin.z < m_pos.z + m_VtxMax.z &&
 		pPos->z + vtxMax.z > m_pos.z + m_VtxMin.z)
 	{
-		//============================
-		//下
-		//============================
+		// ============================
+		// 下
+		// ============================
 		if (pPos->y + vtxMin.y <= m_pos.y + m_VtxMax.y &&
 			pPos->y + vtxMin.y >= m_Oldpos.y + m_VtxMax.y)
 		{
-			//左からぶつかった
+			// 左からぶつかった
 			if (pPos->x + vtxMin.x <= m_pos.x + m_VtxMax.x &&
 				pPos->x + vtxMin.x >= m_Oldpos.x + m_VtxMax.x)
 			{
 			}
 
-			//右からぶつかった
+			// 右からぶつかった
 			else  if (pPos->x + vtxMax.x >= m_pos.x + m_VtxMin.x &&
 				pPos->x + vtxMax.x <= m_Oldpos.x + m_VtxMin.x)
 			{
 			}
 
-			//正面からぶつかった
+			// 正面からぶつかった
 			else  if (pPos->z + vtxMin.z <= m_pos.z + m_VtxMax.z &&
 				pPos->z + vtxMin.z >= m_Oldpos.z + m_VtxMax.z)
 			{
 			}
 
-			//裏からぶつかった
+			// 裏からぶつかった
 			else  if (pPos->z + vtxMax.z >= m_pos.z + m_VtxMin.z &&
 				pPos->z + vtxMax.z <= m_Oldpos.z + m_VtxMin.z)
 			{
@@ -974,31 +974,31 @@ bool CPlayer3D::Collisionbool(D3DXVECTOR3 *pPos, D3DXVECTOR3 vtxMax, D3DXVECTOR3
 			}
 		}
 
-		//================================
-		//上
-		//================================
+		// ================================
+		// 上
+		// ================================
 		if (pPos->y + vtxMax.y >= m_pos.y + m_VtxMin.y &&
 			pPos->y + vtxMax.y <= m_Oldpos.y + m_VtxMin.y)
 		{
-			//左からぶつかった
+			// 左からぶつかった
 			if (pPos->x + vtxMin.x <= m_pos.x + m_VtxMax.x &&
 				pPos->x + vtxMin.x >= m_Oldpos.x + m_VtxMax.x)
 			{
 			}
 
-			//右からぶつかった
+			// 右からぶつかった
 			else  if (pPos->x + vtxMax.x >= m_pos.x + m_VtxMin.x &&
 				pPos->x + vtxMax.x <= m_Oldpos.x + m_VtxMin.x)
 			{
 			}
 
-			//正面からぶつかった
+			// 正面からぶつかった
 			else  if (pPos->z + vtxMin.z <= m_pos.z + m_VtxMax.z &&
 				pPos->z + vtxMin.z >= m_Oldpos.z + m_VtxMax.z)
 			{
 			}
 
-			//裏からぶつかった
+			// 裏からぶつかった
 			else  if (pPos->z + vtxMax.z >= m_pos.z + m_VtxMin.z &&
 				pPos->z + vtxMax.z <= m_Oldpos.z + m_VtxMin.z)
 			{
@@ -1018,31 +1018,31 @@ bool CPlayer3D::Collisionbool(D3DXVECTOR3 *pPos, D3DXVECTOR3 vtxMax, D3DXVECTOR3
 			}
 		}
 
-		//============================
-		//右
-		//============================
+		// ============================
+		// 右
+		// ============================
 		if (pPos->x + vtxMax.x >= m_pos.x + m_VtxMin.x &&
 			pPos->x + vtxMax.x <= m_Oldpos.x + m_VtxMin.x)
 		{
-			//下からぶつかった
+			// 下からぶつかった
 			if (pPos->y + vtxMin.y <= m_pos.y + m_VtxMax.y &&
 				pPos->y + vtxMin.y >= m_Oldpos.y + m_VtxMax.y)
 			{
 			}
 
-			//上からぶつかった
+			// 上からぶつかった
 			else if (pPos->y + vtxMax.y >= m_pos.y + m_VtxMin.y &&
 				pPos->y + vtxMax.y <= m_Oldpos.y + m_VtxMin.y)
 			{
 			}
 
-			//正面からぶつかった
+			// 正面からぶつかった
 			else  if (pPos->z + vtxMin.z <= m_pos.z + m_VtxMax.z &&
 				pPos->z + vtxMin.z >= m_Oldpos.z + m_VtxMax.z)
 			{
 			}
 
-			//裏からぶつかった
+			// 裏からぶつかった
 			else  if (pPos->z + vtxMax.z >= pPos->z + m_VtxMin.z &&
 				pPos->z + vtxMax.z <= m_Oldpos.z + m_VtxMin.z)
 			{
@@ -1060,31 +1060,31 @@ bool CPlayer3D::Collisionbool(D3DXVECTOR3 *pPos, D3DXVECTOR3 vtxMax, D3DXVECTOR3
 			}
 		}
 
-		//============================
-		//左
-		//============================
+		// ============================
+		// 左
+		// ============================
 		if (pPos->x + vtxMin.x <= m_pos.x + m_VtxMax.x &&
 			pPos->x + vtxMin.x >= m_Oldpos.x + m_VtxMax.x)
 		{
-			//下からぶつかった
+			// 下からぶつかった
 			if (pPos->y + vtxMin.y <= m_pos.y + m_VtxMax.y &&
 				pPos->y + vtxMin.y >= m_Oldpos.y + m_VtxMax.y)
 			{
 			}
 
-			//上からぶつかった
+			// 上からぶつかった
 			else if (pPos->y + vtxMax.y >= m_pos.y + m_VtxMin.y &&
 				pPos->y + vtxMax.y <= m_Oldpos.y + m_VtxMin.y)
 			{
 			}
 
-			//正面からぶつかった
+			// 正面からぶつかった
 			else  if (pPos->z + vtxMin.z <= pPos->z + m_VtxMax.z &&
 				pPos->z + vtxMin.z >= m_Oldpos.z + m_VtxMax.z)
 			{
 			}
 
-			//裏からぶつかった
+			// 裏からぶつかった
 			else  if (pPos->z + vtxMax.z >= pPos->z + m_VtxMin.z &&
 				pPos->z + vtxMax.z <= m_Oldpos.z + m_VtxMin.z)
 			{
@@ -1102,31 +1102,31 @@ bool CPlayer3D::Collisionbool(D3DXVECTOR3 *pPos, D3DXVECTOR3 vtxMax, D3DXVECTOR3
 			}
 		}
 
-		//============================
-		//正面
-		//============================
+		// ============================
+		// 正面
+		// ============================
 		if (pPos->z + vtxMin.z <= m_pos.z + m_VtxMax.z &&
 			pPos->z + vtxMin.z >= m_Oldpos.z + m_VtxMax.z)
 		{
-			//下からぶつかった
+			// 下からぶつかった
 			if (pPos->y + vtxMin.y <= m_pos.y + m_VtxMax.y &&
 				pPos->y + vtxMin.y >= m_Oldpos.y + m_VtxMax.y)
 			{
 			}
 
-			//上からぶつかった
+			// 上からぶつかった
 			else if (pPos->y + vtxMax.y >= m_pos.y + m_VtxMin.y &&
 				pPos->y + vtxMax.y <= m_Oldpos.y + m_VtxMin.y)
 			{
 			}
 
-			//右からぶつかった
+			// 右からぶつかった
 			else if (pPos->x + vtxMax.x >= m_pos.x + m_VtxMin.x &&
 				pPos->x + vtxMax.x <= m_Oldpos.x + m_VtxMin.x)
 			{
 			}
 
-			//左からぶつかった
+			// 左からぶつかった
 			else if (pPos->x + vtxMin.x <= m_pos.x + m_VtxMax.x &&
 				pPos->x + vtxMin.x >= m_Oldpos.x + m_VtxMax.x)
 			{
@@ -1139,31 +1139,31 @@ bool CPlayer3D::Collisionbool(D3DXVECTOR3 *pPos, D3DXVECTOR3 vtxMax, D3DXVECTOR3
 			}
 		}
 
-		//============================
-		//裏
-		//============================
+		// ============================
+		// 裏
+		// ============================
 		if (pPos->z + vtxMax.z >= m_pos.z + m_VtxMin.z &&
 			pPos->z + vtxMax.z <= m_Oldpos.z + m_VtxMin.z)
 		{
-			//下からぶつかった
+			// 下からぶつかった
 			if (pPos->y + vtxMin.y <= m_pos.y + m_VtxMax.y &&
 				pPos->y + vtxMin.y >= m_Oldpos.y + m_VtxMax.y)
 			{
 			}
 
-			//上からぶつかった
+			// 上からぶつかった
 			else if (pPos->y + vtxMax.y >= m_pos.y + m_VtxMin.y &&
 				pPos->y + vtxMax.y <= m_Oldpos.y + m_VtxMin.y)
 			{
 			}
 
-			//右からぶつかった
+			// 右からぶつかった
 			else if (pPos->x + vtxMax.x >= m_pos.x + m_VtxMin.x &&
 				pPos->x + vtxMax.x <= m_Oldpos.x + m_VtxMin.x)
 			{
 			}
 
-			//左からぶつかった
+			// 左からぶつかった
 			else if (pPos->x + vtxMin.x <= m_pos.x + m_VtxMax.x &&
 				pPos->x + vtxMin.x >= m_Oldpos.x + m_VtxMax.x)
 			{
@@ -1183,7 +1183,7 @@ bool CPlayer3D::Collisionbool(D3DXVECTOR3 *pPos, D3DXVECTOR3 vtxMax, D3DXVECTOR3
 
 
 //========================================================
-//敵とプレイヤーとの当たり判定
+// 敵とプレイヤーとの当たり判定
 //========================================================
 bool CPlayer3D::CollisionEnemy(D3DXVECTOR3 pos, D3DXVECTOR3 vtxMax, D3DXVECTOR3 vtxMin)
 {
@@ -1197,7 +1197,7 @@ bool CPlayer3D::CollisionEnemy(D3DXVECTOR3 pos, D3DXVECTOR3 vtxMax, D3DXVECTOR3 
 		{
 			CObject *pObjectNext = pObject->GetNext();
 
-			//種類を取得
+			// 種類を取得
 			type = pObject->GetType();
 
 			if (type == TYPE_ENEMY)
@@ -1219,7 +1219,7 @@ bool CPlayer3D::CollisionEnemy(D3DXVECTOR3 pos, D3DXVECTOR3 vtxMax, D3DXVECTOR3 
 }
 
 //=======================================
-//リスポーン処理
+// リスポーン処理
 //=======================================
 void CPlayer3D::Respawn(void)
 {

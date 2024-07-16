@@ -1,8 +1,8 @@
 //========================================================
-//
-//ウインドウの生成等 (wall_obj_manager.cpp)
-//Author 橋本賢太
-//
+// 
+// ウインドウの生成等 (wall_obj_manager.cpp)
+// Author 橋本賢太
+// 
 //========================================================
 #include "wall_obj_manager.h"
 #include "wall_obj.h"
@@ -13,7 +13,7 @@
 int CWallObjManager::m_nNum = 0;
 
 //========================================================
-//コンストラクタ
+// コンストラクタ
 //========================================================
 CWallObjManager::CWallObjManager()
 {
@@ -21,7 +21,7 @@ CWallObjManager::CWallObjManager()
 }
 
 //========================================================
-//デストラクタ
+// デストラクタ
 //========================================================
 CWallObjManager::~CWallObjManager()
 {
@@ -29,23 +29,23 @@ CWallObjManager::~CWallObjManager()
 }
 
 //========================================================
-//生成処理
+// 生成処理
 //========================================================
 CWallObjManager *CWallObjManager::Create()
 {
 	CWallObjManager *pEnemyManager = NULL;
 
-	//2Dオブジェクトの生成
+	// 2Dオブジェクトの生成
 	pEnemyManager = new CWallObjManager;
 
-	//初期化処理
+	// 初期化処理
 	pEnemyManager->Init();
 
 	return pEnemyManager;
 }
 
 //========================================================
-//初期化処理
+// 初期化処理
 //========================================================
 HRESULT CWallObjManager::Init()
 {
@@ -60,7 +60,7 @@ HRESULT CWallObjManager::Init()
 }
 
 //========================================================
-//終了処理
+// 終了処理
 //========================================================
 void CWallObjManager::Uninit()
 {
@@ -78,7 +78,7 @@ void CWallObjManager::Uninit()
 }
 
 //========================================================
-//更新処理
+// 更新処理
 //========================================================
 void CWallObjManager::Update()
 {
@@ -156,7 +156,7 @@ CWallObj **CWallObjManager::SetWall(D3DXVECTOR3 pos, D3DXVECTOR3 rot)
 }
 
 //========================================================
-//位置を返す
+// 位置を返す
 //========================================================
 int CWallObjManager::GetNum()
 {
@@ -178,12 +178,12 @@ void CWallObjManager::ReadWall()
 {
 	int nCnt = 0;
 	char aString[1024];
-	FILE *pFile;	//ファイルポインタを宣言
+	FILE *pFile;	// ファイルポインタを宣言
 
-					//ファイルを開く
-	pFile = fopen("data\\TEXT\\wall.txt", "r");			//(ファイル名を指定,　モードの指定”r”で読み込み)
+					// ファイルを開く
+	pFile = fopen("data\\TEXT\\wall.txt", "r");			// (ファイル名を指定,　モードの指定”r”で読み込み)
 
-	//NULLチェック
+	// NULLチェック
 	if (pFile == NULL)
 	{
 		fclose(pFile);
@@ -194,7 +194,7 @@ void CWallObjManager::ReadWall()
 	{
 		fscanf(pFile, "%s", &aString[0]);
 
-		//文字列比較
+		// 文字列比較
 		if (strcmp(aString, "POS") == 0)
 		{
 			fscanf(pFile, "%s", &aString[0]);
@@ -204,7 +204,7 @@ void CWallObjManager::ReadWall()
 			fscanf(pFile, "%f", &m_nReadPos[nCnt].z);
 		}
 
-		//文字列比較
+		// 文字列比較
 		if (strcmp(aString, "ROT") == 0)
 		{
 			fscanf(pFile, "%s", &aString[0]);

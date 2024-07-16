@@ -1,8 +1,8 @@
 //========================================================
-//
-//ウインドウの生成等 (objectX.cpp)
-//Author 橋本賢太
-//
+// 
+// ウインドウの生成等 (objectX.cpp)
+// Author 橋本賢太
+// 
 //========================================================
 #include "objectX.h"
 #include "manager.h"
@@ -10,7 +10,7 @@
 #include "manager.h"
 
 //========================================================
-//コンストラクタ
+// コンストラクタ
 //========================================================
 CObjectX::CObjectX(int nPriority) : CObject(nPriority)
 {
@@ -18,7 +18,7 @@ CObjectX::CObjectX(int nPriority) : CObject(nPriority)
 }
 
 //========================================================
-//コンストラクタ
+// コンストラクタ
 //========================================================
 CObjectX::~CObjectX()
 {
@@ -26,13 +26,13 @@ CObjectX::~CObjectX()
 }
 
 //========================================================
-//モデルの初期化処理
+// モデルの初期化処理
 //========================================================
 HRESULT CObjectX::Init(void)
 {
-	//デバイスの取得
+	// デバイスの取得
 	LPDIRECT3DDEVICE9 pDevice = CManager::GetInstance()->GetRenderer()->GetDevice();
-	D3DXMATERIAL *pMat = (D3DXMATERIAL*)m_pBuffMat->GetBufferPointer();							//
+	D3DXMATERIAL *pMat = (D3DXMATERIAL*)m_pBuffMat->GetBufferPointer();							// 
 
 	CTexture *pTexture = CManager::GetInstance()->GetTexture();
 
@@ -67,18 +67,18 @@ HRESULT CObjectX::Init(void)
 }
 
 //========================================================
-//モデルの終了処理
+// モデルの終了処理
 //========================================================
 void CObjectX::Uninit(void)
 {
-	//頂点バッファの破棄
+	// 頂点バッファの破棄
 	if (m_pMesh != NULL)
 	{
 		m_pMesh->Release();
 		m_pMesh = NULL;
 	}
 
-	//頂点バッファの破棄
+	// 頂点バッファの破棄
 	if (m_pBuffMat != NULL)
 	{
 		m_pBuffMat->Release();
@@ -89,7 +89,7 @@ void CObjectX::Uninit(void)
 }
 
 //========================================================
-//モデルの更新処理
+// モデルの更新処理
 //========================================================
 void CObjectX::Update(void)
 {
@@ -97,47 +97,47 @@ void CObjectX::Update(void)
 }
 
 //========================================================
-//モデルの描画処理
+// モデルの描画処理
 //========================================================
 void CObjectX::Draw(void)
 {
-	//デバイスの取得
+	// デバイスの取得
 	LPDIRECT3DDEVICE9 pDevice = CManager::GetInstance()->GetRenderer()->GetDevice();
 
-	D3DXMATRIX mtxRot, mtxTrans;				//
-	D3DMATERIAL9 matDef;						//
-	D3DXMATERIAL *pMat;							//
+	D3DXMATRIX mtxRot, mtxTrans;				// 
+	D3DMATERIAL9 matDef;						// 
+	D3DXMATERIAL *pMat;							// 
 
 	CTexture *pTexture = CManager::GetInstance()->GetTexture();
 
-	//ワールドマトリックスの初期化
+	// ワールドマトリックスの初期化
 	D3DXMatrixIdentity(&m_mtxWorld);
 
-	//向きを反映
+	// 向きを反映
 	D3DXMatrixRotationYawPitchRoll(&mtxRot, m_rot.y, m_rot.x, m_rot.z);
 
 	D3DXMatrixMultiply(&m_mtxWorld, &m_mtxWorld, &mtxRot);
 
-	//位置を反映
+	// 位置を反映
 	D3DXMatrixTranslation(&mtxTrans, m_pos.x, m_pos.y, m_pos.z);
 
 	D3DXMatrixMultiply(&m_mtxWorld, &m_mtxWorld, &mtxTrans);
 
-	//ワールドマトリックスの設定
+	// ワールドマトリックスの設定
 	pDevice->SetTransform(D3DTS_WORLD, &m_mtxWorld);
 
-	//現在のマテリアルを取得
+	// 現在のマテリアルを取得
 	pDevice->GetMaterial(&matDef);
 
-	//マテリアルデータへのポインタを取得
+	// マテリアルデータへのポインタを取得
 	pMat = (D3DXMATERIAL*)m_pBuffMat->GetBufferPointer();
 
 	for (int nCntMat = 0; nCntMat < (int)m_dwNumMat; nCntMat++)
 	{
-		//マテリアルの設定
+		// マテリアルの設定
 		pDevice->SetMaterial(&pMat[nCntMat].MatD3D);
 
-		//テクスチャの設定
+		// テクスチャの設定
 		if (m_IdxTexture[nCntMat] != -1)
 		{
 			pDevice->SetTexture(0, pTexture->GetAddress(m_IdxTexture[nCntMat]));
@@ -148,16 +148,16 @@ void CObjectX::Draw(void)
 			pDevice->SetTexture(0, NULL);
 		}
 
-		//モデル(パーツ)も描画
+		// モデル(パーツ)も描画
 		m_pMesh->DrawSubset(nCntMat);
 	}
 
-	//保存していたマテリアルを戻す
+	// 保存していたマテリアルを戻す
 	pDevice->SetMaterial(&matDef);
 }
 
 //========================================================
-//
+// 
 //========================================================
 D3DXVECTOR3 CObjectX::GetPos(void)
 {
@@ -165,7 +165,7 @@ D3DXVECTOR3 CObjectX::GetPos(void)
 }
 
 //========================================================
-//位置を返す
+// 位置を返す
 //========================================================
 void CObjectX::SetPos(D3DXVECTOR3 pos)
 {
@@ -174,7 +174,7 @@ void CObjectX::SetPos(D3DXVECTOR3 pos)
 
 
 //========================================================
-//位置を返す
+// 位置を返す
 //========================================================
 void CObjectX::SetRot(D3DXVECTOR3 rot)
 {

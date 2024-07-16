@@ -1,8 +1,8 @@
 //========================================================
-//
-//ウインドウの生成等 (title.cpp)
-//Author 橋本賢太
-//
+// 
+// ウインドウの生成等 (title.cpp)
+// Author 橋本賢太
+// 
 //========================================================
 #include "title.h"
 #include "title_obj2D.h"
@@ -21,7 +21,7 @@
 
 
 //========================================================
-//静的メンバ変数
+// 静的メンバ変数
 //========================================================
 CTitle_Obj2D *CTitle::m_apTitleObj = NULL;
 CWallObjManager *CTitle::m_pWallManager = NULL;
@@ -29,7 +29,7 @@ int CTitle::m_nIdxTexture = 0;
 float CTitle::m_nInitPos = 0.0f;
 
 //========================================================
-//コンストラクタ
+// コンストラクタ
 //========================================================
 CTitle::CTitle()
 {
@@ -37,7 +37,7 @@ CTitle::CTitle()
 }
 
 //========================================================
-//デストラクタ
+// デストラクタ
 //========================================================
 CTitle::~CTitle()
 {
@@ -45,7 +45,7 @@ CTitle::~CTitle()
 }
 
 //========================================================
-//初期化処理
+// 初期化処理
 //========================================================
 HRESULT CTitle::Init(void)
 {
@@ -112,29 +112,29 @@ HRESULT CTitle::Init(void)
 }
 
 //========================================================
-//終了処理
+// 終了処理
 //========================================================
 void CTitle::Uninit(void)
 {
-	//NULLチェック
+	// NULLチェック
 	if (m_apTitleObj != NULL)
 	{
-		//終了処理
+		// 終了処理
 		m_apTitleObj->Uninit();
 		m_apTitleObj = NULL;
 	}
 
-	//NULLチェック
+	// NULLチェック
 	if (m_pWallManager != NULL)
 	{
-		//終了処理
+		// 終了処理
 		m_pWallManager->Uninit();
 		m_pWallManager = NULL;
 	}
 
 	for (int nCntField = 0; nCntField < FEILD_WIDTH_NUM * FEILD_HEIGHT_NUM; nCntField++)
 	{
-		//NULLチェック
+		// NULLチェック
 		if (m_pField[nCntField] != NULL)
 		{
 			m_pField[nCntField]->Uninit();
@@ -144,7 +144,7 @@ void CTitle::Uninit(void)
 
 	for (int nCntWall = 0; nCntWall < WALL_WIDTH_NUM * WALL_HEIGHT_NUM * WALL_NUM; nCntWall++)
 	{
-		//NULLチェック
+		// NULLチェック
 		if (m_pWall[nCntWall] != NULL)
 		{
 			m_pWall[nCntWall]->Uninit();
@@ -156,14 +156,14 @@ void CTitle::Uninit(void)
 }
 
 //========================================================
-//更新処理
+// 更新処理
 //========================================================
 void CTitle::Update(void)
 {
-	//キーボードの取得
+	// キーボードの取得
 	CInputKeyboard *pInputKeyboard = CManager::GetInstance()->GetInputKeyboard();
 
-	//マウスの取得
+	// マウスの取得
 	CInputMouse *pInputMouse = CManager::GetInstance()->GetInputMouse();
 
 	if (CTitle_Obj2D::GetBlinkingCnt() >= 60 * 2)
@@ -180,7 +180,7 @@ void CTitle::Update(void)
 }
 
 //========================================================
-//描画処理
+// 描画処理
 //========================================================
 void CTitle::Draw(void)
 {
@@ -188,7 +188,7 @@ void CTitle::Draw(void)
 }
 
 //========================================================
-//位置を返す
+// 位置を返す
 //========================================================
 D3DXVECTOR3 CTitle::GetPos(void)
 {
@@ -196,7 +196,7 @@ D3DXVECTOR3 CTitle::GetPos(void)
 }
 
 //========================================================
-//位置を返す
+// 位置を設定
 //========================================================
 void CTitle::SetPos(D3DXVECTOR3 pos)
 {
@@ -204,7 +204,7 @@ void CTitle::SetPos(D3DXVECTOR3 pos)
 }
 
 //========================================================
-//位置を返す
+// 向きを設定
 //========================================================
 void CTitle::SetRot(D3DXVECTOR3 rot)
 {

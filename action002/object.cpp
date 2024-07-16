@@ -1,22 +1,22 @@
 //========================================================
-//
-//ウインドウの生成等 (Object.cpp)
-//Author 橋本賢太
-//
+// 
+// ウインドウの生成等 (Object.cpp)
+// Author 橋本賢太
+// 
 //========================================================
 #include "object.h"
 #include "renderer.h"
 #include "manager.h"
 #include "game.h"
 
-//マクロ定義
-#define MAX_PLAYER							(2)			//プレイヤーの最大数
+// マクロ定義
+#define MAX_PLAYER							(2)			// プレイヤーの最大数
 
 CObject *CObject::m_pTop[8] = {};
 CObject *CObject::m_pCur[8] = {};
 
 //========================================================
-//コンストラクタ
+// コンストラクタ
 //========================================================
 CObject::CObject(int nPriority)
 {
@@ -28,8 +28,8 @@ CObject::CObject(int nPriority)
 
 	if (m_pTop[nPriority] == NULL)
 	{
-		m_pTop[nPriority] = this;				//自分自身を代入
-		m_pCur[nPriority] = m_pTop[nPriority];			//自分自身を代入
+		m_pTop[nPriority] = this;				// 自分自身を代入
+		m_pCur[nPriority] = m_pTop[nPriority];			// 自分自身を代入
 	}
 
 	else if (m_pTop[nPriority] != NULL)
@@ -44,12 +44,12 @@ CObject::CObject(int nPriority)
 
 	m_nPriority = nPriority;	// 優先順位
 
-	m_type = TYPE_NONE;				//
+	m_type = TYPE_NONE;				// 
 	m_bflag = false;
 }
 
 //========================================================
-//デストラクタ
+// デストラクタ
 //========================================================
 CObject::~CObject()
 {
@@ -57,7 +57,7 @@ CObject::~CObject()
 }
 
 //========================================================
-//初期化終了処理
+// 初期化終了処理
 //========================================================
 void CObject::ReleaseAll(void)
 {
@@ -77,7 +77,7 @@ void CObject::ReleaseAll(void)
 }
 
 //========================================================
-//オブジェクトの更新処理
+// オブジェクトの更新処理
 //========================================================
 void CObject::UpdateAll(void)
 {
@@ -122,13 +122,13 @@ void CObject::UpdateAll(void)
 }
 
 //========================================================
-//オブジェクトの描画処理
+// オブジェクトの描画処理
 //========================================================
 void CObject::DrawAll(void)
 {
 	CCamera *pCamera = CManager::GetInstance()->GetCamera();
 
-	//カメラの設定
+	// カメラの設定
 	pCamera->SetCamera();
 
 	for (int nCntPriority = 0; nCntPriority < 8; nCntPriority++)
@@ -147,7 +147,7 @@ void CObject::DrawAll(void)
 }
 
 //========================================================
-//n番目の初期化終了処理
+// n番目の初期化終了処理
 //========================================================
 void CObject::Release(void)
 {
@@ -155,7 +155,7 @@ void CObject::Release(void)
 }
 
 //========================================================
-//
+// 
 //========================================================
 void CObject::Death(void)
 {
@@ -168,8 +168,8 @@ void CObject::Death(void)
 	CObject *pObjectPrev = pObject->m_pPrev;
 
 
-	//this使う (delete this;)
-	//繋げ直しはNextのNextまで使う
+	// this使う (delete this;)
+	// 繋げ直しはNextのNextまで使う
 	if (pObject != m_pCur[nPriority])
 	{
 		pObjectNext->m_pPrev = pObjectPrev;
@@ -205,7 +205,7 @@ void CObject::Death(void)
 }
 
 //========================================================
-//オブジェクトの最初を返す
+// オブジェクトの最初を返す
 //========================================================
 CObject *CObject::GetTop(int nPriority)
 {
@@ -213,7 +213,7 @@ CObject *CObject::GetTop(int nPriority)
 }
 
 //========================================================
-//次のオブジェクトを返す
+// 次のオブジェクトを返す
 //========================================================
 CObject *CObject::GetNext(void)
 {
@@ -221,7 +221,7 @@ CObject *CObject::GetNext(void)
 }
 
 //========================================================
-//オブジェクトの種類を設定
+// オブジェクトの種類を設定
 //========================================================
 void CObject::SetType(TYPE type)
 {
@@ -229,7 +229,7 @@ void CObject::SetType(TYPE type)
 }
 
 //========================================================
-//オブジェクトの種類を返す関数
+// オブジェクトの種類を返す関数
 //========================================================
 CObject::TYPE CObject::GetType(void)
 {
@@ -237,7 +237,7 @@ CObject::TYPE CObject::GetType(void)
 }
 
 //========================================================
-//オブジェクトを返す関数
+// オブジェクトを返す関数
 //========================================================
 CObject *CObject::GetObject()
 {

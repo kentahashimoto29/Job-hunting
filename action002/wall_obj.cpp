@@ -1,8 +1,8 @@
 //========================================================
-//
-//ウインドウの生成等 (wall_obj.cpp)
-//Author 橋本賢太
-//
+// 
+// ウインドウの生成等 (wall_obj.cpp)
+// Author 橋本賢太
+// 
 //========================================================
 #include "wall_obj.h"
 #include "wall_obj_manager.h"
@@ -12,14 +12,14 @@
 #include "item_throw.h"
 
 //========================================================
-//コンストラクタ
+// コンストラクタ
 //========================================================
 CWallObj::CWallObj(int nPriority) : CObjectX(nPriority)
 {
 }
 
 //========================================================
-//オーバーライドされたコンストラクタ
+// オーバーライドされたコンストラクタ
 //========================================================
 CWallObj::CWallObj(D3DXVECTOR3 pos, D3DXVECTOR3 rot, int nPriority) : CObjectX(nPriority)
 {
@@ -29,7 +29,7 @@ CWallObj::CWallObj(D3DXVECTOR3 pos, D3DXVECTOR3 rot, int nPriority) : CObjectX(n
 }
 
 //========================================================
-//デストラクタ
+// デストラクタ
 //========================================================
 CWallObj::~CWallObj()
 {
@@ -37,34 +37,34 @@ CWallObj::~CWallObj()
 }
 
 //========================================================
-//生成処理
+// 生成処理
 //========================================================
 CWallObj *CWallObj::Create(D3DXVECTOR3 pos, D3DXVECTOR3 rot, int nIdx)
 {
 	CWallObj *pEnemy3D;
 
-	//2Dオブジェクトの生成
+	// 2Dオブジェクトの生成
 	pEnemy3D = new CWallObj(pos, rot);
 
-	//初期化処理
+	// 初期化処理
 	pEnemy3D->Init(nIdx);
 
 	return pEnemy3D;
 }
 
 //========================================================
-//初期化処理
+// 初期化処理
 //========================================================
 HRESULT CWallObj::Init(int nIdx)
 {
-	int nNumVtx;				//頂点数
-	DWORD dwSizeFVF;			//頂点フォーマットのサイズ
-	BYTE *pVtxBuff;				//頂点バッファへのポインタ
+	int nNumVtx;				// 頂点数
+	DWORD dwSizeFVF;			// 頂点フォーマットのサイズ
+	BYTE *pVtxBuff;				// 頂点バッファへのポインタ
 
-								//デバイスの取得
+								// デバイスの取得
 	LPDIRECT3DDEVICE9 pDevice = CManager::GetInstance()->GetRenderer()->GetDevice();
 
-	//Xファイルの読み込み
+	// Xファイルの読み込み
 	D3DXLoadMeshFromX("data\\MODEL\\wall.x",
 		D3DXMESH_SYSTEMMEM,
 		pDevice,
@@ -74,19 +74,19 @@ HRESULT CWallObj::Init(int nIdx)
 		&m_dwNumMat,
 		&m_pMesh);
 
-	//頂点数を取得
+	// 頂点数を取得
 	nNumVtx = m_pMesh->GetNumVertices();
 
-	//頂点フォーマットのサイズを取得
+	// 頂点フォーマットのサイズを取得
 	dwSizeFVF = D3DXGetFVFVertexSize(m_pMesh->GetFVF());
 
 
-	//頂点バッファをロック
+	// 頂点バッファをロック
 	m_pMesh->LockVertexBuffer(D3DLOCK_READONLY, (void**)&pVtxBuff);
 
 	for (int nCntVtx = 0; nCntVtx < nNumVtx; nCntVtx++)
 	{
-		D3DXVECTOR3 vtx = *(D3DXVECTOR3*)pVtxBuff;					//頂点座標の代入
+		D3DXVECTOR3 vtx = *(D3DXVECTOR3*)pVtxBuff;					// 頂点座標の代入
 
 		if (m_VtxMin.x > vtx.x)
 		{
@@ -118,12 +118,12 @@ HRESULT CWallObj::Init(int nIdx)
 			m_VtxMax.z = vtx.z;
 		}
 
-		pVtxBuff += dwSizeFVF;					//頂点フォーマットのサイズ分ポインタを進める
+		pVtxBuff += dwSizeFVF;					// 頂点フォーマットのサイズ分ポインタを進める
 	}
 
 	ReguVtx();
 
-	//頂点バッファをアンロック
+	// 頂点バッファをアンロック
 	m_pMesh->UnlockVertexBuffer();
 
 	CObjectX::Init();
@@ -136,7 +136,7 @@ HRESULT CWallObj::Init(int nIdx)
 }
 
 //========================================================
-//終了処理
+// 終了処理
 //========================================================
 void CWallObj::Uninit(void)
 {
@@ -144,7 +144,7 @@ void CWallObj::Uninit(void)
 }
 
 //========================================================
-//更新処理
+// 更新処理
 //========================================================
 void CWallObj::Update(void)
 {
@@ -153,10 +153,10 @@ void CWallObj::Update(void)
 
 	if (CManager::GetInstance()->GetScene()->GetMode() == CScene::MODE_GAME)
 	{
-		//プレイヤーの情報を取得
+		// プレイヤーの情報を取得
 		CPlayer3D *pPlayer = CGame::GetPlayer3D();
 
-		//投げアイテムの情報を取得
+		// 投げアイテムの情報を取得
 		CItemThrow **ppItemThrow = CGame::GetItemManager()->GetItemThrow();
 		CItemThrow *pItemThrow = *ppItemThrow;
 
@@ -170,7 +170,7 @@ void CWallObj::Update(void)
 }
 
 //========================================================
-//描画処理
+// 描画処理
 //========================================================
 void CWallObj::Draw(void)
 {
@@ -178,7 +178,7 @@ void CWallObj::Draw(void)
 }
 
 //========================================================
-//位置を返す
+// 位置を返す
 //========================================================
 D3DXVECTOR3 CWallObj::GetPos(void)
 {
@@ -186,7 +186,7 @@ D3DXVECTOR3 CWallObj::GetPos(void)
 }
 
 //========================================================
-//敵のダメージ処理
+// 敵のダメージ処理
 //========================================================
 void CWallObj::HitEnemy(void)
 {
@@ -194,13 +194,13 @@ void CWallObj::HitEnemy(void)
 }
 
 //=======================================
-//モデルの当たり判定
+// モデルの当たり判定
 //=======================================
 bool CWallObj::Collision(D3DXVECTOR3 *pPos, D3DXVECTOR3 OldPos, D3DXVECTOR3 vtxMax, D3DXVECTOR3 vtxMin)
 {
 	bool b = false;
 
-	//プレイヤーがブロックにめり込む
+	// プレイヤーがブロックにめり込む
 	if (pPos->x + vtxMin.x < m_pos.x + m_VtxMax.x &&
 		pPos->x + vtxMax.x > m_pos.x + m_VtxMin.x &&
 		pPos->y + vtxMin.y < m_pos.y + m_VtxMax.y &&
@@ -208,31 +208,31 @@ bool CWallObj::Collision(D3DXVECTOR3 *pPos, D3DXVECTOR3 OldPos, D3DXVECTOR3 vtxM
 		pPos->z + vtxMin.z < m_pos.z + m_VtxMax.z &&
 		pPos->z + vtxMax.z > m_pos.z + m_VtxMin.z)
 	{
-		//============================
-		//下
-		//============================
+		// ============================
+		// 下
+		// ============================
 		if (pPos->y + vtxMin.y <= m_pos.y + m_VtxMax.y &&
 			OldPos.y + vtxMin.y >= m_pos.y + m_VtxMax.y)
 		{
-			//左からぶつかった
+			// 左からぶつかった
 			if (pPos->x + vtxMin.x <= m_pos.x + m_VtxMax.x &&
 				OldPos.x + vtxMin.x >= m_pos.x + m_VtxMax.x)
 			{
 			}
 
-			//右からぶつかった
+			// 右からぶつかった
 			else  if (pPos->x + vtxMax.x >= m_pos.x + m_VtxMin.x &&
 				OldPos.x + vtxMax.x <= m_pos.x + m_VtxMin.x)
 			{
 			}
 
-			//正面からぶつかった
+			// 正面からぶつかった
 			else  if (pPos->z + vtxMin.z <= m_pos.z + m_VtxMax.z &&
 				OldPos.z + vtxMin.z >= m_pos.z + m_VtxMax.z)
 			{
 			}
 
-			//裏からぶつかった
+			// 裏からぶつかった
 			else  if (pPos->z + vtxMax.z >= m_pos.z + m_VtxMin.z &&
 				OldPos.z + vtxMax.z <= m_pos.z + m_VtxMin.z)
 			{
@@ -245,31 +245,31 @@ bool CWallObj::Collision(D3DXVECTOR3 *pPos, D3DXVECTOR3 OldPos, D3DXVECTOR3 vtxM
 			}
 		}
 
-		//================================
-		//上
-		//================================
+		// ================================
+		// 上
+		// ================================
 		if (pPos->y + vtxMax.y >= m_pos.y + m_VtxMin.y &&
 			OldPos.y + vtxMax.y <= m_pos.y + m_VtxMin.y)
 		{
-			//左からぶつかった
+			// 左からぶつかった
 			if (pPos->x + vtxMin.x <= m_pos.x + m_VtxMax.x &&
 				OldPos.x + vtxMin.x >= m_pos.x + m_VtxMax.x)
 			{
 			}
 
-			//右からぶつかった
+			// 右からぶつかった
 			else  if (pPos->x + vtxMax.x >= m_pos.x + m_VtxMin.x &&
 				OldPos.x + vtxMax.x <= m_pos.x + m_VtxMin.x)
 			{
 			}
 
-			//正面からぶつかった
+			// 正面からぶつかった
 			else  if (pPos->z + vtxMin.z <= m_pos.z + m_VtxMax.z &&
 				OldPos.z + vtxMin.z >= m_pos.z + m_VtxMax.z)
 			{
 			}
 
-			//裏からぶつかった
+			// 裏からぶつかった
 			else  if (pPos->z + vtxMax.z >= m_pos.z + m_VtxMin.z &&
 				OldPos.z + vtxMax.z <= m_pos.z + m_VtxMin.z)
 			{
@@ -282,31 +282,31 @@ bool CWallObj::Collision(D3DXVECTOR3 *pPos, D3DXVECTOR3 OldPos, D3DXVECTOR3 vtxM
 			}
 		}
 
-		//============================
-		//右
-		//============================
+		// ============================
+		// 右
+		// ============================
 		if (pPos->x + vtxMax.x >= m_pos.x + m_VtxMin.x &&
 			OldPos.x + vtxMax.x <= m_pos.x + m_VtxMin.x)
 		{
-			//下からぶつかった
+			// 下からぶつかった
 			if (pPos->y + vtxMin.y <= m_pos.y + m_VtxMax.y &&
 				OldPos.y + vtxMin.y >= m_pos.y + m_VtxMax.y)
 			{
 			}
 
-			//上からぶつかった
+			// 上からぶつかった
 			else if (pPos->y + vtxMax.y >= m_pos.y + m_VtxMin.y &&
 				OldPos.y + vtxMax.y <= m_pos.y + m_VtxMin.y)
 			{
 			}
 
-			//正面からぶつかった
+			// 正面からぶつかった
 			else  if (pPos->z + vtxMin.z <= m_pos.z + m_VtxMax.z &&
 				OldPos.z + vtxMin.z >= m_pos.z + m_VtxMax.z)
 			{
 			}
 
-			//裏からぶつかった
+			// 裏からぶつかった
 			else  if (pPos->z + vtxMax.z >= pPos->z + m_VtxMin.z &&
 				OldPos.z + vtxMax.z <= m_pos.z + m_VtxMin.z)
 			{
@@ -319,31 +319,31 @@ bool CWallObj::Collision(D3DXVECTOR3 *pPos, D3DXVECTOR3 OldPos, D3DXVECTOR3 vtxM
 			}
 		}
 
-		//============================
-		//左
-		//============================
+		// ============================
+		// 左
+		// ============================
 		if (pPos->x + vtxMin.x <= m_pos.x + m_VtxMax.x &&
 			OldPos.x + vtxMin.x >= m_pos.x + m_VtxMax.x)
 		{
-			//下からぶつかった
+			// 下からぶつかった
 			if (pPos->y + vtxMin.y <= m_pos.y + m_VtxMax.y &&
 				OldPos.y + vtxMin.y >= m_pos.y + m_VtxMax.y)
 			{
 			}
 
-			//上からぶつかった
+			// 上からぶつかった
 			else if (pPos->y + vtxMax.y >= m_pos.y + m_VtxMin.y &&
 				OldPos.y + vtxMax.y <= m_pos.y + m_VtxMin.y)
 			{
 			}
 
-			//正面からぶつかった
+			// 正面からぶつかった
 			else  if (pPos->z + vtxMin.z <= pPos->z + m_VtxMax.z &&
 				OldPos.z + vtxMin.z >= m_pos.z + m_VtxMax.z)
 			{
 			}
 
-			//裏からぶつかった
+			// 裏からぶつかった
 			else  if (pPos->z + vtxMax.z >= pPos->z + m_VtxMin.z &&
 				OldPos.z + vtxMax.z <= m_pos.z + m_VtxMin.z)
 			{
@@ -356,31 +356,31 @@ bool CWallObj::Collision(D3DXVECTOR3 *pPos, D3DXVECTOR3 OldPos, D3DXVECTOR3 vtxM
 			}
 		}
 
-		//============================
-		//正面
-		//============================
+		// ============================
+		// 正面
+		// ============================
 		if (pPos->z + vtxMin.z <= m_pos.z + m_VtxMax.z &&
 			OldPos.z + vtxMin.z >= m_pos.z + m_VtxMax.z)
 		{
-			//下からぶつかった
+			// 下からぶつかった
 			if (pPos->y + vtxMin.y <= m_pos.y + m_VtxMax.y &&
 				OldPos.y + vtxMin.y >= m_pos.y + m_VtxMax.y)
 			{
 			}
 
-			//上からぶつかった
+			// 上からぶつかった
 			else if (pPos->y + vtxMax.y >= m_pos.y + m_VtxMin.y &&
 				OldPos.y + vtxMax.y <= m_pos.y + m_VtxMin.y)
 			{
 			}
 
-			//右からぶつかった
+			// 右からぶつかった
 			else if (pPos->x + vtxMax.x >= m_pos.x + m_VtxMin.x &&
 				OldPos.x + vtxMax.x <= m_pos.x + m_VtxMin.x)
 			{
 			}
 
-			//左からぶつかった
+			// 左からぶつかった
 			else if (pPos->x + vtxMin.x <= m_pos.x + m_VtxMax.x &&
 				OldPos.x + vtxMin.x >= m_pos.x + m_VtxMax.x)
 			{
@@ -393,31 +393,31 @@ bool CWallObj::Collision(D3DXVECTOR3 *pPos, D3DXVECTOR3 OldPos, D3DXVECTOR3 vtxM
 			}
 		}
 
-		//============================
-		//裏
-		//============================
+		// ============================
+		// 裏
+		// ============================
 		if (pPos->z + vtxMax.z >= m_pos.z + m_VtxMin.z &&
 			OldPos.z + vtxMax.z <= m_pos.z + m_VtxMin.z)
 		{
-			//下からぶつかった
+			// 下からぶつかった
 			if (pPos->y + vtxMin.y <= m_pos.y + m_VtxMax.y &&
 				OldPos.y + vtxMin.y >= m_pos.y + m_VtxMax.y)
 			{
 			}
 
-			//上からぶつかった
+			// 上からぶつかった
 			else if (pPos->y + vtxMax.y >= m_pos.y + m_VtxMin.y &&
 				OldPos.y + vtxMax.y <= m_pos.y + m_VtxMin.y)
 			{
 			}
 
-			//右からぶつかった
+			// 右からぶつかった
 			else if (pPos->x + vtxMax.x >= m_pos.x + m_VtxMin.x &&
 				OldPos.x + vtxMax.x <= m_pos.x + m_VtxMin.x)
 			{
 			}
 
-			//左からぶつかった
+			// 左からぶつかった
 			else if (pPos->x + vtxMin.x <= m_pos.x + m_VtxMax.x &&
 				OldPos.x + vtxMin.x >= m_pos.x + m_VtxMax.x)
 			{
@@ -435,7 +435,7 @@ bool CWallObj::Collision(D3DXVECTOR3 *pPos, D3DXVECTOR3 OldPos, D3DXVECTOR3 vtxM
 }
 
 //========================================================
-//当たり判定の処理
+// 当たり判定の処理
 //========================================================
 bool CWallObj::Collision(CPlayer3D *pPlayer, CItemThrow *pItemThrow)
 {
@@ -450,7 +450,7 @@ bool CWallObj::Collision(CPlayer3D *pPlayer, CItemThrow *pItemThrow)
 }
 
 //========================================================
-//当たり判定の処理
+// 当たり判定の処理
 //========================================================
 void CWallObj::ReguVtx()
 {

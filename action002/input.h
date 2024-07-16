@@ -1,57 +1,57 @@
 //========================================================
-//
-//ウインドウの生成等 (input.h)
-//Author 橋本賢太
-//
+// 
+// ウインドウの生成等 (input.h)
+// Author 橋本賢太
+// 
 //========================================================
 #ifndef _INPUT_H_
 #define _INPUT_H_
 #include "main.h"
 
 //===================================
-//入力のクラス
+// 入力のクラス
 //===================================
 class CInput
 {
 public:
-	CInput();						//コンストラクタ
-	virtual ~CInput();				//デストラクタ
+	CInput();						// コンストラクタ
+	virtual ~CInput();				// デストラクタ
 
-	virtual HRESULT Init(HINSTANCE hInstance, HWND hWnd);		//初期化処理
-	virtual void Uninit(void);									//終了処理
-	virtual void Update(void) = 0;								//更新処理
+	virtual HRESULT Init(HINSTANCE hInstance, HWND hWnd);		// 初期化処理
+	virtual void Uninit(void);									// 終了処理
+	virtual void Update(void) = 0;								// 更新処理
 
 protected:
-	static LPDIRECTINPUT8 m_pInput;			//キーボードのポインタ
-	LPDIRECTINPUTDEVICE8 m_pDevice;			//デバイスのポインタ
+	static LPDIRECTINPUT8 m_pInput;			// キーボードのポインタ
+	LPDIRECTINPUTDEVICE8 m_pDevice;			// デバイスのポインタ
 };
 
 //===================================
-//キーボードのクラス
+// キーボードのクラス
 //===================================
 class CInputKeyboard : public CInput
 {
 public:
-	CInputKeyboard();				//コンストラクタ
-	~CInputKeyboard();				//デストラクタ
+	CInputKeyboard();				// コンストラクタ
+	~CInputKeyboard();				// デストラクタ
 
-	HRESULT Init(HINSTANCE hInstance, HWND hWnd);		//初期化処理
-	void Uninit(void);									//終了処理
-	void Update(void);									//更新処理
-	bool GetPress(int nKey);							//キーボードのプレス情報を取得
-	bool GetTrigger(int nKey);							//キーボードのトリガー情報を取得
-	bool GetOldSPress(int nKey);						//ひとつ前のキーボードのプレス情報を取得
-	bool GetOldSTrigger(int nKey);						//ひとつ前のキーボードのトリガー情報を取得
+	HRESULT Init(HINSTANCE hInstance, HWND hWnd);		// 初期化処理
+	void Uninit(void);									// 終了処理
+	void Update(void);									// 更新処理
+	bool GetPress(int nKey);							// キーボードのプレス情報を取得
+	bool GetTrigger(int nKey);							// キーボードのトリガー情報を取得
+	bool GetOldSPress(int nKey);						// ひとつ前のキーボードのプレス情報を取得
+	bool GetOldSTrigger(int nKey);						// ひとつ前のキーボードのトリガー情報を取得
 
 private:
-	BYTE m_aKeyState[256];								//キーボードの情報
-	BYTE m_aKeyStateTrigger[256];						//キーボードのトリガー情報
-	BYTE m_aKeyOldState[256];							//ひとつ前のキーボードの情報
-	BYTE m_aKeyOldStateTrigger[256];					//ひとつ前のキーボードのトリガー情報
+	BYTE m_aKeyState[256];								// キーボードの情報
+	BYTE m_aKeyStateTrigger[256];						// キーボードのトリガー情報
+	BYTE m_aKeyOldState[256];							// ひとつ前のキーボードの情報
+	BYTE m_aKeyOldStateTrigger[256];					// ひとつ前のキーボードのトリガー情報
 };
 
 //===================================
-//マウスのクラス
+// マウスのクラス
 //===================================
 class CInputMouse : public CInput
 {
@@ -64,13 +64,13 @@ public:
 		TYPE_MAX,
 	}MOUSE_BUTTON;
 
-	CInputMouse();				//コンストラクタ
-	~CInputMouse();				//デストラクタ
+	CInputMouse();				// コンストラクタ
+	~CInputMouse();				// デストラクタ
 
-	HRESULT Init(HINSTANCE hInstance, HWND hWnd);		//初期化処理
-	void Uninit(void);									//終了処理
-	void Update(void);									//更新処理
-	bool GetPress(MOUSE_BUTTON type);					//キーボードのプレス情報を取得
+	HRESULT Init(HINSTANCE hInstance, HWND hWnd);		// 初期化処理
+	void Uninit(void);									// 終了処理
+	void Update(void);									// 更新処理
+	bool GetPress(MOUSE_BUTTON type);					// キーボードのプレス情報を取得
 	POINT GetPos(void);
 	D3DXVECTOR2 GetMouseMove(void);
 

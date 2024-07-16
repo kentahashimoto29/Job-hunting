@@ -1,8 +1,8 @@
 //========================================================
-//
+// 
 // ウインドウの生成等 (result_obj2D.cpp)
 // Author 橋本賢太
-//
+// 
 //========================================================
 #include "result_obj2D.h"
 #include "manager.h"
@@ -36,10 +36,10 @@ CResult_Obj2D *CResult_Obj2D::Create()
 {
 	CResult_Obj2D *pTitleObj;
 
-	//2Dオブジェクトの生成
+	// 2Dオブジェクトの生成
 	pTitleObj = new CResult_Obj2D();
 
-	//初期化処理
+	// 初期化処理
 	pTitleObj->Init();
 
 	return pTitleObj;
@@ -94,19 +94,19 @@ HRESULT CResult_Obj2D::Init(void)
 			break;
 
 		case 2:
-			//m_apObject2D[i] = new CObject2D;
+			// m_apObject2D[i] = new CObject2D;
 
-			//m_nIdxTexture = m_apObject2D[i]->SetTex("data\\TEXTURE\\gametitle.png");
+			// m_nIdxTexture = m_apObject2D[i]->SetTex("data\\TEXTURE\\gametitle.png");
 
-			//m_apObject2D[i]->BindTexture(m_nIdxTexture);
+			// m_apObject2D[i]->BindTexture(m_nIdxTexture);
 
-			//m_apObject2D[i]->Init();
+			// m_apObject2D[i]->Init();
 
-			//m_apObject2D[i]->SetPos(D3DXVECTOR3(640.0f, 360.0f, 0.0f));
+			// m_apObject2D[i]->SetPos(D3DXVECTOR3(640.0f, 360.0f, 0.0f));
 
-			//m_apObject2D[i]->SetVtxTitle();
+			// m_apObject2D[i]->SetVtxTitle();
 
-			//m_apObject2D[i]->SetType(CObject::TYPE_TITLE);
+			// m_apObject2D[i]->SetType(CObject::TYPE_TITLE);
 			break;
 		}
 	}

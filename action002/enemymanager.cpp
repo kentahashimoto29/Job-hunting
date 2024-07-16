@@ -1,8 +1,8 @@
 //========================================================
-//
-//ウインドウの生成等 (enemymanager.cpp)
-//Author 橋本賢太
-//
+// 
+// ウインドウの生成等 (enemymanager.cpp)
+// Author 橋本賢太
+// 
 //========================================================
 #include "enemymanager.h"
 #include "game.h"
@@ -13,7 +13,7 @@
 int CEnemyManager::m_nNum = 0;
 
 //========================================================
-//コンストラクタ
+// コンストラクタ
 //========================================================
 CEnemyManager::CEnemyManager()
 {
@@ -22,7 +22,7 @@ CEnemyManager::CEnemyManager()
 }
 
 //========================================================
-//デストラクタ
+// デストラクタ
 //========================================================
 CEnemyManager::~CEnemyManager()
 {
@@ -30,28 +30,28 @@ CEnemyManager::~CEnemyManager()
 }
 
 //========================================================
-//生成処理
+// 生成処理
 //========================================================
 CEnemyManager *CEnemyManager::Create()
 {
 	CEnemyManager *pEnemyManager = NULL;
 
-	//2Dオブジェクトの生成
+	// 2Dオブジェクトの生成
 	pEnemyManager = new CEnemyManager;
 
-	//初期化処理
+	// 初期化処理
 	pEnemyManager->Init();
 
 	return pEnemyManager;
 }
 
 //========================================================
-//初期化処理
+// 初期化処理
 //========================================================
 HRESULT CEnemyManager::Init(void)
 {
-	//SetEnemy(D3DXVECTOR3(-200.0f, 0.0f, 200.0f), D3DXVECTOR3(0.0f, 0.0f, 0.0f));
-	//SetEnemy(D3DXVECTOR3(250.0f, 0.0f, 350.0f), D3DXVECTOR3(0.0f, 0.0f, 0.0f));
+	// SetEnemy(D3DXVECTOR3(-200.0f, 0.0f, 200.0f), D3DXVECTOR3(0.0f, 0.0f, 0.0f));
+	// SetEnemy(D3DXVECTOR3(250.0f, 0.0f, 350.0f), D3DXVECTOR3(0.0f, 0.0f, 0.0f));
 	SetEnemy(D3DXVECTOR3(200.0f, 0.0f, 200.0f), D3DXVECTOR3(0.0f, 0.0f, 0.0f));
 
 	srand((unsigned int)time(NULL));
@@ -60,7 +60,7 @@ HRESULT CEnemyManager::Init(void)
 }
 
 //========================================================
-//終了処理
+// 終了処理
 //========================================================
 void CEnemyManager::Uninit(void)
 {
@@ -78,16 +78,16 @@ void CEnemyManager::Uninit(void)
 }
 
 //========================================================
-//更新処理
+// 更新処理
 //========================================================
 void CEnemyManager::Update(void)
 {
-	//キーボードの取得
+	// キーボードの取得
 	CInputKeyboard *pInputKeyboard = CManager::GetInstance()->GetInputKeyboard();
 
 	m_nCreCnt++;
 
-	//Nキーを押したとき
+	// Nキーを押したとき
 	if (pInputKeyboard->GetTrigger(DIK_N) == true)
 	{
 		SetEnemy(D3DXVECTOR3(0.0f, 0.0f, 200.0f), D3DXVECTOR3(0.0f, 0.0f, 0.0f));
@@ -294,7 +294,7 @@ void CEnemyManager::SectionSpawn()
 }
 
 //========================================================
-//位置を返す
+// 位置を返す
 //========================================================
 int CEnemyManager::GetNum(void)
 {

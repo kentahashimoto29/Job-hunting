@@ -1,8 +1,8 @@
 //========================================================
-//
-//ウインドウの生成等 (item3D.cpp)
-//Author 橋本賢太
-//
+// 
+// ウインドウの生成等 (item3D.cpp)
+// Author 橋本賢太
+// 
 //========================================================
 #include "item3D.h"
 #include "manager.h"
@@ -12,7 +12,7 @@
 int CItem3D::m_nIdxTexture = 0;
 
 //========================================================
-//コンストラクタ
+// コンストラクタ
 //========================================================
 CItem3D::CItem3D(int nPriority) : CObjectX(nPriority)
 {
@@ -20,7 +20,7 @@ CItem3D::CItem3D(int nPriority) : CObjectX(nPriority)
 }
 
 //========================================================
-//オーバーライドされたコンストラクタ
+// オーバーライドされたコンストラクタ
 //========================================================
 CItem3D::CItem3D(D3DXVECTOR3 pos, int nPriority) : CObjectX(nPriority)
 {
@@ -29,7 +29,7 @@ CItem3D::CItem3D(D3DXVECTOR3 pos, int nPriority) : CObjectX(nPriority)
 }
 
 //========================================================
-//デストラクタ
+// デストラクタ
 //========================================================
 CItem3D::~CItem3D()
 {
@@ -37,30 +37,30 @@ CItem3D::~CItem3D()
 }
 
 //========================================================
-//生成処理
+// 生成処理
 //========================================================
 CItem3D *CItem3D::Create(D3DXVECTOR3 pos)
 {
 	CItem3D *pPlayer3D;
 
-	//2Dオブジェクトの生成
+	// 2Dオブジェクトの生成
 	pPlayer3D = new CItem3D(pos);
 
-	//初期化処理
+	// 初期化処理
 	pPlayer3D->Init();
 
 	return pPlayer3D;
 }
 
 //========================================================
-//初期化処理void
+// 初期化処理void
 //========================================================
 HRESULT CItem3D::Init(void)
 {
-	//デバイスの取得
+	// デバイスの取得
 	LPDIRECT3DDEVICE9 pDevice = CManager::GetInstance()->GetRenderer()->GetDevice();
 
-	//Xファイルの読み込み
+	// Xファイルの読み込み
 	D3DXLoadMeshFromX("data\\MODEL\\voltaction000.x",
 		D3DXMESH_SYSTEMMEM,
 		pDevice,
@@ -72,13 +72,13 @@ HRESULT CItem3D::Init(void)
 
 	CObjectX::Init();
 
-	//CObject::SetType(TYPE_FACE_X);
+	// CObject::SetType(TYPE_FACE_X);
 
 	return S_OK;
 }
 
 //========================================================
-//終了処理
+// 終了処理
 //========================================================
 void CItem3D::Uninit(void)
 {
@@ -86,11 +86,11 @@ void CItem3D::Uninit(void)
 }
 
 //========================================================
-//更新処理
+// 更新処理
 //========================================================
 void CItem3D::Update(void)
 {
-	//キーボードの取得
+	// キーボードの取得
 	CInputKeyboard *pInputKeyboard = CManager::GetInstance()->GetInputKeyboard();
 
 	/*if (pInputKeyboard->GetTrigger(DIK_SPACE) == TRUE)
@@ -100,7 +100,7 @@ void CItem3D::Update(void)
 }
 
 //========================================================
-//描画処理
+// 描画処理
 //========================================================
 void CItem3D::Draw(void)
 {
@@ -108,7 +108,7 @@ void CItem3D::Draw(void)
 }
 
 //========================================================
-//位置を返す
+// 位置を返す
 //========================================================
 D3DXVECTOR3 CItem3D::GetPos(void)
 {

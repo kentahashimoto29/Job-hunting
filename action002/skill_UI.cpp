@@ -1,8 +1,8 @@
 //========================================================
-//
-//ウインドウの生成等 (skill_UI.cpp)
-//Author 橋本賢太
-//
+// 
+// ウインドウの生成等 (skill_UI.cpp)
+// Author 橋本賢太
+// 
 //========================================================
 #include "skill_UI.h"
 #include "manager.h"
@@ -11,7 +11,7 @@
 int CSkill_UI::m_nIdxTexture = 0;
 
 //========================================================
-//コンストラクタ
+// コンストラクタ
 //========================================================
 CSkill_UI::CSkill_UI()
 {
@@ -20,7 +20,7 @@ CSkill_UI::CSkill_UI()
 }
 
 //========================================================
-//デストラクタ
+// デストラクタ
 //========================================================
 CSkill_UI::~CSkill_UI()
 {
@@ -28,33 +28,33 @@ CSkill_UI::~CSkill_UI()
 }
 
 //========================================================
-//生成処理
+// 生成処理
 //========================================================
 CSkill_UI *CSkill_UI::Create()
 {
 	CSkill_UI *pTitleObj;
 
-	//2Dオブジェクトの生成
+	// 2Dオブジェクトの生成
 	pTitleObj = new CSkill_UI();
 
-	//初期化処理
+	// 初期化処理
 	pTitleObj->Init();
 
 	return pTitleObj;
 }
 
 //========================================================
-//初期化処理
+// 初期化処理
 //========================================================
 HRESULT CSkill_UI::Init(void)
 {
-	//m_apObject2D = new CObject2D;
-	//m_nIdxTexture = m_apObject2D->SetTex("data\\TEXTURE\\イヴェルカーナ.png");
-	//m_apObject2D->BindTexture(m_nIdxTexture);
-	//m_apObject2D->Init();
-	//m_apObject2D->SetPos(D3DXVECTOR3(150.0f, 650.0f, 0.0f));
-	//m_apObject2D->SetVtxSkillUI();
-	//m_apObject2D->SetType(CObject::TYPE_OBJECT_2D);
+	// m_apObject2D = new CObject2D;
+	// m_nIdxTexture = m_apObject2D->SetTex("data\\TEXTURE\\イヴェルカーナ.png");
+	// m_apObject2D->BindTexture(m_nIdxTexture);
+	// m_apObject2D->Init();
+	// m_apObject2D->SetPos(D3DXVECTOR3(150.0f, 650.0f, 0.0f));
+	// m_apObject2D->SetVtxSkillUI();
+	// m_apObject2D->SetType(CObject::TYPE_OBJECT_2D);
 
 	m_apObjectGauge2D = new CObject2D;
 	m_nIdxTexture = m_apObjectGauge2D->SetTex(NULL);
@@ -70,7 +70,7 @@ HRESULT CSkill_UI::Init(void)
 }
 
 //========================================================
-//終了処理
+// 終了処理
 //========================================================
 void CSkill_UI::Uninit(void)
 {
@@ -87,7 +87,7 @@ void CSkill_UI::Uninit(void)
 }
 
 //========================================================
-//更新処理
+// 更新処理
 //========================================================
 void CSkill_UI::Update(void)
 {
@@ -98,7 +98,7 @@ void CSkill_UI::Update(void)
 }
 
 //========================================================
-//描画処理
+// 描画処理
 //========================================================
 void CSkill_UI::Draw(void)
 {
@@ -113,7 +113,7 @@ void CSkill_UI::Draw(void)
 }
 
 //========================================================
-//位置を返す
+// 位置を返す
 //========================================================
 D3DXVECTOR3 CSkill_UI::GetPos(void)
 {
@@ -121,7 +121,7 @@ D3DXVECTOR3 CSkill_UI::GetPos(void)
 }
 
 //========================================================
-//位置を返す
+// 位置を返す
 //========================================================
 void CSkill_UI::SetPos(D3DXVECTOR3 pos)
 {
@@ -129,7 +129,7 @@ void CSkill_UI::SetPos(D3DXVECTOR3 pos)
 }
 
 //========================================================
-//位置を返す
+// 位置を返す
 //========================================================
 void CSkill_UI::SetRot(D3DXVECTOR3 rot)
 {

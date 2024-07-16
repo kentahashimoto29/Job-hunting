@@ -1,8 +1,8 @@
 //========================================================
-//
-//ウインドウの生成等 (block3D.cpp)
-//Author 橋本賢太
-//
+// 
+// ウインドウの生成等 (block3D.cpp)
+// Author 橋本賢太
+// 
 //========================================================
 #include "death_block.h"
 #include "manager.h"
@@ -12,7 +12,7 @@
 int CDeathBlock::m_nIdxTexture = 0;
 
 //========================================================
-//コンストラクタ
+// コンストラクタ
 //========================================================
 CDeathBlock::CDeathBlock(int nPriority) : CObjectX(nPriority)
 {
@@ -20,7 +20,7 @@ CDeathBlock::CDeathBlock(int nPriority) : CObjectX(nPriority)
 }
 
 //========================================================
-//オーバーライドされたコンストラクタ
+// オーバーライドされたコンストラクタ
 //========================================================
 CDeathBlock::CDeathBlock(D3DXVECTOR3 pos, int nPriority) : CObjectX(nPriority)
 {
@@ -28,7 +28,7 @@ CDeathBlock::CDeathBlock(D3DXVECTOR3 pos, int nPriority) : CObjectX(nPriority)
 }
 
 //========================================================
-//デストラクタ
+// デストラクタ
 //========================================================
 CDeathBlock::~CDeathBlock()
 {
@@ -36,34 +36,34 @@ CDeathBlock::~CDeathBlock()
 }
 
 //========================================================
-//生成処理
+// 生成処理
 //========================================================
 CDeathBlock *CDeathBlock::Create(D3DXVECTOR3 pos)
 {
 	CDeathBlock *pPlayer3D;
 
-	//2Dオブジェクトの生成
+	// 2Dオブジェクトの生成
 	pPlayer3D = new CDeathBlock(pos);
 
-	//初期化処理
+	// 初期化処理
 	pPlayer3D->Init();
 
 	return pPlayer3D;
 }
 
 //========================================================
-//初期化処理
+// 初期化処理
 //========================================================
 HRESULT CDeathBlock::Init(void)
 {
-	int nNumVtx;				//頂点数
-	DWORD dwSizeFVF;			//頂点フォーマットのサイズ
-	BYTE *pVtxBuff;				//頂点バッファへのポインタ
+	int nNumVtx;				// 頂点数
+	DWORD dwSizeFVF;			// 頂点フォーマットのサイズ
+	BYTE *pVtxBuff;				// 頂点バッファへのポインタ
 
-								//デバイスの取得
+								// デバイスの取得
 	LPDIRECT3DDEVICE9 pDevice = CManager::GetInstance()->GetRenderer()->GetDevice();
 
-	//Xファイルの読み込み
+	// Xファイルの読み込み
 	D3DXLoadMeshFromX("data\\MODEL\\damage_box000.x",
 		D3DXMESH_SYSTEMMEM,
 		pDevice,
@@ -73,19 +73,19 @@ HRESULT CDeathBlock::Init(void)
 		&m_dwNumMat,
 		&m_pMesh);
 
-	//頂点数を取得
+	// 頂点数を取得
 	nNumVtx = m_pMesh->GetNumVertices();
 
-	//頂点フォーマットのサイズを取得
+	// 頂点フォーマットのサイズを取得
 	dwSizeFVF = D3DXGetFVFVertexSize(m_pMesh->GetFVF());
 
 
-	//頂点バッファをロック
+	// 頂点バッファをロック
 	m_pMesh->LockVertexBuffer(D3DLOCK_READONLY, (void**)&pVtxBuff);
 
 	for (int nCntVtx = 0; nCntVtx < nNumVtx; nCntVtx++)
 	{
-		D3DXVECTOR3 vtx = *(D3DXVECTOR3*)pVtxBuff;					//頂点座標の代入
+		D3DXVECTOR3 vtx = *(D3DXVECTOR3*)pVtxBuff;					// 頂点座標の代入
 
 		if (m_VtxMin.x > vtx.x)
 		{
@@ -117,10 +117,10 @@ HRESULT CDeathBlock::Init(void)
 			m_VtxMax.z = vtx.z;
 		}
 
-		pVtxBuff += dwSizeFVF;					//頂点フォーマットのサイズ分ポインタを進める
+		pVtxBuff += dwSizeFVF;					// 頂点フォーマットのサイズ分ポインタを進める
 	}
 
-	//頂点バッファをアンロック
+	// 頂点バッファをアンロック
 	m_pMesh->UnlockVertexBuffer();
 
 	CObject::SetType(TYPE_BLOCK_DEATH);
@@ -131,7 +131,7 @@ HRESULT CDeathBlock::Init(void)
 }
 
 //========================================================
-//終了処理
+// 終了処理
 //========================================================
 void CDeathBlock::Uninit(void)
 {
@@ -139,7 +139,7 @@ void CDeathBlock::Uninit(void)
 }
 
 //========================================================
-//更新処理
+// 更新処理
 //========================================================
 void CDeathBlock::Update(void)
 {
@@ -150,7 +150,7 @@ void CDeathBlock::Update(void)
 }
 
 //========================================================
-//描画処理
+// 描画処理
 //========================================================
 void CDeathBlock::Draw(void)
 {
@@ -158,7 +158,7 @@ void CDeathBlock::Draw(void)
 }
 
 //========================================================
-//位置を返す
+// 位置を返す
 //========================================================
 D3DXVECTOR3 CDeathBlock::GetPos(void)
 {

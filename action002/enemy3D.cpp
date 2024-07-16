@@ -1,8 +1,8 @@
 //========================================================
-//
-//ウインドウの生成等 (enemy3D.cpp)
-//Author 橋本賢太
-//
+// 
+// ウインドウの生成等 (enemy3D.cpp)
+// Author 橋本賢太
+// 
 //========================================================
 #include "enemy3D.h"
 #include "enemymanager.h"
@@ -13,14 +13,14 @@
 #include "wall_obj.h"
 
 //========================================================
-//コンストラクタ
+// コンストラクタ
 //========================================================
 CEnemy3D::CEnemy3D(int nPriority) : CObjectX(nPriority)
 {
 }
 
 //========================================================
-//オーバーライドされたコンストラクタ
+// オーバーライドされたコンストラクタ
 //========================================================
 CEnemy3D::CEnemy3D(D3DXVECTOR3 pos, D3DXVECTOR3 rot, int nPriority) : CObjectX(nPriority)
 {
@@ -31,7 +31,7 @@ CEnemy3D::CEnemy3D(D3DXVECTOR3 pos, D3DXVECTOR3 rot, int nPriority) : CObjectX(n
 }
 
 //========================================================
-//デストラクタ
+// デストラクタ
 //========================================================
 CEnemy3D::~CEnemy3D()
 {
@@ -39,34 +39,34 @@ CEnemy3D::~CEnemy3D()
 }
 
 //========================================================
-//生成処理
+// 生成処理
 //========================================================
 CEnemy3D *CEnemy3D::Create(D3DXVECTOR3 pos, D3DXVECTOR3 rot, int nIdx)
 {
 	CEnemy3D *pEnemy3D;
 
-	//2Dオブジェクトの生成
+	// 2Dオブジェクトの生成
 	pEnemy3D = new CEnemy3D(pos, rot);
 
-	//初期化処理
+	// 初期化処理
 	pEnemy3D->Init(nIdx);
 
 	return pEnemy3D;
 }
 
 //========================================================
-//初期化処理
+// 初期化処理
 //========================================================
 HRESULT CEnemy3D::Init(int nIdx)
 {
-	int nNumVtx;				//頂点数
-	DWORD dwSizeFVF;			//頂点フォーマットのサイズ
-	BYTE *pVtxBuff;				//頂点バッファへのポインタ
+	int nNumVtx;				// 頂点数
+	DWORD dwSizeFVF;			// 頂点フォーマットのサイズ
+	BYTE *pVtxBuff;				// 頂点バッファへのポインタ
 
-	//デバイスの取得
+	// デバイスの取得
 	LPDIRECT3DDEVICE9 pDevice = CManager::GetInstance()->GetRenderer()->GetDevice();
 
-	//Xファイルの読み込み
+	// Xファイルの読み込み
 	D3DXLoadMeshFromX("data\\MODEL\\ghost.x",
 		D3DXMESH_SYSTEMMEM,
 		pDevice,
@@ -76,19 +76,19 @@ HRESULT CEnemy3D::Init(int nIdx)
 		&m_dwNumMat,
 		&m_pMesh);
 
-	//頂点数を取得
+	// 頂点数を取得
 	nNumVtx = m_pMesh->GetNumVertices();
 
-	//頂点フォーマットのサイズを取得
+	// 頂点フォーマットのサイズを取得
 	dwSizeFVF = D3DXGetFVFVertexSize(m_pMesh->GetFVF());
 
 
-	//頂点バッファをロック
+	// 頂点バッファをロック
 	m_pMesh->LockVertexBuffer(D3DLOCK_READONLY, (void**)&pVtxBuff);
 
 	for (int nCntVtx = 0; nCntVtx < nNumVtx; nCntVtx++)
 	{
-		D3DXVECTOR3 vtx = *(D3DXVECTOR3*)pVtxBuff;					//頂点座標の代入
+		D3DXVECTOR3 vtx = *(D3DXVECTOR3*)pVtxBuff;					// 頂点座標の代入
 
 		if (m_VtxMin.x > vtx.x)
 		{
@@ -120,10 +120,10 @@ HRESULT CEnemy3D::Init(int nIdx)
 			m_VtxMax.z = vtx.z;
 		}
 
-		pVtxBuff += dwSizeFVF;					//頂点フォーマットのサイズ分ポインタを進める
+		pVtxBuff += dwSizeFVF;					// 頂点フォーマットのサイズ分ポインタを進める
 	}
 
-	//頂点バッファをアンロック
+	// 頂点バッファをアンロック
 	m_pMesh->UnlockVertexBuffer();
 
 	CObjectX::Init();
@@ -139,7 +139,7 @@ HRESULT CEnemy3D::Init(int nIdx)
 }
 
 //========================================================
-//終了処理
+// 終了処理
 //========================================================
 void CEnemy3D::Uninit(void)
 {
@@ -147,34 +147,34 @@ void CEnemy3D::Uninit(void)
 }
 
 //========================================================
-//更新処理
+// 更新処理
 //========================================================
 void CEnemy3D::Update(void)
 {
 	float fDistance;
 
-	//プレイヤーの情報を取得
+	// プレイヤーの情報を取得
 	CPlayer3D *pPlayer = CGame::GetPlayer3D();
 
-	//投げアイテムの情報を取得
-	//CItemThrow **ppItemThrow = CGame::GetItemManager()->GetItemThrow();
-	//CItemThrow *pItemThrow = *ppItemThrow;
+	// 投げアイテムの情報を取得
+	// CItemThrow **ppItemThrow = CGame::GetItemManager()->GetItemThrow();
+	// CItemThrow *pItemThrow = *ppItemThrow;
 
-	//ブロック3Dの取得
+	// ブロック3Dの取得
 	CBlock3D *pBlock = CGame::GetBlock3D();
 
-	//キーボードの取得
+	// キーボードの取得
 	CInputKeyboard *pInputKeyboard = CManager::GetInstance()->GetInputKeyboard();
 
 	m_Oldpos = m_pos;
 
-	//対角線の長さを算出
+	// 対角線の長さを算出
 	fDistance = sqrtf((m_pos.x - pPlayer->GetPos().x) * (m_pos.x - pPlayer->GetPos().x)
 		+ (m_pos.z - pPlayer->GetPos().z) * (m_pos.z - pPlayer->GetPos().z));
 
 	if (fDistance <= 200.0f)
 	{
-		//対角線の角度を算出
+		// 対角線の角度を算出
 		m_rot.y = atan2f(m_pos.x - pPlayer->GetPos().x, m_pos.z - pPlayer->GetPos().z) - D3DX_PI;
 
 		m_move.x = -sinf(D3DX_PI * 0.0f + m_rot.y) * 2.0f;
@@ -188,7 +188,7 @@ void CEnemy3D::Update(void)
 		CBullet3D::Create(m_pos, m_rot, 1.0f);
 	}*/
 
-	//pBlock->Collision(&m_pos, &m_Oldpos, &m_move, m_VtxMax, m_VtxMin);
+	// pBlock->Collision(&m_pos, &m_Oldpos, &m_move, m_VtxMax, m_VtxMin);
 
 	
 	bCollision = Collision();
@@ -234,7 +234,7 @@ void CEnemy3D::Update(void)
 }
 
 //========================================================
-//描画処理
+// 描画処理
 //========================================================
 void CEnemy3D::Draw(void)
 {
@@ -242,7 +242,7 @@ void CEnemy3D::Draw(void)
 }
 
 //========================================================
-//位置を返す
+// 位置を返す
 //========================================================
 D3DXVECTOR3 CEnemy3D::GetPos(void)
 {
@@ -250,7 +250,7 @@ D3DXVECTOR3 CEnemy3D::GetPos(void)
 }
 
 //========================================================
-//敵のダメージ処理
+// 敵のダメージ処理
 //========================================================
 void CEnemy3D::HitEnemy(void)
 {
@@ -258,14 +258,14 @@ void CEnemy3D::HitEnemy(void)
 }
 
 //========================================================
-//当たり判定の処理
+// 当たり判定の処理
 //========================================================
 bool CEnemy3D::Collision()
 {
-	//プレイヤーの情報を取得
+	// プレイヤーの情報を取得
 	CPlayer3D *pPlayer = CGame::GetPlayer3D();
 
-	//投げアイテムの情報を取得
+	// 投げアイテムの情報を取得
 	CItemThrow **ppItemThrow = CGame::GetItemManager()->GetItemThrow();
 	CItemThrow *pItemThrow = *ppItemThrow;
 

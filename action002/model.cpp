@@ -1,8 +1,8 @@
 //========================================================
-//
-//ウインドウの生成等 (model.cpp)
-//Author 橋本賢太
-//
+// 
+// ウインドウの生成等 (model.cpp)
+// Author 橋本賢太
+// 
 //========================================================
 #include "Model.h"
 #include "Xmodel.h"
@@ -11,7 +11,7 @@
 #include "bullet3D.h"
 
 //========================================================
-//コンストラクタ
+// コンストラクタ
 //========================================================
 CModel::CModel()
 {
@@ -19,7 +19,7 @@ CModel::CModel()
 }
 
 //========================================================
-//コンストラクタ
+// コンストラクタ
 //========================================================
 CModel::CModel(D3DXVECTOR3 pos)
 {
@@ -28,7 +28,7 @@ CModel::CModel(D3DXVECTOR3 pos)
 }
 
 //========================================================
-//コンストラクタ
+// コンストラクタ
 //========================================================
 CModel::~CModel()
 {
@@ -36,23 +36,23 @@ CModel::~CModel()
 }
 
 //========================================================
-//生成処理
+// 生成処理
 //========================================================
 CModel *CModel::Create(const char *pFilename, D3DXVECTOR3 pos)
 {
 	CModel *pModel;
 
-	//モデルの生成
+	// モデルの生成
 	pModel = new CModel(pos);
 
-	//初期化処理
+	// 初期化処理
 	pModel->Init(pFilename);
 
 	return pModel;
 }
 
 //========================================================
-//親モデルの設定
+// 親モデルの設定
 //========================================================
 void CModel::SetParent(CModel *pModel)
 {
@@ -60,7 +60,7 @@ void CModel::SetParent(CModel *pModel)
 }
 
 //========================================================
-//位置を返す
+// 位置を返す
 //========================================================
 D3DXVECTOR3 CModel::GetPos(void)
 {
@@ -68,7 +68,7 @@ D3DXVECTOR3 CModel::GetPos(void)
 }
 
 //========================================================
-//向きを返す
+// 向きを返す
 //========================================================
 D3DXVECTOR3 CModel::GetRot(void)
 {
@@ -76,7 +76,7 @@ D3DXVECTOR3 CModel::GetRot(void)
 }
 
 //========================================================
-//マトリックスを返す
+// マトリックスを返す
 //========================================================
 D3DXMATRIX CModel::GetMtxWorld(void)
 {
@@ -84,7 +84,7 @@ D3DXMATRIX CModel::GetMtxWorld(void)
 }
 
 //========================================================
-//位置を設定
+// 位置を設定
 //========================================================
 void CModel::SetPos(D3DXVECTOR3 pos)
 {
@@ -92,7 +92,7 @@ void CModel::SetPos(D3DXVECTOR3 pos)
 }
 
 //========================================================
-//向きを設定
+// 向きを設定
 //========================================================
 void CModel::SetRot(D3DXVECTOR3 rot)
 {
@@ -100,19 +100,19 @@ void CModel::SetRot(D3DXVECTOR3 rot)
 }
 
 //========================================================
-//モデルの初期化処理
+// モデルの初期化処理
 //========================================================
 HRESULT CModel::Init(const char *pFilename)
 {
 	CTexture *pT = CManager::GetInstance()->GetTexture();
 
 
-	//デバイスの取得
+	// デバイスの取得
 	LPDIRECT3DDEVICE9 pDevice = CManager::GetInstance()->GetRenderer()->GetDevice();
 
-	//CManager::GetInstance()->GetXmodel()->Regist(pFilename);
+	// CManager::GetInstance()->GetXmodel()->Regist(pFilename);
 
-	//Xファイルの読み込み
+	// Xファイルの読み込み
 	D3DXLoadMeshFromX(pFilename,
 		D3DXMESH_SYSTEMMEM,
 		pDevice,
@@ -122,7 +122,7 @@ HRESULT CModel::Init(const char *pFilename)
 		&m_dwNumMat,
 		&m_pMesh);
 
-	D3DXMATERIAL *pMat = (D3DXMATERIAL*)m_pBuffMat->GetBufferPointer();							//
+	D3DXMATERIAL *pMat = (D3DXMATERIAL*)m_pBuffMat->GetBufferPointer();							// 
 
 	CTexture *pTexture = CManager::GetInstance()->GetTexture();
 
@@ -158,18 +158,18 @@ HRESULT CModel::Init(const char *pFilename)
 }
 
 //========================================================
-//モデルの終了処理
+// モデルの終了処理
 //========================================================
 void CModel::Uninit(void)
 {
-	//頂点バッファの破棄
+	// 頂点バッファの破棄
 	if (m_pMesh != NULL)
 	{
 		m_pMesh->Release();
 		m_pMesh = NULL;
 	}
 
-	//頂点バッファの破棄
+	// 頂点バッファの破棄
 	if (m_pBuffMat != NULL)
 	{
 		m_pBuffMat->Release();
@@ -179,7 +179,7 @@ void CModel::Uninit(void)
 }
 
 //========================================================
-//モデルの更新処理
+// モデルの更新処理
 //========================================================
 void CModel::Update(void)
 {
@@ -187,39 +187,39 @@ void CModel::Update(void)
 }
 
 //========================================================
-//モデルの描画処理
+// モデルの描画処理
 //========================================================
 void CModel::Draw(void)
 {
-	//デバイスの取得
+	// デバイスの取得
 	LPDIRECT3DDEVICE9 pDevice = CManager::GetInstance()->GetRenderer()->GetDevice();
 
-	D3DXMATRIX mtxRot, mtxTrans, mtxParent;		//計算用マトリックス
-	D3DMATERIAL9 matDef;						//
-	D3DXMATERIAL *pMat;							//
+	D3DXMATRIX mtxRot, mtxTrans, mtxParent;		// 計算用マトリックス
+	D3DMATERIAL9 matDef;						// 
+	D3DXMATERIAL *pMat;							// 
 
 	CTexture *pTexture = CManager::GetInstance()->GetTexture();
 
-	//ワールドマトリックスの初期化
+	// ワールドマトリックスの初期化
 	D3DXMatrixIdentity(&m_mtxWorld);
 
-	//向きを反映
+	// 向きを反映
 	D3DXMatrixRotationYawPitchRoll(&mtxRot, m_rot.y, m_rot.x, m_rot.z);
 
 	D3DXMatrixMultiply(&m_mtxWorld, &m_mtxWorld, &mtxRot);
 
-	//位置を反映
+	// 位置を反映
 	D3DXMatrixTranslation(&mtxTrans, m_pos.x, m_pos.y, m_pos.z);
 
 	D3DXMatrixMultiply(&m_mtxWorld, &m_mtxWorld, &mtxTrans);
 
-	//親がNULLじゃなかった場合
+	// 親がNULLじゃなかった場合
 	if (m_pModel != NULL)
 	{
 		mtxParent = m_pModel->GetMtxWorld();
 	}
 
-	//親がNULLだった場合
+	// 親がNULLだった場合
 	else if (m_pModel == NULL)
 	{
 		/*CPlayer3D *pPlayer3D = CManager::GetPlayer3D();
@@ -228,28 +228,28 @@ void CModel::Draw(void)
 
 		D3DXMatrixMultiply(&m_mtxWorld, &m_mtxWorld, &mtxParent);*/
 
-		//現在(最新)のマトリックスを取得する
+		// 現在(最新)のマトリックスを取得する
 		pDevice->GetTransform(D3DTS_WORLD, &mtxParent);
 	}
 
-	//親のマトリックスと掛け合わせる
+	// 親のマトリックスと掛け合わせる
 	D3DXMatrixMultiply(&m_mtxWorld, &m_mtxWorld, &mtxParent);
 
-	//ワールドマトリックスの設定
+	// ワールドマトリックスの設定
 	pDevice->SetTransform(D3DTS_WORLD, &m_mtxWorld);
 
-	//現在のマテリアルを取得
+	// 現在のマテリアルを取得
 	pDevice->GetMaterial(&matDef);
 
-	//マテリアルデータへのポインタを取得
+	// マテリアルデータへのポインタを取得
 	pMat = (D3DXMATERIAL*)m_pBuffMat->GetBufferPointer();
 
 	for (int nCntMat = 0; nCntMat < (int)m_dwNumMat; nCntMat++)
 	{
-		//マテリアルの設定
+		// マテリアルの設定
 		pDevice->SetMaterial(&pMat[nCntMat].MatD3D);
 
-		//テクスチャの設定
+		// テクスチャの設定
 		if (m_IdxTexture[nCntMat] != -1)
 		{
 			pDevice->SetTexture(0, pTexture->GetAddress(m_IdxTexture[nCntMat]));
@@ -260,10 +260,10 @@ void CModel::Draw(void)
 			pDevice->SetTexture(0, NULL);
 		}
 
-		//モデル(パーツ)も描画
+		// モデル(パーツ)も描画
 		m_pMesh->DrawSubset(nCntMat);
 	}
 
-	//保存していたマテリアルを戻す
+	// 保存していたマテリアルを戻す
 	pDevice->SetMaterial(&matDef);
 }

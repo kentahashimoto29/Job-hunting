@@ -1,8 +1,8 @@
 //========================================================
-//
-//ウインドウの生成等 (item3D.cpp)
-//Author 橋本賢太
-//
+// 
+// ウインドウの生成等 (item3D.cpp)
+// Author 橋本賢太
+// 
 //========================================================
 #include "item_throw.h"
 #include "item_manager.h"
@@ -14,7 +14,7 @@
 int CItemThrow::m_nIdxTexture = 0;
 
 //========================================================
-//コンストラクタ
+// コンストラクタ
 //========================================================
 CItemThrow::CItemThrow(int nPriority) : CObjectX(nPriority)
 {
@@ -22,7 +22,7 @@ CItemThrow::CItemThrow(int nPriority) : CObjectX(nPriority)
 }
 
 //========================================================
-//オーバーライドされたコンストラクタ
+// オーバーライドされたコンストラクタ
 //========================================================
 CItemThrow::CItemThrow(D3DXVECTOR3 pos, int nPriority) : CObjectX(nPriority)
 {
@@ -31,7 +31,7 @@ CItemThrow::CItemThrow(D3DXVECTOR3 pos, int nPriority) : CObjectX(nPriority)
 }
 
 //========================================================
-//デストラクタ
+// デストラクタ
 //========================================================
 CItemThrow::~CItemThrow()
 {
@@ -39,34 +39,34 @@ CItemThrow::~CItemThrow()
 }
 
 //========================================================
-//生成処理
+// 生成処理
 //========================================================
 CItemThrow *CItemThrow::Create(D3DXVECTOR3 pos, int nIdx)
 {
 	CItemThrow *p;
 
-	//2Dオブジェクトの生成
+	// 2Dオブジェクトの生成
 	p = new CItemThrow(pos);
 
-	//初期化処理
+	// 初期化処理
 	p->Init(nIdx);
 
 	return p;
 }
 
 //========================================================
-//初期化処理void
+// 初期化処理void
 //========================================================
 HRESULT CItemThrow::Init(int nIdx)
 {
-	int nNumVtx;				//頂点数
-	DWORD dwSizeFVF;			//頂点フォーマットのサイズ
-	BYTE *pVtxBuff;				//頂点バッファへのポインタ
+	int nNumVtx;				// 頂点数
+	DWORD dwSizeFVF;			// 頂点フォーマットのサイズ
+	BYTE *pVtxBuff;				// 頂点バッファへのポインタ
 
-	//デバイスの取得
+	// デバイスの取得
 	LPDIRECT3DDEVICE9 pDevice = CManager::GetInstance()->GetRenderer()->GetDevice();
 
-	//Xファイルの読み込み
+	// Xファイルの読み込み
 	D3DXLoadMeshFromX("data\\MODEL\\voltaction000.x",
 		D3DXMESH_SYSTEMMEM,
 		pDevice,
@@ -76,19 +76,19 @@ HRESULT CItemThrow::Init(int nIdx)
 		&m_dwNumMat,
 		&m_pMesh);
 
-	//頂点数を取得
+	// 頂点数を取得
 	nNumVtx = m_pMesh->GetNumVertices();
 
-	//頂点フォーマットのサイズを取得
+	// 頂点フォーマットのサイズを取得
 	dwSizeFVF = D3DXGetFVFVertexSize(m_pMesh->GetFVF());
 
 
-	//頂点バッファをロック
+	// 頂点バッファをロック
 	m_pMesh->LockVertexBuffer(D3DLOCK_READONLY, (void**)&pVtxBuff);
 
 	for (int nCntVtx = 0; nCntVtx < nNumVtx; nCntVtx++)
 	{
-		D3DXVECTOR3 vtx = *(D3DXVECTOR3*)pVtxBuff;					//頂点座標の代入
+		D3DXVECTOR3 vtx = *(D3DXVECTOR3*)pVtxBuff;					// 頂点座標の代入
 
 		if (m_VtxMin.x > vtx.x)
 		{
@@ -120,10 +120,10 @@ HRESULT CItemThrow::Init(int nIdx)
 			m_VtxMax.z = vtx.z;
 		}
 
-		pVtxBuff += dwSizeFVF;					//頂点フォーマットのサイズ分ポインタを進める
+		pVtxBuff += dwSizeFVF;					// 頂点フォーマットのサイズ分ポインタを進める
 	}
 
-	//頂点バッファをアンロック
+	// 頂点バッファをアンロック
 	m_pMesh->UnlockVertexBuffer();
 
 	SetRot(D3DXVECTOR3(0.0f, 0.0f, 0.0f));
@@ -132,13 +132,13 @@ HRESULT CItemThrow::Init(int nIdx)
 
 	m_nIdx = nIdx;
 
-	//CObject::SetType(TYPE_FACE_X);
+	// CObject::SetType(TYPE_FACE_X);
 
 	return S_OK;
 }
 
 //========================================================
-//終了処理
+// 終了処理
 //========================================================
 void CItemThrow::Uninit(void)
 {
@@ -148,11 +148,11 @@ void CItemThrow::Uninit(void)
 }
 
 //========================================================
-//更新処理
+// 更新処理
 //========================================================
 void CItemThrow::Update(void)
 {
-	//キーボードの取得
+	// キーボードの取得
 	CInputKeyboard *pInputKeyboard = CManager::GetInstance()->GetInputKeyboard();
 
 	if (pInputKeyboard->GetTrigger(DIK_B) == TRUE)
@@ -191,70 +191,70 @@ void CItemThrow::Update(void)
 }
 
 //========================================================
-//描画処理
+// 描画処理
 //========================================================
 void CItemThrow::Draw(void)
 {
 	if (bUse == false)
 	{
-		//デバイスの取得
+		// デバイスの取得
 		LPDIRECT3DDEVICE9 pDevice = CManager::GetInstance()->GetRenderer()->GetDevice();
 
-		D3DXMATRIX mtxRot, mtxTrans, mtxParent;		//計算用マトリックス
-		D3DMATERIAL9 matDef;						//
-		D3DXMATERIAL *pMat;							//
+		D3DXMATRIX mtxRot, mtxTrans, mtxParent;		// 計算用マトリックス
+		D3DMATERIAL9 matDef;						// 
+		D3DXMATERIAL *pMat;							// 
 
-													//ワールドマトリックスの初期化
+													// ワールドマトリックスの初期化
 		D3DXMatrixIdentity(&m_mtxWorld);
 
-		//向きを反映
+		// 向きを反映
 		D3DXMatrixRotationYawPitchRoll(&mtxRot, m_rot.y, m_rot.x, m_rot.z);
 
 		D3DXMatrixMultiply(&m_mtxWorld, &m_mtxWorld, &mtxRot);
 
-		//位置を反映
+		// 位置を反映
 		D3DXMatrixTranslation(&mtxTrans, m_pos.x, m_pos.y, m_pos.z);
 
 		D3DXMatrixMultiply(&m_mtxWorld, &m_mtxWorld, &mtxTrans);
 
-		//親がNULLじゃなかった場合
+		// 親がNULLじゃなかった場合
 		if (CGame::GetPlayer3D()->GetModel(8) != NULL)
 		{
 			mtxParent = CGame::GetPlayer3D()->GetModel(8)->GetMtxWorld();
 		}
 
-		//親がNULLだった場合
+		// 親がNULLだった場合
 		else if (CGame::GetPlayer3D()->GetModel(8) == NULL)
 		{
-			//現在(最新)のマトリックスを取得する
+			// 現在(最新)のマトリックスを取得する
 			pDevice->GetTransform(D3DTS_WORLD, &mtxParent);
 		}
 
-		//親のマトリックスと掛け合わせる
+		// 親のマトリックスと掛け合わせる
 		D3DXMatrixMultiply(&m_mtxWorld, &m_mtxWorld, &mtxParent);
 
-		//ワールドマトリックスの設定
+		// ワールドマトリックスの設定
 		pDevice->SetTransform(D3DTS_WORLD, &m_mtxWorld);
 
-		//現在のマテリアルを取得
+		// 現在のマテリアルを取得
 		pDevice->GetMaterial(&matDef);
 
-		//マテリアルデータへのポインタを取得
+		// マテリアルデータへのポインタを取得
 		pMat = (D3DXMATERIAL*)m_pBuffMat->GetBufferPointer();
 
 		for (int nCntMat = 0; nCntMat < (int)m_dwNumMat; nCntMat++)
 		{
-			//マテリアルの設定
+			// マテリアルの設定
 			pDevice->SetMaterial(&pMat[nCntMat].MatD3D);
 
-			//テクスチャの設定
+			// テクスチャの設定
 			pDevice->SetTexture(0, NULL);
 
-			//モデル(パーツ)の描画
+			// モデル(パーツ)の描画
 			m_pMesh->DrawSubset(nCntMat);
 		}
 
-		//保存していたマテリアルを戻す
+		// 保存していたマテリアルを戻す
 		pDevice->SetMaterial(&matDef);
 	}
 	
@@ -265,7 +265,7 @@ void CItemThrow::Draw(void)
 }
 
 //========================================================
-//位置を返す
+// 位置を返す
 //========================================================
 D3DXVECTOR3 CItemThrow::GetPos(void)
 {
@@ -273,7 +273,7 @@ D3DXVECTOR3 CItemThrow::GetPos(void)
 }
 
 //========================================================
-//敵とプレイヤーとの当たり判定
+// 敵とプレイヤーとの当たり判定
 //========================================================
 bool CItemThrow::CollisionEnemy(D3DXVECTOR3 pos, D3DXVECTOR3 vtxMax, D3DXVECTOR3 vtxMin)
 {
@@ -287,7 +287,7 @@ bool CItemThrow::CollisionEnemy(D3DXVECTOR3 pos, D3DXVECTOR3 vtxMax, D3DXVECTOR3
 		{
 			CObject *pObjectNext = pObject->GetNext();
 
-			//種類を取得
+			// 種類を取得
 			type = pObject->GetType();
 
 			if (type == TYPE_ENEMY)

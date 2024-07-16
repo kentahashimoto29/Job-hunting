@@ -1,8 +1,8 @@
 //========================================================
-//
-//ウインドウの生成等 (bullet.cpp)
-//Author 橋本賢太
-//
+// 
+// ウインドウの生成等 (bullet.cpp)
+// Author 橋本賢太
+// 
 //========================================================
 #include "bullet.h"
 #include "manager.h"
@@ -10,12 +10,12 @@
 #include "effect.h"
 #include "score.h"
 
-#define MAX_OBJECT							(128)		//オブジェクトの最大数
+#define MAX_OBJECT							(128)		// オブジェクトの最大数
 
 int CBullet::m_nIdxTexture = 0;
 
 //========================================================
-//コンストラクタ
+// コンストラクタ
 //========================================================
 CBullet::CBullet()
 {
@@ -23,7 +23,7 @@ CBullet::CBullet()
 }
 
 //========================================================
-//コンストラクタ
+// コンストラクタ
 //========================================================
 CBullet::CBullet(D3DXVECTOR3 pos, D3DXVECTOR3 move)
 {
@@ -33,7 +33,7 @@ CBullet::CBullet(D3DXVECTOR3 pos, D3DXVECTOR3 move)
 }
 
 //========================================================
-//デストラクタ
+// デストラクタ
 //========================================================
 CBullet::~CBullet()
 {
@@ -41,16 +41,16 @@ CBullet::~CBullet()
 }
 
 //========================================================
-//生成処理
+// 生成処理
 //========================================================
 CBullet *CBullet::Create(D3DXVECTOR3 pos)
 {
 	CBullet *pBullet;
 
-	//2Dオブジェクトの生成
+	// 2Dオブジェクトの生成
   	pBullet = new CBullet(pos, D3DXVECTOR3(0.0f, -2.0f, 0.0f));
 
-	//初期化処理
+	// 初期化処理
 	pBullet->Init();
 
 	pBullet->BindTexture(m_nIdxTexture);
@@ -59,7 +59,7 @@ CBullet *CBullet::Create(D3DXVECTOR3 pos)
 }
 
 //========================================================
-//初期化処理
+// 初期化処理
 //========================================================
 HRESULT CBullet::Init(void)
 {
@@ -83,14 +83,14 @@ HRESULT CBullet::Init(void)
 
 	CObject2D::Init();
 
-	//種類の設定
+	// 種類の設定
 	CObject::SetType(TYPE_BULLET);
 
 	return S_OK;
 }
 
 //========================================================
-//終了処理
+// 終了処理
 //========================================================
 void CBullet::Uninit(void)
 {
@@ -98,7 +98,7 @@ void CBullet::Uninit(void)
 }
 
 //========================================================
-//更新処理
+// 更新処理
 //========================================================
 void CBullet::Update(void)
 {
@@ -108,18 +108,18 @@ void CBullet::Update(void)
 
 	m_nLife--;
 
-	VERTEX_2D *pVtx;			//頂点情報へのポインタ
+	VERTEX_2D *pVtx;			// 頂点情報へのポインタ
 
-	//頂点バッファをロックする
+	// 頂点バッファをロックする
 	m_aVerBuff->Lock(0, 0, (void**)&pVtx, 0);
 
-	//頂点座標の設定
+	// 頂点座標の設定
 	pVtx[0].pos = D3DXVECTOR3(m_pos.x - 20.0f, m_pos.y - 20.0f, 0.0f);
 	pVtx[1].pos = D3DXVECTOR3(m_pos.x + 20.0f, m_pos.y - 20.0f, 0.0f);
 	pVtx[2].pos = D3DXVECTOR3(m_pos.x - 20.0f, m_pos.y + 20.0f, 0.0f);
 	pVtx[3].pos = D3DXVECTOR3(m_pos.x + 20.0f, m_pos.y + 20.0f, 0.0f);
 
-	//頂点バッファをアンロックする
+	// 頂点バッファをアンロックする
 	m_aVerBuff->Unlock();
 
 	bool bCollision = CollisionEnemy(m_pos);
@@ -128,20 +128,20 @@ void CBullet::Update(void)
 	{
 		if (m_nLife <= 0)
 		{
-			//CExplosion::Create(m_pos);
+			// CExplosion::Create(m_pos);
 			Release();
 		}
 
 		else if (m_pos.x >= SCREEN_WIDTH || m_pos.x <= 0 || m_pos.y >= SCREEN_HEIGHT || m_pos.y <= 0)
 		{
-			//CExplosion::Create(m_pos);
+			// CExplosion::Create(m_pos);
 			Release();
 		}
 	}
 }
 
 //========================================================
-//描画処理
+// 描画処理
 //========================================================
 void CBullet::Draw(void)
 {
@@ -149,41 +149,41 @@ void CBullet::Draw(void)
 }
 
 //========================================================
-//敵と弾との当たり判定
+// 敵と弾との当たり判定
 //========================================================
 bool CBullet::CollisionEnemy(D3DXVECTOR3 pos)
 {
-	//for (int nCnt = 0; nCnt < MAX_OBJECT; nCnt++)
-	//{
-	//	CObject *pObj;
+	// for (int nCnt = 0; nCnt < MAX_OBJECT; nCnt++)
+	// {
+	// 	CObject *pObj;
 
-	//	//オブジェクトの取得
-	//	pObj = CObject::GetObject(nCnt);
+	// 	// オブジェクトの取得
+	// 	pObj = CObject::GetObject(nCnt);
 
-	//	if (pObj != NULL)
-	//	{
-	//		TYPE type;
+	// 	if (pObj != NULL)
+	// 	{
+	// 		TYPE type;
 
-	//		//種類を取得
-	//		type = pObj->GetType();
+	// 		// 種類を取得
+	// 		type = pObj->GetType();
 
-	//		if (type == TYPE_ENEMY)
-	//		{
-	//			if (pos.x > pObj->GetPos().x - 50.0f
-	//				&& pos.x < pObj->GetPos().x + 50.0f
-	//				&& pos.y > pObj->GetPos().y - 50.0f
-	//				&& pos.y < pObj->GetPos().y + 50.0f)
-	//			{
-	//				pObj->Uninit();
-	//				//CExplosion::Create(m_pos);
-	//				Uninit();
+	// 		if (type == TYPE_ENEMY)
+	// 		{
+	// 			if (pos.x > pObj->GetPos().x - 50.0f
+	// 				&& pos.x < pObj->GetPos().x + 50.0f
+	// 				&& pos.y > pObj->GetPos().y - 50.0f
+	// 				&& pos.y < pObj->GetPos().y + 50.0f)
+	// 			{
+	// 				pObj->Uninit();
+	// 				// CExplosion::Create(m_pos);
+	// 				Uninit();
 
-	//				//CScore *pScore = CManager::GetScore();
-	//				//pScore->AddScore(100);
-	//				return TRUE;
-	//			}
-	//		}
-	//	}
-	//}
+	// 				// CScore *pScore = CManager::GetScore();
+	// 				// pScore->AddScore(100);
+	// 				return TRUE;
+	// 			}
+	// 		}
+	// 	}
+	// }
 	return FALSE;
 }

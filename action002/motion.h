@@ -1,8 +1,8 @@
 //========================================================
-//
-//ウインドウの生成等 (motion.h)
-//Author 橋本賢太
-//
+// 
+// ウインドウの生成等 (motion.h)
+// Author 橋本賢太
+// 
 //========================================================
 #ifndef _MOTION_H_
 #define _MOTION_H_
@@ -12,12 +12,12 @@
 #include <string.h>
 
 //===================================
-//モデルのクラス
+// モデルのクラス
 //===================================
 class CMotion
 {
 public:
-	//モーションの種類
+	// モーションの種類
 	typedef enum
 	{
 		TYPE_STAND = 0,
@@ -29,7 +29,7 @@ public:
 		TYPE_END
 	}TYPE;
 
-	//キーの構造体
+	// キーの構造体
 	typedef struct
 	{
 		float fPosX;
@@ -40,25 +40,25 @@ public:
 		float fRotZ;
 	}KEY;
 
-	//キー情報の構造体
+	// キー情報の構造体
 	typedef struct
 	{
-		float nFrame;				//再生フレーム
-		KEY aKey[15];				//各モデルのキー要素
+		float nFrame;				// 再生フレーム
+		KEY aKey[15];				// 各モデルのキー要素
 	}KEY_INFO;
 
-	//モーション情報の構造体
+	// モーション情報の構造体
 	typedef struct
 	{
-		bool bLoop;					//ループするかどうか
-		int nNumKey;				//キーの総数
-		KEY_INFO aKeyInfo[16];		//キー情報
-		TYPE nType;					//モーションの種類
+		bool bLoop;					// ループするかどうか
+		int nNumKey;				// キーの総数
+		KEY_INFO aKeyInfo[16];		// キー情報
+		TYPE nType;					// モーションの種類
 		int m_nType;
 	}INFO;
 
-	CMotion();						//コンストラクタ
-	~CMotion();						//デストラクタ
+	CMotion();						// コンストラクタ
+	~CMotion();						// デストラクタ
 
 	void Init(int nType);
 	void Set(int nType);
@@ -80,10 +80,10 @@ private:
 	int m_nNumKey;
 	int m_nKey[16];
 	float m_nCounter;
-	bool m_bFinish;			//終了したかどうか
+	bool m_bFinish;			// 終了したかどうか
 
-	CModel **m_ppModel;		//モデルへのポインタ
-	int m_nNumModel;		//モデルの総数
+	CModel **m_ppModel;		// モデルへのポインタ
+	int m_nNumModel;		// モデルの総数
 
 	int m_nKeyCurrent;
 	int m_nKeyTarget;

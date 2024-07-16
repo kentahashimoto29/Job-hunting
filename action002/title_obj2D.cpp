@@ -1,8 +1,8 @@
 //========================================================
-//
+// 
 // ウインドウの生成等 (title_obj2D.cpp)
 // Author 橋本賢太
-//
+// 
 //========================================================
 #include "title_obj2D.h"
 #include "manager.h"
@@ -40,10 +40,10 @@ CTitle_Obj2D *CTitle_Obj2D::Create()
 {
 	CTitle_Obj2D *pTitleObj;
 
-	//2Dオブジェクトの生成
+	// 2Dオブジェクトの生成
 	pTitleObj = new CTitle_Obj2D();
 
-	//初期化処理
+	// 初期化処理
 	pTitleObj->Init();
 
 	return pTitleObj;
@@ -60,19 +60,19 @@ HRESULT CTitle_Obj2D::Init(void)
 		{
 			// 背景
 		case 0:
-			//m_apObject2D[i] = new CObject2D;
+			// m_apObject2D[i] = new CObject2D;
 
-			//m_nIdxTexture = m_apObject2D[i]->SetTex("data\\TEXTURE\\イヴェルカーナ.png");
+			// m_nIdxTexture = m_apObject2D[i]->SetTex("data\\TEXTURE\\イヴェルカーナ.png");
 
-			//m_apObject2D[i]->BindTexture(m_nIdxTexture);
+			// m_apObject2D[i]->BindTexture(m_nIdxTexture);
 
-			//m_apObject2D[i]->Init();
+			// m_apObject2D[i]->Init();
 
-			//m_apObject2D[i]->SetPos(D3DXVECTOR3(640.0f, 360.0f, 0.0f));
+			// m_apObject2D[i]->SetPos(D3DXVECTOR3(640.0f, 360.0f, 0.0f));
 
-			//m_apObject2D[i]->SetVtxResult();
+			// m_apObject2D[i]->SetVtxResult();
 
-			//m_apObject2D[i]->SetType(CObject::TYPE_TITLE);
+			// m_apObject2D[i]->SetType(CObject::TYPE_TITLE);
 			break;
 
 			// ENTERロゴ
@@ -134,10 +134,10 @@ void CTitle_Obj2D::Uninit(void)
 // 更新処理
 //========================================================
 void CTitle_Obj2D::Update(void)
-{	//キーボードの取得
+{	// キーボードの取得
 	CInputKeyboard *pInputKeyboard = CManager::GetInstance()->GetInputKeyboard();
 
-	//マウスの取得
+	// マウスの取得
 	CInputMouse *pInputMouse = CManager::GetInstance()->GetInputMouse();
 
 	for (int i = 0; i < OBJ_MAX; i++)

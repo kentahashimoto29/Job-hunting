@@ -1,8 +1,8 @@
 //========================================================
-//
+// 
 // ウインドウの生成等 (ranking.cpp)
 // Author 橋本賢太
-//
+// 
 //========================================================
 #include "ranking.h"
 #include "manager.h"
@@ -86,7 +86,7 @@ HRESULT CRanking::Init(void)
 	FILE *pFile;	// ファイルポインタを宣言
 
 					// ファイルを開く
-	pFile = fopen("data\\TEXT\\ranking.txt", "r");			//(ファイル名を指定,　モードの指定”r”で読み込み)
+	pFile = fopen("data\\TEXT\\ranking.txt", "r");			// (ファイル名を指定,　モードの指定”r”で読み込み)
 
 	// NULLチェック
 	if (pFile != NULL)
@@ -121,14 +121,14 @@ HRESULT CRanking::Init(void)
 			// 今回のスコアがランキングに入っていた場合
 			if (nPreScore == m_nRankingScore[nCnt])
 			{
-				//m_apObject2D[nCnt * SCORE_NUM]->SetColor(D3DXCOLOR(1.0f, 0.4f, 0.3f, 1.0f));
-				//m_apObject2D[nCnt * SCORE_NUM + 1]->SetColor(D3DXCOLOR(1.0f, 0.4f, 0.3f, 1.0f));
-				//m_apObject2D[nCnt * SCORE_NUM + 2]->SetColor(D3DXCOLOR(1.0f, 0.4f, 0.3f, 1.0f));
+				// m_apObject2D[nCnt * SCORE_NUM]->SetColor(D3DXCOLOR(1.0f, 0.4f, 0.3f, 1.0f));
+				// m_apObject2D[nCnt * SCORE_NUM + 1]->SetColor(D3DXCOLOR(1.0f, 0.4f, 0.3f, 1.0f));
+				// m_apObject2D[nCnt * SCORE_NUM + 2]->SetColor(D3DXCOLOR(1.0f, 0.4f, 0.3f, 1.0f));
 
 				m_nNewRec = nCnt;
 				m_bNewRec = true;
 
-				//m_col = D3DXCOLOR(1.0f, 0.4f, 0.3f, 1.0f);
+				// m_col = D3DXCOLOR(1.0f, 0.4f, 0.3f, 1.0f);
 
 				m_Alpha = -0.015f;
 				break;

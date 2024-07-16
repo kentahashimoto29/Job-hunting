@@ -1,8 +1,8 @@
 //========================================================
-//
-//ウインドウの生成等 (manager.cpp)
-//Author 橋本賢太
-//
+// 
+// ウインドウの生成等 (manager.cpp)
+// Author 橋本賢太
+// 
 //========================================================
 #include "manager.h"
 #include "title.h"
@@ -10,13 +10,13 @@
 #include "result.h"
 #include "fade.h"
 
-//マクロ定義
-#define BG_MAX									(3)		//背景の最大数
+// マクロ定義
+#define BG_MAX									(3)		// 背景の最大数
 
 CManager *CManager::m_pManager = NULL;
 
 //========================================================
-//コンストラクタ
+// コンストラクタ
 //========================================================
 CManager::CManager()
 {
@@ -31,7 +31,7 @@ CManager::CManager()
 }
 
 //========================================================
-//デストラクタ
+// デストラクタ
 //========================================================
 CManager::~CManager()
 {
@@ -39,85 +39,85 @@ CManager::~CManager()
 }
 
 //========================================================
-//初期化処理
+// 初期化処理
 //========================================================
 HRESULT CManager::Init(HINSTANCE hInstance, HWND hWnd, BOOL bWindow)
 {
-	//NULLチェック
+	// NULLチェック
 	if (m_pRenderer == NULL)
 	{
-		//レンダラーの生成
+		// レンダラーの生成
 		m_pRenderer = new CRenderer;
 	}
 
 	if (m_pRenderer != NULL)
 	{
-		//初期化処理
+		// 初期化処理
 		if (FAILED(m_pRenderer->Init(hWnd, TRUE)))
-		{//初期化処理が失敗した場合
+		{// 初期化処理が失敗した場合
 			return -1;
 		}
 	}
 
-	//NULLチェック
+	// NULLチェック
 	if (m_pInputKeyboard == NULL)
 	{
-		//キーボードの生成
+		// キーボードの生成
 		m_pInputKeyboard = new CInputKeyboard;
 	}
 
 	if (m_pInputKeyboard != NULL)
 	{
-		//初期化処理
+		// 初期化処理
 		if (FAILED(m_pInputKeyboard->Init(hInstance, hWnd)))
-		{//初期化処理が失敗した場合
+		{// 初期化処理が失敗した場合
 			return -1;
 		}
 	}
 
-	//NULLチェック
+	// NULLチェック
 	if (m_pInputMouse == NULL)
 	{
-		//キーボードの生成
+		// キーボードの生成
 		m_pInputMouse = new CInputMouse;
 	}
 
 	if (m_pInputMouse != NULL)
 	{
-		//初期化処理
+		// 初期化処理
 		if (FAILED(m_pInputMouse->Init(hInstance, hWnd)))
-		{//初期化処理が失敗した場合
+		{// 初期化処理が失敗した場合
 			return -1;
 		}
 	}
 
-	//NULLチェック
+	// NULLチェック
 	if (m_pSound == NULL)
 	{
-		//キーボードの生成
+		// キーボードの生成
 		m_pSound = new CSound;
 	}
 
 	if (m_pSound != NULL)
 	{
-		//初期化処理
+		// 初期化処理
 		if (FAILED(m_pSound->Init(hWnd)))
-		{//初期化処理が失敗した場合
+		{// 初期化処理が失敗した場合
 			return -1;
 		}
 	}
 
 	m_pTexture = new CTexture;
 
-	//フェードの生成
+	// フェードの生成
 	m_pFade = new CFade;
 	m_pFade->Init();
 
-	//ライトの生成
+	// ライトの生成
 	m_pLight = new CLight;
 	m_pLight->Init();
 
-	//カメラの生成
+	// カメラの生成
 	m_pCamera = new CCamera;
 	m_pCamera->Init();
 
@@ -127,14 +127,14 @@ HRESULT CManager::Init(HINSTANCE hInstance, HWND hWnd, BOOL bWindow)
 }
 
 //========================================================
-//終了処理
+// 終了処理
 //========================================================
 void CManager::Uninit(void)
 {
-	//NULLチェック
+	// NULLチェック
 	if (m_pRenderer != NULL)
 	{
-		//終了処理
+		// 終了処理
 		m_pRenderer->Uninit();
 
 		delete m_pRenderer;
@@ -142,10 +142,10 @@ void CManager::Uninit(void)
 		m_pRenderer = NULL;
 	}
 
-	//NULLチェック
+	// NULLチェック
 	if (m_pInputKeyboard != NULL)
 	{
-		//終了処理
+		// 終了処理
 		m_pInputKeyboard->Uninit();
 
 		delete m_pInputKeyboard;
@@ -153,10 +153,10 @@ void CManager::Uninit(void)
 		m_pInputKeyboard = NULL;
 	}
 
-	//NULLチェック
+	// NULLチェック
 	if (m_pCamera != NULL)
 	{
-		//終了処理
+		// 終了処理
 		m_pCamera->Uninit();
 
 		delete m_pCamera;
@@ -164,10 +164,10 @@ void CManager::Uninit(void)
 		m_pCamera = NULL;
 	}
 
-	//NULLチェック
+	// NULLチェック
 	if (m_pLight != NULL)
 	{
-		//終了処理
+		// 終了処理
 		m_pLight->Uninit();
 
 		delete m_pLight;
@@ -177,11 +177,11 @@ void CManager::Uninit(void)
 }
 
 //========================================================
-//更新処理
+// 更新処理
 //========================================================
 void CManager::Update(void)
 {
-	//更新処理
+	// 更新処理
 	m_pFade->Update();
 	m_pCamera->Update();
 	m_pRenderer->Update();
@@ -190,17 +190,17 @@ void CManager::Update(void)
 }
 
 //========================================================
-//描画処理
+// 描画処理
 //========================================================
 void CManager::Draw(void)
 {
-	//描画処理
+	// 描画処理
 	m_pFade->Draw();
 	m_pRenderer->Draw();
 }
 
 //========================================================
-//マネージャーのポインタを返す関数
+// マネージャーのポインタを返す関数
 //========================================================
 CManager *CManager::GetInstance(void)
 {
@@ -216,7 +216,7 @@ CManager *CManager::GetInstance(void)
 }
 
 //========================================================
-//モード設定
+// モード設定
 //========================================================
 void CManager::SetMode(CScene::MODE Mode)
 {
@@ -250,7 +250,7 @@ void CManager::SetMode(CScene::MODE Mode)
 
 
 //========================================================
-//コンストラクタ
+// コンストラクタ
 //========================================================
 CScene::CScene()
 {
@@ -258,7 +258,7 @@ CScene::CScene()
 }
 
 //========================================================
-//コンストラクタ
+// コンストラクタ
 //========================================================
 CScene::CScene(MODE Mode)
 {
@@ -266,7 +266,7 @@ CScene::CScene(MODE Mode)
 }
 
 //========================================================
-//デストラクタ
+// デストラクタ
 //========================================================
 CScene::~CScene()
 {
@@ -274,13 +274,13 @@ CScene::~CScene()
 }
 
 //========================================================
-//生成処理
+// 生成処理
 //========================================================
 CScene *CScene::Create(MODE Mode)
 {
 	CScene *pScene = NULL;
 
-	//2Dオブジェクトの生成
+	// 2Dオブジェクトの生成
 	switch (Mode)
 	{
 	case MODE_TITLE:
@@ -299,7 +299,7 @@ CScene *CScene::Create(MODE Mode)
 		break;
 	}
 
-	//初期化処理
+	// 初期化処理
 	pScene->Init();
 
 	pScene->m_mode = Mode;
@@ -308,7 +308,7 @@ CScene *CScene::Create(MODE Mode)
 }
 
 //========================================================
-//初期化処理
+// 初期化処理
 //========================================================
 HRESULT CScene::Init()
 {
@@ -317,7 +317,7 @@ HRESULT CScene::Init()
 }
 
 //========================================================
-//終了処理
+// 終了処理
 //========================================================
 void CScene::Uninit(void)
 {
@@ -325,7 +325,7 @@ void CScene::Uninit(void)
 }
 
 //========================================================
-//更新処理
+// 更新処理
 //========================================================
 void CScene::Update(void)
 {
@@ -333,7 +333,7 @@ void CScene::Update(void)
 }
 
 //========================================================
-//描画処理
+// 描画処理
 //========================================================
 void CScene::Draw(void)
 {
@@ -341,7 +341,7 @@ void CScene::Draw(void)
 }
 
 //========================================================
-//モードを返す関数
+// モードを返す関数
 //========================================================
 CScene::MODE CScene::GetMode(void)
 {
@@ -349,7 +349,7 @@ CScene::MODE CScene::GetMode(void)
 }
 
 //========================================================
-//モードを返す関数
+// モードを返す関数
 //========================================================
 void CScene::SetMode(MODE Mode)
 {
@@ -357,7 +357,7 @@ void CScene::SetMode(MODE Mode)
 }
 
 //========================================================
-//位置を返す関数
+// 位置を返す関数
 //========================================================
 D3DXVECTOR3 CScene::GetPos(void)
 {
@@ -365,7 +365,7 @@ D3DXVECTOR3 CScene::GetPos(void)
 }
 
 //========================================================
-//位置を返す
+// 位置を返す
 //========================================================
 void CScene::SetPos(D3DXVECTOR3 pos)
 {
@@ -373,7 +373,7 @@ void CScene::SetPos(D3DXVECTOR3 pos)
 }
 
 //========================================================
-//位置を返す
+// 位置を返す
 //========================================================
 void CScene::SetRot(D3DXVECTOR3 rot)
 {
