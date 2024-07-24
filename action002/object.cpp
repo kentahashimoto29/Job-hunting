@@ -126,11 +126,6 @@ void CObject::UpdateAll(void)
 //========================================================
 void CObject::DrawAll(void)
 {
-	CCamera *pCamera = CManager::GetInstance()->GetCamera();
-
-	// ƒJƒƒ‰‚ÌÝ’è
-	pCamera->SetCamera();
-
 	for (int nCntPriority = 0; nCntPriority < 8; nCntPriority++)
 	{
 		CObject *pObject = m_pTop[nCntPriority];

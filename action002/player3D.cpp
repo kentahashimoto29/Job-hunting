@@ -42,7 +42,7 @@ CPlayer3D::CPlayer3D(D3DXVECTOR3 pos, int nPriority) : CObject(nPriority)
 {
 	m_pos = pos;
 	m_revivalpos = pos;
-	m_rot = D3DXVECTOR3(0.0f, 0.0f / 2, 0.0f);
+	m_rot = D3DXVECTOR3(0.0f, 0.0f, 0.0f);
 	m_revivalrot = m_rot;
 	m_Destrot = D3DXVECTOR3(0.0f, 0.0f, 0.0f);
 	m_Diffrot = D3DXVECTOR3(0.0f, 0.0f, 0.0f);

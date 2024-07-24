@@ -42,10 +42,10 @@ public:
 	D3DXVECTOR3 GetPos(void);								// 位置を返す
 	void SetPos(D3DXVECTOR3 pos);							// 位置を設定
 	void SetRot(D3DXVECTOR3 rot);							// 向きを設定
-	float GetsizeX() { return m_sizeX; }					// X方向の大きさを返す
-	float GetsizeY() { return m_sizeY; }					// Y方向の大きさを返す
-	void SetsizeX(float sizeX) { m_sizeX = sizeX; }			// X方向の大きさを設定
-	void SetsizeY(float sizeY) { m_sizeY = sizeY; }			// Y方向の大きさを設定
+	float GetSizeX() { return m_sizeX; }					// X方向の大きさを返す
+	float GetSizeY() { return m_sizeY; }					// Y方向の大きさを返す
+	void SetSizeX(float sizeX) { m_sizeX = sizeX; }			// X方向の大きさを設定
+	void SetSizeY(float sizeY) { m_sizeY = sizeY; }			// Y方向の大きさを設定
 	void SetColor(D3DXCOLOR col);							// 色を設定
 	int SetTex(const char TexName[64]);
 

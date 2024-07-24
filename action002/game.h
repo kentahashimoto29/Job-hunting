@@ -19,6 +19,7 @@
 #include "wall.h"
 #include "item_manager.h"
 #include "wall_obj_manager.h"
+#include "minimap_camera.h"
 class CSkill_UI;
 
 //===================================

@@ -1,6 +1,6 @@
 //========================================================
 // 
-// ウインドウの生成等 (Renderer.cpp)
+// ミニマップカメラ (minimap_camera.cpp)
 // Author 橋本賢太
 // 
 //========================================================
@@ -162,8 +162,39 @@ void CRenderer::Draw(void)
 	if (SUCCEEDED(m_pD3DDevice->BeginScene()))
 	{// 描画開始が成功した場合
 
-		// 描画処理
-		CObject::DrawAll();
+		CCamera *pCamera = CManager::GetInstance()->GetCamera();
+		CMinimap_Camera *pMiniCamera = CManager::GetInstance()->GetMinimap_Camera();
+
+		D3DVIEWPORT9 viewportDef;
+		m_pD3DDevice->GetViewport(&viewportDef);
+
+		for (int i = 0; i < 2; i++)
+		{
+			switch (i)
+			{
+			case 0:
+				// カメラの設定
+				pCamera->SetCamera();
+
+				break;
+
+			case 1:
+				if (CManager::GetInstance()->GetScene()->GetMode() == CScene::MODE_GAME)
+				{
+					// ミニマップカメラの設定
+					pMiniCamera->SetCamera();
+				}
+
+				break;
+			default:
+				break;
+			}
+
+			// 描画処理
+			CObject::DrawAll();
+		}
+
+		m_pD3DDevice->SetViewport(&viewportDef);
 
 #ifdef _DEBUG
 		// FPSの表示

@@ -60,8 +60,6 @@ CGame::~CGame()
 //========================================================
 HRESULT CGame::Init(void)
 {
-	CTexture *T = CManager::GetInstance()->GetTexture();
-
 	m_pTime = CTime::Create();
 
 	m_pPlayer3D = CPlayer3D::Create(D3DXVECTOR3(0.0f, 0.0f, 0.0f));
@@ -129,6 +127,9 @@ HRESULT CGame::Init(void)
 
 	CManager::GetInstance()->GetCamera()->SetPosGame(m_pPlayer3D->GetPos(), m_pPlayer3D->GetPos());
 	CManager::GetInstance()->GetCamera()->SetRot(D3DXVECTOR3(0.0, 0.0, 0.0));
+
+	CManager::GetInstance()->GetMinimap_Camera()->SetPos(D3DXVECTOR3(750.0f, 2000.0f, 750.0f), D3DXVECTOR3(750.0f, 10.0f, 750.001f));
+	CManager::GetInstance()->GetCamera()->SetRot(D3DXVECTOR3(0.0f, 0.0, 0.0));
 
 	return S_OK;
 }
@@ -228,6 +229,7 @@ void CGame::Update(void)
 	// ƒ}ƒEƒX‚ÌŽæ“¾
 	CInputMouse *pInputMouse = CManager::GetInstance()->GetInputMouse();
 
+#ifdef _DEBUG
 	if (pInputKeyboard->GetTrigger(DIK_RETURN) == true)
 	{
 		if (b != true)
@@ -239,6 +241,7 @@ void CGame::Update(void)
 			}
 		}
 	}
+#endif
 
 	if (m_pEnemyManager->GetNum() <= 0)
 	{
@@ -262,13 +265,6 @@ void CGame::Update(void)
 				b = true;
 			}
 		}
-	}
-
-	if (pInputKeyboard->GetTrigger(DIK_T) == true)
-	{
-		CTexture *pT = CManager::GetInstance()->GetTexture();
-
-		int i = 0;
 	}
 
 	m_pEnemyManager->Update();

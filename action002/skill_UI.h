@@ -36,8 +36,8 @@ public:
 
 private:
 	D3DXCOLOR m_col;
-	CObject2D *m_apObject2D;				// タイトルのオブジェクト
-	CObject2D *m_apObjectGauge2D;			// タイトルのオブジェクト
+	CObject2D *m_apObject2D[2];				// UIのオブジェクト
+	CObject2D *m_apObjectGauge2D;			// ゲージのオブジェクト
 	static int m_nIdxTexture;				// テクスチャの番号
 
 	bool b;

@@ -1,4 +1,9 @@
-﻿  wall_obj_manager.cpp
+﻿  shadow.cpp
+  object3D.cpp
+  コードを生成中...
+  スキップ中... (関連する変更は検出されませんでした)
+  Xmodel.cpp
+  wall_obj_manager.cpp
   wall_obj.cpp
   wall.cpp
   title_obj2D.cpp
@@ -6,7 +11,6 @@
   time.cpp
   through_block.cpp
   texture.cpp
-  sound.cpp
   skill_UI.cpp
   score.cpp
   result_obj2D.cpp
@@ -16,13 +20,11 @@
   player3D.cpp
   player.cpp
   objectX.cpp
-  object3D.cpp
   object2D.cpp
-  コードを生成中...
-  コンパイル中...
   object.cpp
   motion.cpp
   model.cpp
+  minimap_camera.cpp
   mesh_object3D.cpp
   manager.cpp
   main.cpp
@@ -30,7 +32,6 @@
   item_throw.cpp
   item_manager.cpp
   item3D.cpp
-  input.cpp
   goal.cpp
   game.cpp
   field.cpp
@@ -40,8 +41,6 @@
   enemy3D.cpp
   enemy.cpp
   effect.cpp
-  コードを生成中...
-  コンパイル中...
   death_block.cpp
   camera.cpp
   bullet3D.cpp
@@ -50,7 +49,5 @@
   block.cpp
   billboard.cpp
   bg.cpp
-  Xmodel.cpp
-  コードを生成中...
   action002.vcxproj -> C:\Users\student\Desktop\就職作品aaa\Job-hunting\action002\Debug\action002.exe
   action002.vcxproj -> C:\Users\student\Desktop\就職作品aaa\Job-hunting\action002\Debug\action002.pdb (Full PDB)

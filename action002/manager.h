@@ -16,6 +16,7 @@
 #include "Xmodel.h"
 #include "object3D.h"
 #include "sound.h"
+#include "minimap_camera.h"
 class CFade;
 
 
@@ -85,6 +86,7 @@ public:
 	CScene *GetScene() { return m_pScene; }							// シーンのポインタを返す関数
 	CSound *GetSound() { return m_pSound; }							// サウンドのポインタを返す関数
 	CFade *GetFade() { return m_pFade; }							// フェードのポインタを返す関数
+	CMinimap_Camera *GetMinimap_Camera() { return m_pMinimap_Camera; }		// アイテムマネージャーのポインタを返す関数
 
 	void SetMode(CScene::MODE Mode);
 
@@ -100,6 +102,7 @@ private:
 	CScene *m_pScene;											// シーンのポインタ
 	CSound *m_pSound;											// サウンドのポインタ
 	CFade *m_pFade;												// フェードのポインタ
+	CMinimap_Camera *m_pMinimap_Camera;							// アイテムマネージャーのポインタ
 
 };
 

@@ -55,8 +55,8 @@ HRESULT CTime::Init(void)
 
 		m_apObject2D[nCnt]->SetPos(D3DXVECTOR3(520.0f, 70.0f, 0.0f));
 
-		m_apObject2D[nCnt]->SetsizeX(40.0f);
-		m_apObject2D[nCnt]->SetsizeY(50.0f);
+		m_apObject2D[nCnt]->SetSizeX(40.0f);
+		m_apObject2D[nCnt]->SetSizeY(50.0f);
 
 		m_nIdxTexture = m_apObject2D[nCnt]->SetTex("data\\TEXTURE\\number_blackclover_07.png");
 

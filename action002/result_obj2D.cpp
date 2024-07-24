@@ -1,6 +1,6 @@
 //========================================================
 // 
-// ウインドウの生成等 (result_obj2D.cpp)
+// リザルトの2Dオブジェクト (result_obj2D.cpp)
 // Author 橋本賢太
 // 
 //========================================================
@@ -59,15 +59,12 @@ HRESULT CResult_Obj2D::Init(void)
 			m_apObject2D[i] = new CObject2D;
 
 			m_nIdxTexture = m_apObject2D[i]->SetTex("data\\TEXTURE\\result02.jpg");
-
 			m_apObject2D[i]->BindTexture(m_nIdxTexture);
 
 			m_apObject2D[i]->Init();
 
 			m_apObject2D[i]->SetPos(D3DXVECTOR3(640.0f, 360.0f, 0.0f));
-
 			m_apObject2D[i]->SetVtxResult();
-
 			m_apObject2D[i]->SetType(CObject::TYPE_TITLE);
 			break;
 
@@ -76,20 +73,15 @@ HRESULT CResult_Obj2D::Init(void)
 			m_apObject2D[i] = new CObject2D;
 
 			m_nIdxTexture = m_apObject2D[i]->SetTex("data\\TEXTURE\\black_000.jpg");
-
 			m_apObject2D[i]->BindTexture(m_nIdxTexture);
 
 			m_apObject2D[i]->Init();
 
 			m_apObject2D[i]->SetPos(D3DXVECTOR3(640.0f, 360.0f, 0.0f));
-
-			m_apObject2D[i]->SetsizeX(200.0f);
-			m_apObject2D[i]->SetsizeY(280.0f);
-
-			m_apObject2D[i]->SetVtx(m_apObject2D[i]->GetPos(), m_apObject2D[i]->GetsizeX(), m_apObject2D[i]->GetsizeY());
-
+			m_apObject2D[i]->SetSizeX(200.0f);
+			m_apObject2D[i]->SetSizeY(280.0f);
+			m_apObject2D[i]->SetVtx(m_apObject2D[i]->GetPos(), m_apObject2D[i]->GetSizeX(), m_apObject2D[i]->GetSizeY());
 			m_apObject2D[i]->SetColor(D3DXCOLOR(1.0f, 1.0f, 1.0f, 0.5f));
-
 			m_apObject2D[i]->SetType(CObject::TYPE_TITLE);
 			break;
 

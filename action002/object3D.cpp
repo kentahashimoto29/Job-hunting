@@ -273,6 +273,43 @@ void CObject3D::SetVtxField(void)
 //========================================================
 // 位置を返す
 //========================================================
+void CObject3D::SetVtxShadow(void)
+{
+	VERTEX_3D *pVtx;
+
+	// 頂点バッファをロック
+	m_aVerBuff->Lock(0, 0, (void**)&pVtx, 0);
+
+	// 頂点座標の設定
+	pVtx[0].pos = D3DXVECTOR3(-5.0f, 0.0f, 5.0f);
+	pVtx[1].pos = D3DXVECTOR3(5.0f, 0.0f, 5.0f);
+	pVtx[2].pos = D3DXVECTOR3(-5.0f, 0.0f, -5.0f);
+	pVtx[3].pos = D3DXVECTOR3(5.0f, 0.0f, -5.0f);
+
+	pVtx[0].nor = D3DXVECTOR3(0.0f, 1.0f, 0.0f);
+	pVtx[1].nor = D3DXVECTOR3(0.0f, 1.0f, 0.0f);
+	pVtx[2].nor = D3DXVECTOR3(0.0f, 1.0f, 0.0f);
+	pVtx[3].nor = D3DXVECTOR3(0.0f, 1.0f, 0.0f);
+
+	// 頂点カラーの設定
+	pVtx[0].col = D3DCOLOR_RGBA(255, 255, 255, 255);
+	pVtx[1].col = D3DCOLOR_RGBA(255, 255, 255, 255);
+	pVtx[2].col = D3DCOLOR_RGBA(255, 255, 255, 255);
+	pVtx[3].col = D3DCOLOR_RGBA(255, 255, 255, 255);
+
+	// テクスチャ座標の設定
+	pVtx[0].tex = D3DXVECTOR2(0.0f, 0.0f);
+	pVtx[1].tex = D3DXVECTOR2(1.0f, 0.0f);
+	pVtx[2].tex = D3DXVECTOR2(0.0f, 1.0f);
+	pVtx[3].tex = D3DXVECTOR2(1.0f, 1.0f);
+
+	// 頂点バッファをアンロックする
+	m_aVerBuff->Unlock();
+}
+
+//========================================================
+// 位置を返す
+//========================================================
 void CObject3D::SetVtxWall()
 {
 	VERTEX_3D *pVtx;

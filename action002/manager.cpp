@@ -121,6 +121,9 @@ HRESULT CManager::Init(HINSTANCE hInstance, HWND hWnd, BOOL bWindow)
 	m_pCamera = new CCamera;
 	m_pCamera->Init();
 
+	m_pMinimap_Camera = new CMinimap_Camera;
+	m_pMinimap_Camera->Init();
+
 	SetMode(GetScene()->MODE_TITLE);
 
 	return S_OK;
@@ -165,6 +168,17 @@ void CManager::Uninit(void)
 	}
 
 	// NULLチェック
+	if (m_pMinimap_Camera != NULL)
+	{
+		// 終了処理
+		m_pMinimap_Camera->Uninit();
+
+		delete m_pMinimap_Camera;
+
+		m_pMinimap_Camera = NULL;
+	}
+
+	// NULLチェック
 	if (m_pLight != NULL)
 	{
 		// 終了処理
@@ -184,6 +198,7 @@ void CManager::Update(void)
 	// 更新処理
 	m_pFade->Update();
 	m_pCamera->Update();
+	m_pMinimap_Camera->Update();
 	m_pRenderer->Update();
 	m_pInputKeyboard->Update();
 	m_pInputMouse->Update();

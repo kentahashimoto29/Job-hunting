@@ -448,10 +448,10 @@ void CObject2D::SetVtxGaugeUI(void)
 	m_aVerBuff->Lock(0, 0, (void**)&pVtx, 0);
 
 	// 頂点座標の設定
-	pVtx[0].pos = D3DXVECTOR3(m_pos.x, m_pos.y - 100.0f * (m_nGauge / m_nGaugeMax), 0.0f);
-	pVtx[1].pos = D3DXVECTOR3(m_pos.x + 40.0f,  m_pos.y - 100.0f * (m_nGauge / m_nGaugeMax), 0.0f);
+	pVtx[0].pos = D3DXVECTOR3(m_pos.x, m_pos.y - 140.0f * (m_nGauge / m_nGaugeMax), 0.0f);
+	pVtx[1].pos = D3DXVECTOR3(m_pos.x + 65.0f,  m_pos.y - 140.0f * (m_nGauge / m_nGaugeMax), 0.0f);
 	pVtx[2].pos = D3DXVECTOR3(m_pos.x, m_pos.y, 0.0f);
-	pVtx[3].pos = D3DXVECTOR3(m_pos.x + 40.0f, m_pos.y, 0.0f);
+	pVtx[3].pos = D3DXVECTOR3(m_pos.x + 65.0f, m_pos.y, 0.0f);
 
 	// 頂点バッファをアンロックする
 	m_aVerBuff->Unlock();
