@@ -14,6 +14,7 @@
 #include "game.h"
 #include "skill_UI.h"
 #include "object2D.h"
+#include "shadow.h"
 
 #define DASH_DATA								(12.0f)		// ダッシュ時の速度
 #define DASH_COUNT								(20)		// ダッシュの効果時間
@@ -124,13 +125,9 @@ HRESULT CPlayer3D::Init(void)
 	m_nNumModel = 15;
 
 	m_pMotion = new CMotion;
-
 	m_pMotion->SetModel(&m_apModel[0], m_nNumModel);
-
 	m_pMotion->Load();
-
 	m_pMotion->SetType(CMotion::TYPE_MOVE);
-
 	m_pMotion->Init(m_pMotion->TYPE_STAND);
 
 	m_nType = MOTION_NEUTRAL;
@@ -138,6 +135,8 @@ HRESULT CPlayer3D::Init(void)
 	m_nOldType = m_nType;
 
 	CObject::SetType(TYPE_PLAYER_3D);
+
+	m_pShadow = CShadow::Create(m_pos, m_rot);
 
 	return S_OK;
 }
@@ -151,6 +150,8 @@ void CPlayer3D::Uninit(void)
 	{
 		m_apModel[nCnt]->Uninit();
 	}
+
+	m_pShadow->Uninit();
 
 	Release();
 }
@@ -538,7 +539,11 @@ void CPlayer3D::Update(void)
 		m_move.z = 0.0f;
 	}
 
+	D3DXVECTOR3 ShadowPos = m_pos;
+	ShadowPos.y = CGame::GetField()->GetPos().y;
 
+	m_pShadow->SetPos(ShadowPos);
+	m_pShadow->SetRot(m_rot);
 
 
 	if (m_nType == MOTION_MOVE)

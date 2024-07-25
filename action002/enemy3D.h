@@ -11,6 +11,7 @@
 
 class CPlayer3D;
 class CItemThrow;
+class CShadow;
 
 //===================================
 // “G‚ÌƒNƒ‰ƒX
@@ -49,6 +50,8 @@ private:
 	int m_nIdx;
 
 	bool bCollision;
+
+	CShadow *m_pShadow;
 };
 
 #endif

@@ -10,6 +10,7 @@
 #include "object.h"
 #include "model.h"
 #include "motion.h"
+class CShadow;
 
 //===================================
 // プレイヤーのクラス
@@ -98,6 +99,8 @@ private:
 	bool m_bJump;
 	bool m_bGoal;
 	bool m_bWalk;
+
+	CShadow *m_pShadow;
 };
 
 #endif

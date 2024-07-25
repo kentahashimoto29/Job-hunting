@@ -58,34 +58,10 @@ CWall *CWall::Create(D3DXVECTOR3 pos, D3DXVECTOR3 rot)
 //========================================================
 HRESULT CWall::Init()
 {
-	// デバイスの取得
-	LPDIRECT3DDEVICE9 pDevice = CManager::GetInstance()->GetRenderer()->GetDevice();
-
-	CTexture *pTexture = CManager::GetInstance()->GetTexture();
-
-	bool bTexture = false;
-
-	for (int nCnt = 0; nCnt < TEXTURE_MAX; nCnt++)
-	{
-		if ("data\\TEXTURE\\block000.jpg" == pTexture->GetName(nCnt))
-		{
-			bTexture = true;
-			m_nIdxTexture = nCnt;
-			break;
-		}
-	}
-
-	if (bTexture == false)
-	{
-		m_nIdxTexture = pTexture->Regist("data\\TEXTURE\\block000.jpg");
-	}
-
+	m_nIdxTexture = SetTex("data\\TEXTURE\\block000.jpg");
 	BindTexture(m_nIdxTexture);
-
 	CObject3D::Init();
-
 	SetVtxWall();
-
 	SetType(TYPE_WALL);
 
 	return S_OK;

@@ -28,7 +28,7 @@ public:
 
 	static CField *Create(D3DXVECTOR3 pos, D3DXVECTOR3 rot);		// 生成処理
 	D3DXVECTOR3 GetPos(void);										// 位置を返す
-	LPDIRECT3DINDEXBUFFER9 GetIdxBuff(void);						// 
+	LPDIRECT3DINDEXBUFFER9 GetIdxBuff(void);						// インデックスバッファのポインタを返す
 
 private:
 	static int m_nIdxTexture;					// テクスチャの番号

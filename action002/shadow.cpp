@@ -6,13 +6,14 @@
 //========================================================
 #include "shadow.h"
 #include "manager.h"
+#include "game.h"
 
 int CShadow::m_nIdxTexture = 0;
 
 //========================================================
 // コンストラクタ
 //========================================================
-CShadow::CShadow()
+CShadow::CShadow(int nPriority) : CObject3D(nPriority)
 {
 	m_pos = D3DXVECTOR3(0.0f, 0.0f, 0.0f);
 	m_rot = D3DXVECTOR3(0.0f, 0.0f, 0.0f);
@@ -22,7 +23,7 @@ CShadow::CShadow()
 //========================================================
 // コンストラクタ
 //========================================================
-CShadow::CShadow(D3DXVECTOR3 pos, D3DXVECTOR3 rot)
+CShadow::CShadow(D3DXVECTOR3 pos, D3DXVECTOR3 rot, int nPriority) : CObject3D(nPriority)
 {
 	m_pos = pos;
 	m_rot = rot;
@@ -58,34 +59,11 @@ CShadow *CShadow::Create(D3DXVECTOR3 pos, D3DXVECTOR3 rot)
 //========================================================
 HRESULT CShadow::Init(void)
 {
-	// デバイスの取得
-	LPDIRECT3DDEVICE9 pDevice = CManager::GetInstance()->GetRenderer()->GetDevice();
-
-	CTexture *pTexture = CManager::GetInstance()->GetTexture();
-
-	bool bTexture = false;
-
-	for (int nCnt = 0; nCnt < TEXTURE_MAX; nCnt++)
-	{
-		if ("data\\TEXTURE\\shadow000.jpg" == pTexture->GetName(nCnt))
-		{
-			bTexture = true;
-			break;
-		}
-	}
-
-	if (bTexture == false)
-	{
-		m_nIdxTexture = pTexture->Regist("data\\TEXTURE\\shadow000.jpg");
-	}
-
+	m_nIdxTexture = SetTex("data\\TEXTURE\\shadow000.jpg");
 	BindTexture(m_nIdxTexture);
-
 	CObject3D::Init();
-
 	SetVtxShadow();
-
-	SetType(TYPE_FIELD);
+	SetType(TYPE_SHADOW);
 
 	return S_OK;
 }
@@ -112,20 +90,4 @@ void CShadow::Update(void)
 void CShadow::Draw(void)
 {
 	CObject3D::Draw();
-}
-
-//========================================================
-// 
-//========================================================
-D3DXVECTOR3 CShadow::GetPos(void)
-{
-	return m_pos;
-}
-
-//========================================================
-// 
-//========================================================
-LPDIRECT3DINDEXBUFFER9 CShadow::GetIdxBuff(void)
-{
-	return m_pIdxBuff;
 }

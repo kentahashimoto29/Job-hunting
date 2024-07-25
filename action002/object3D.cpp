@@ -7,6 +7,8 @@
 #include "object3D.h"
 #include "manager.h"
 
+#define SHADOW_SIZE (15.0f)
+
 //========================================================
 // コンストラクタ
 //========================================================
@@ -194,10 +196,27 @@ void CObject3D::Draw(void)
 	// テクスチャの設定
 	pDevice->SetTexture(0, pTexture->GetAddress(m_nTexture));
 
+	if (GetType() == TYPE_SHADOW)
+	{
+		//減算合成の設定
+		pDevice->SetRenderState(D3DRS_BLENDOP, D3DBLENDOP_REVSUBTRACT);
+		pDevice->SetRenderState(D3DRS_SRCBLEND, D3DBLEND_SRCALPHA);
+		pDevice->SetRenderState(D3DRS_DESTBLEND, D3DBLEND_ONE);
+	}
+
+	// 描画
 	pDevice->DrawPrimitive(
 		D3DPT_TRIANGLESTRIP,				// プリミティブの種類
 		0,									// 最初の頂点インデックス
 		2);									// プリミティブ数
+
+	if (GetType() == TYPE_SHADOW)
+	{
+		//通常の合成に戻す
+		pDevice->SetRenderState(D3DRS_BLENDOP, D3DBLENDOP_ADD);
+		pDevice->SetRenderState(D3DRS_SRCBLEND, D3DBLEND_SRCALPHA);
+		pDevice->SetRenderState(D3DRS_DESTBLEND, D3DBLEND_INVSRCALPHA);
+	}
 }
 
 //========================================================
@@ -230,6 +249,39 @@ void CObject3D::SetPos(D3DXVECTOR3 pos)
 void CObject3D::SetRot(D3DXVECTOR3 rot)
 {
 	m_rot = rot;
+}
+
+//========================================================
+// テクスチャを設定
+//========================================================
+int CObject3D::SetTex(const char TexName[64])
+{
+	if (TexName == NULL)
+	{
+		return -1;
+	}
+
+	CTexture *pTexture = CManager::GetInstance()->GetTexture();
+
+	int nIdxTexture = 0;
+	bool bTexture = false;
+
+	for (int nCnt = 0; nCnt < TEXTURE_MAX; nCnt++)
+	{
+		if (TexName == pTexture->GetName(nCnt))
+		{
+			nIdxTexture = nCnt;
+			bTexture = true;
+			break;
+		}
+	}
+
+	if (bTexture == false)
+	{
+		nIdxTexture = pTexture->Regist(TexName);
+	}
+
+	return nIdxTexture;
 }
 
 //========================================================
@@ -281,10 +333,10 @@ void CObject3D::SetVtxShadow(void)
 	m_aVerBuff->Lock(0, 0, (void**)&pVtx, 0);
 
 	// 頂点座標の設定
-	pVtx[0].pos = D3DXVECTOR3(-5.0f, 0.0f, 5.0f);
-	pVtx[1].pos = D3DXVECTOR3(5.0f, 0.0f, 5.0f);
-	pVtx[2].pos = D3DXVECTOR3(-5.0f, 0.0f, -5.0f);
-	pVtx[3].pos = D3DXVECTOR3(5.0f, 0.0f, -5.0f);
+	pVtx[0].pos = D3DXVECTOR3(-SHADOW_SIZE, 0.0f, SHADOW_SIZE);
+	pVtx[1].pos = D3DXVECTOR3(SHADOW_SIZE, 0.0f, SHADOW_SIZE);
+	pVtx[2].pos = D3DXVECTOR3(-SHADOW_SIZE, 0.0f, -SHADOW_SIZE);
+	pVtx[3].pos = D3DXVECTOR3(SHADOW_SIZE, 0.0f, -SHADOW_SIZE);
 
 	pVtx[0].nor = D3DXVECTOR3(0.0f, 1.0f, 0.0f);
 	pVtx[1].nor = D3DXVECTOR3(0.0f, 1.0f, 0.0f);

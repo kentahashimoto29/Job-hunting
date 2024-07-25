@@ -48,8 +48,8 @@ public:
 	static CWallObjManager *GetWallManager();	// 敵マネージャーのポインタを返す関数
 	static CItemManager *GetItemManager();		// アイテムマネージャーのポインタを返す関数
 	static CSkill_UI *GetSkillUI();				// アイテムマネージャーのポインタを返す関数
-	CField *GetField();							// フィールドのポインタを返す関数
-	CWall *GetWall();							// 壁のポインタを返す関数
+	static CField *GetField();							// フィールドのポインタを返す関数
+	static CWall *GetWall();							// 壁のポインタを返す関数
 
 	static float GetInitPos();
 	static int GetGameScore();
@@ -68,8 +68,8 @@ private:
 	static CWallObjManager *m_pWallManager;		// 壁3Dのポインタ
 	static CItemManager *m_pItemManager;		// アイテムマネージャーのポインタ
 	static CSkill_UI *m_pSkillUI;				// アイテムマネージャーのポインタ
-	CField *m_pField[256];						// フィールドのポインタ
-	CWall *m_pWall[256];						// 壁のポインタ
+	static CField *m_pField[256];						// フィールドのポインタ
+	static CWall *m_pWall[256];						// 壁のポインタ
 
 	static float m_nInitPos;
 

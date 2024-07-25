@@ -1,53 +1,7 @@
-﻿  shadow.cpp
-  object3D.cpp
+﻿  enemy3D.cpp
   コードを生成中...
   スキップ中... (関連する変更は検出されませんでした)
-  Xmodel.cpp
-  wall_obj_manager.cpp
-  wall_obj.cpp
-  wall.cpp
-  title_obj2D.cpp
-  title.cpp
-  time.cpp
-  through_block.cpp
-  texture.cpp
-  skill_UI.cpp
-  score.cpp
-  result_obj2D.cpp
-  result.cpp
-  renderer.cpp
-  ranking.cpp
+  shadow.cpp
   player3D.cpp
-  player.cpp
-  objectX.cpp
-  object2D.cpp
-  object.cpp
-  motion.cpp
-  model.cpp
-  minimap_camera.cpp
-  mesh_object3D.cpp
-  manager.cpp
-  main.cpp
-  light.cpp
-  item_throw.cpp
-  item_manager.cpp
-  item3D.cpp
-  goal.cpp
-  game.cpp
-  field.cpp
-  fade.cpp
-  explosion.cpp
-  enemymanager.cpp
-  enemy3D.cpp
-  enemy.cpp
-  effect.cpp
-  death_block.cpp
-  camera.cpp
-  bullet3D.cpp
-  bullet.cpp
-  block3D.cpp
-  block.cpp
-  billboard.cpp
-  bg.cpp
   action002.vcxproj -> C:\Users\student\Desktop\就職作品aaa\Job-hunting\action002\Debug\action002.exe
   action002.vcxproj -> C:\Users\student\Desktop\就職作品aaa\Job-hunting\action002\Debug\action002.pdb (Full PDB)

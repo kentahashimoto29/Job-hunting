@@ -15,8 +15,8 @@
 class CShadow : public CObject3D
 {
 public:
-	CShadow();									// コンストラクタ
-	CShadow(D3DXVECTOR3 pos, D3DXVECTOR3 rot);	// オーバーライドされたコンストラクタ
+	CShadow(int nPriority = 8);										// コンストラクタ
+	CShadow(D3DXVECTOR3 pos, D3DXVECTOR3 rot, int nPriority = 8);	// オーバーライドされたコンストラクタ
 	~CShadow();									// デストラクタ
 
 	HRESULT Init(void);							// 初期化処理
@@ -25,8 +25,11 @@ public:
 	void Draw(void);							// 描画処理
 
 	static CShadow *Create(D3DXVECTOR3 pos, D3DXVECTOR3 rot);		// 生成処理
-	D3DXVECTOR3 GetPos(void);										// 位置を返す
-	LPDIRECT3DINDEXBUFFER9 GetIdxBuff(void);						// 
+	D3DXVECTOR3 GetPos() { return m_pos; }							// 位置を返す
+	void SetPos(D3DXVECTOR3 pos) { m_pos = pos; }					// 位置を設定
+	D3DXVECTOR3 GetRot() { return m_rot; }							// 位置を返す
+	void SetRot(D3DXVECTOR3 rot) { m_rot = rot; }					// 位置を設定
+	LPDIRECT3DINDEXBUFFER9 GetIdxBuff() { return m_pIdxBuff; }		// インデックスバッファのポインタを返す
 
 private:
 	static int m_nIdxTexture;					// テクスチャの番号

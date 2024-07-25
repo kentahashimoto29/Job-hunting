@@ -32,6 +32,7 @@ public:
 	D3DXVECTOR3 GetPos(void);		// 位置を返す
 	void SetPos(D3DXVECTOR3 pos);
 	void SetRot(D3DXVECTOR3 rot);
+	int SetTex(const char TexName[64]);
 
 	D3DXVECTOR3 m_pos;							// オブジェクトの位置
 	LPDIRECT3DVERTEXBUFFER9 m_aVerBuff;		// 頂点情報へのポインタ

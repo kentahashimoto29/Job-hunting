@@ -47,7 +47,7 @@ public:
 	void SetSizeX(float sizeX) { m_sizeX = sizeX; }			// X方向の大きさを設定
 	void SetSizeY(float sizeY) { m_sizeY = sizeY; }			// Y方向の大きさを設定
 	void SetColor(D3DXCOLOR col);							// 色を設定
-	int SetTex(const char TexName[64]);
+	int SetTex(const char TexName[64]);						// テクスチャを設定
 
 	void AlphaTestValid();
 	void AlphaTestInvalid();

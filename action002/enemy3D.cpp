@@ -11,6 +11,7 @@
 #include "block3D.h"
 #include "item_throw.h"
 #include "wall_obj.h"
+#include "shadow.h"
 
 //========================================================
 // コンストラクタ
@@ -135,6 +136,8 @@ HRESULT CEnemy3D::Init(int nIdx)
 
 	m_nIdx = nIdx;
 
+	m_pShadow = CShadow::Create(m_pos, m_rot);
+
 	return S_OK;
 }
 
@@ -144,6 +147,7 @@ HRESULT CEnemy3D::Init(int nIdx)
 void CEnemy3D::Uninit(void)
 {
 	CObjectX::Uninit();
+	m_pShadow->Uninit();
 }
 
 //========================================================
@@ -224,6 +228,11 @@ void CEnemy3D::Update(void)
 		m_move.z = 0.0f;
 	}
 
+	D3DXVECTOR3 ShadowPos = m_pos;
+	ShadowPos.y = CGame::GetField()->GetPos().y;
+
+	m_pShadow->SetPos(ShadowPos);
+	m_pShadow->SetRot(m_rot);
 
 
 
@@ -284,6 +293,8 @@ bool CEnemy3D::Collision()
 
 			CEnemyManager *p = CGame::GetEnemyManager();
 			p->Release(m_nIdx);
+
+			m_pShadow->Release();
 
 			b = true;
 

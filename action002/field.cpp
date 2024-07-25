@@ -4,7 +4,7 @@
 // Author 橋本賢太
 // 
 //========================================================
-#include "Field.h"
+#include "field.h"
 #include "manager.h"
 
 int CField::m_nIdxTexture = 0;
@@ -58,33 +58,10 @@ CField *CField::Create(D3DXVECTOR3 pos, D3DXVECTOR3 rot)
 //========================================================
 HRESULT CField::Init(void)
 {
-	// デバイスの取得
-	LPDIRECT3DDEVICE9 pDevice = CManager::GetInstance()->GetRenderer()->GetDevice();
-
-	CTexture *pTexture = CManager::GetInstance()->GetTexture();
-
-	bool bTexture = false;
-
-	for (int nCnt = 0; nCnt < TEXTURE_MAX; nCnt++)
-	{
-		if ("data\\TEXTURE\\concreat.png" == pTexture->GetName(nCnt))
-		{
-			bTexture = true;
-			break;
-		}
-	}
-
-	if (bTexture == false)
-	{
-		m_nIdxTexture = pTexture->Regist("data\\TEXTURE\\concreat.png");
-	}
-
+	m_nIdxTexture = SetTex("data\\TEXTURE\\concreat.png");
 	BindTexture(m_nIdxTexture);
-
 	CObject3D::Init();
-
 	SetVtxField();
-
 	SetType(TYPE_FIELD);
 	
 

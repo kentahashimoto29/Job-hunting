@@ -33,6 +33,8 @@ CItemManager *CGame::m_pItemManager = NULL;
 CTime *CGame::m_pTime = NULL;
 CScore *CGame::m_pScore = NULL;
 CSkill_UI *CGame::m_pSkillUI = NULL;
+CField *CGame::m_pField[256] = {};
+CWall *CGame::m_pWall[256] = {};
 float CGame::m_nInitPos = 0.0f;
 int CGame::m_nScore = 0;
 
@@ -41,8 +43,6 @@ int CGame::m_nScore = 0;
 //========================================================
 CGame::CGame()
 {
-	memset(&m_pField[0], NULL, sizeof(m_pField));		// 
-	memset(&m_pWall[0], NULL, sizeof(m_pWall));			// 
 	m_nInitPos = 0;
 	m_nScore = 0;
 }
